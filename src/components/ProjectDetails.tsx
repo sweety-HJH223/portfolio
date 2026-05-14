@@ -52,6 +52,23 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
         )}
       </div>
 
+      {/* Project Images */}
+      {project.images && project.images.length > 0 && (
+        <section className="space-y-4">
+          <h2 className="text-2xl font-semibold text-primary">Project Gallery</h2>
+          <div className="columns-1 md:columns-2 gap-4 space-y-4">
+            {project.images.map((img, index) => (
+              <img 
+                key={index} 
+                src={img} 
+                alt={`${project.name} screenshot ${index + 1}`} 
+                className="w-full rounded-lg shadow-md break-inside-avoid hover:scale-[1.02] transition-transform duration-300" 
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Overview */}
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold text-primary">Overview</h2>
@@ -74,14 +91,16 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
       {/* Challenges & Solutions */}
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold text-primary">Challenges & Solutions</h2>
-        <div className="bg-secondary p-4 rounded-lg">
-          <p className="text-muted-foreground">
-            <span className="font-semibold text-foreground">Challenge:</span> {project.challengesSolutions.challenge}
-          </p>
-          <p className="text-muted-foreground mt-2">
-            <span className="font-semibold text-foreground">Solution:</span> {project.challengesSolutions.solution}
-          </p>
-        </div>
+        {project.challengesSolutions.map((cs, index) => (
+          <div key={index} className="bg-secondary p-4 rounded-lg">
+            <p className="text-muted-foreground">
+              <span className="font-semibold text-foreground">Challenge {index + 1}:</span> {cs.challenge}
+            </p>
+            <p className="text-muted-foreground mt-2">
+              <span className="font-semibold text-foreground">Solution:</span> {cs.solution}
+            </p>
+          </div>
+        ))}
       </section>
 
       {/* What I Learned */}
@@ -105,28 +124,89 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
         </div>
       </section>
 
-      {/* GitHub + Live Demo Buttons */}
-      <div className="flex gap-4 mt-8">
-        {project.github && (
+      {/* Case Study Report */}
+      {project.caseStudy && (
+        <section className="space-y-6">
+          <h2 className="text-2xl font-semibold text-primary">Case Study Report</h2>
+          <div className="grid gap-6">
+            <div className="bg-secondary/30 p-6 rounded-2xl border border-border/50">
+              <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
+                <span className="text-primary text-xl">❓</span> The Problem
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                {project.caseStudy.problem}
+              </p>
+            </div>
+            <div className="bg-secondary/30 p-6 rounded-2xl border border-border/50">
+              <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
+                <span className="text-primary text-xl">🛠️</span> My Approach
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                {project.caseStudy.approach}
+              </p>
+            </div>
+            <div className="bg-secondary/30 p-6 rounded-2xl border border-border/50">
+              <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
+                <span className="text-primary text-xl">✅</span> The Result
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                {project.caseStudy.result}
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* PDF Case Study Link */}
+      {project.caseStudyPdfUrl && (
+        <section className="space-y-4">
+          <h2 className="text-2xl font-semibold text-primary">Case Study PDF</h2>
           <a
-            href={`https://github.com/yourusername/${project.slug}`} // Placeholder for GitHub link
+            href={project.caseStudyPdfUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-200 shadow-lg shadow-primary/25"
+            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-200 shadow-lg shadow-emerald-500/25"
           >
-            <GitHubIcon className="w-5 h-5" />
-            GitHub Repo
+            <span className="text-xl">📄</span>
+            View Case Study PDF
+          </a>
+        </section>
+      )
+      }
+
+      {/* GitHub + Live Demo + Case Study Buttons */}
+      <div className="flex flex-wrap gap-4 mt-8">
+        {project.githubUrl && (
+          <a
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-200 shadow-lg shadow-primary/25"
+          >
+            <GitHubIcon />
+            View Source Code
           </a>
         )}
-        {project.liveDemo && (
+        {project.liveDemoUrl && (
           <a
-            href={`https://${project.slug}.yourdomain.com`} // Placeholder for Live Demo link
+            href={project.liveDemoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/70 transition-all duration-200 border border-border"
+            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/70 transition-all duration-200 border border-border shadow-sm"
           >
             <ExternalLink className="w-5 h-5" />
-            Live Demo
+            Launch Live Demo
+          </a>
+        )}
+        {project.fullCaseStudyUrl && !project.caseStudyPdfUrl && (
+          <a
+            href={project.fullCaseStudyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-200 shadow-lg shadow-emerald-500/25"
+          >
+            <span className="text-xl">📄</span>
+            Read Full Case Study (50+ Pages)
           </a>
         )}
       </div>

@@ -1,84 +1,149 @@
-import { NextResponse } from "next/server";
+import { GoogleGenerativeAI } from "@google/generative-ai"
+import { NextResponse } from "next/server"
 
-const SYSTEM_PROMPT = `You are a cute and friendly AI assistant for Subhashree Behera's portfolio website. 
-Reply in the same language the visitor uses (English or Korean).
-Keep replies short, friendly and use emojis.
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "")
 
-About Subhashree:
-- CS Graduate 2026, Khallikote University, Odisha India
-- Frontend Developer + Python Automation + AI Integration
-- Skills: React, HTML, CSS, JavaScript, Tailwind, Python, pandas, BeautifulSoup, Selenium, OpenAI API, Gemini API
-- Projects: AI Chatbot Automation, Korean-English Weather App, Web Scraper Dashboard, Sales Reporter, File Organizer, Portfolio
-- Hackathon winner: 1st Place x2, 2nd Place x1 (Jan 2026)
-- Keynote Speaker: Blockchain Seminar
-- Languages: English (Fluent), Korean (Conversational)
-- Available for: Remote Internship, Junior Dev, Freelance
-- Email: sweety22313@gmail.com
-- Targeting Korean and global tech opportunities
-- Certifications: HackerRank Python, KMOOC Data Science, DeepLearning.ai, Coursera ML, CS50W, Git & GitHub
-- Upwork and Fiverr: Available for hire
-- Preparing for TOPIK Korean exam
-- Digital artist and creative coder
+const systemPrompt = `You are a cute, friendly, and professional AI assistant for Subhashree Behera, known as "SweetyCodes".
+Your job is to answer questions about her skills, projects, achievements, and why someone should hire her.
 
-When asked about hiring or contact:
-Share email and mention Upwork/Fiverr availability.
-Always be cute, encouraging and professional!`;
+CRITICAL RULES:
+1. ALWAYS reply in the SAME language the user writes in. If they write Korean → reply Korean. If English → reply English.
+2. If the language field is 'ko', default to Korean even for first message.
+3. Be friendly, warm, and use relevant emojis naturally (not excessively).
+4. Keep replies concise but helpful — under 150 words unless asking for detail.
+5. Never make up information. Only use what's provided below.
+6. If asked something unrelated to Subhashree, politely redirect.
+
+ABOUT SUBHASHREE (SweetyCodes):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Brand Name: SweetyCodes
+Real Name: Subhashree Behera
+Title: Full-Stack Developer & AI Engineer
+Email: sweety22313@gmail.com
+GitHub: https://github.com/sweety-HJH223
+LinkedIn: https://www.linkedin.com/in/sweety-jh-39a96a405
+Location: Odisha, India | Open to Remote Worldwide
+Availability: Remote Internship | Junior Developer | Freelance
+
+SKILLS:
+━━━━━━━
+Frontend: React.js, Next.js, JavaScript (ES6+), TypeScript (learning), HTML5, CSS3, Tailwind CSS, Responsive Design
+Python: Python, pandas, NumPy, BeautifulSoup, Selenium, Playwright, PyAutoGUI, xlsxwriter, requests
+AI & ML: OpenAI API, Gemini API, LLM Integration, AI Agents, Prompt Engineering, Scikit-learn
+Tools: Git, GitHub, VS Code, npm, pip, Chrome DevTools, Figma, Canva
+Deployment: Vercel, Netlify, GitHub Pages, Railway
+Languages: English (Fluent), Korean (Conversational) — TOPIK preparation in progress
+
+PROJECTS:
+━━━━━━━━━
+1. AI Chatbot Desktop Automation (Featured ⭐)
+   - Built AI-powered desktop automation using Python, PyAutoGUI, OpenAI API
+   - Reads messages from desktop apps and replies intelligently using LLM
+   - Features: context-aware responses, target filtering, human-like cooldowns, emergency stop
+
+2. Korean-English Weather App (Live Demo available)
+   - Fully responsive bilingual weather app with real-time EN/KR language switching
+   - Uses OpenWeather API for live data, temperature, humidity, forecasts
+   - Deployed on GitHub Pages
+
+3. Python Web Scraper + Excel Dashboard
+   - OOP-based scraper with dual-level error handling and auto-timestamped output
+   - Generates Excel reports with pie charts, bar charts and KPI metrics
+   - Ethical scraping with randomized delays and rate limiting
+
+4. Automated Sales Analysis Reporter
+   - Transforms raw Excel transaction logs into executive-ready business reports
+   - Multi-sheet Excel output with category summaries and KPIs
+
+5. Batch File Organizer with Audit Log
+   - Desktop automation tool that organizes files by type automatically
+   - Duplicate-safe with timestamped CSV audit log
+
+6. Portfolio Website (this site!)
+   - Built with Next.js 15, React, Tailwind CSS
+   - Features AI chatbot, Korean/English toggle, dark/light mode
+
+ACHIEVEMENTS:
+━━━━━━━━━━━━
+🏆 1st Place — Solution Sprint | Intercollege Hackathon | Jan 2026 | Team
+🏆 1st Place — Code Relay | Intercollege Hackathon | Jan 2026 | Team
+🥈 2nd Place — Bug Buster | Intercollege Hackathon | Jan 2026 | Individual
+🎤 Keynote Speaker — Blockchain Technology Seminar | Khallikote University
+
+CERTIFICATIONS:
+━━━━━━━━━━━━━━
+- HackerRank Python (Basic) | 2025
+- KMOOC Data Science and AI | Korea National Open University | 2025
+- AI and Agentic Automation — DeepLearning.ai | 2025
+- Machine Learning Specialization — Coursera | 2025
+- Full Stack Web Development — FreeCodeCamp / Harvard CS50W | 2024-2025
+- Version Control with Git and GitHub | 2026
+
+EDUCATION:
+━━━━━━━━━
+B.Sc Computer Science — Khallikote University, Odisha | 2023-2026
+Senior Secondary (XII) — Science, CBSE | Kendriya Vidyalaya | 2021 | 88%
+Secondary (X) — CBSE | Kendriya Vidyalaya | 2019 | 91.4%
+
+WHY HIRE SUBHASHREE:
+━━━━━━━━━━━━━━━━━━━
+✅ Rare combo: Frontend + Python Automation + AI Integration
+✅ Bilingual: English (Fluent) + Korean (Conversational) — targeting Korean companies
+✅ Proven under pressure: 3x Hackathon winner in same event
+✅ Self-learner: 100+ hours dedicated to Python, AI, automation independently
+✅ Available immediately for remote work globally
+✅ Multiple certifications showing commitment to continuous learning
+✅ Creative coder with UI/UX design background (Canva, Figma)
+
+CONTACT:
+━━━━━━━
+📧 Email: sweety22313@gmail.com
+💼 Upwork: Available for hire (New Seller)
+🟠 Fiverr: Available for hire (New Seller)
+⚡ Response time: Within 24 hours`
 
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
-    const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+    const { messages, language } = await req.json()
 
-    if (!apiKey) {
-      return NextResponse.json(
-        { error: "Gemini API key not configured" },
-        { status: 500 }
-      );
-    }
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite"})
 
-    const contents = [
-      {
-        role: "user",
-        parts: [{ text: `System Instruction: ${SYSTEM_PROMPT}` }],
-      },
-      ...messages.map((m: any) => ({
-        role: m.role === "assistant" ? "model" : "user",
-        parts: [{ text: m.content }],
-      })),
-    ];
+    const languageInstruction = language === "ko"
+      ? "The user's interface is set to Korean. Reply in Korean (한국어) unless the user writes in English."
+      : "Reply in English unless the user writes in Korean."
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    const history = messages.slice(0, -1).map((m: { role: string; content: string }) => ({
+      role: m.role === "user" ? "user" : "model",
+      parts: [{ text: m.content }],
+    }))
+
+    const chat = model.startChat({
+      history: [
+        {
+          role: "user",
+          parts: [{ text: `${systemPrompt}\n\nLanguage instruction: ${languageInstruction}` }],
         },
-        body: JSON.stringify({
-          contents,
-          generationConfig: {
-            maxOutputTokens: 200,
-            temperature: 0.7,
-          },
-        }),
-      }
-    );
+        {
+          role: "model",
+          parts: [{ text: language === "ko" 
+            ? "네! 저는 SweetyCodes의 AI 어시스턴트예요. 스위티에 대해 뭐든지 물어보세요! 😊" 
+            : "Got it! I'm SweetyCodes' AI assistant. Ask me anything about Sweety! 😊" 
+          }],
+        },
+        ...history,
+      ],
+    })
 
-    const data = await response.json();
-    
-    if (data.error) {
-      console.error("Gemini API Error:", data.error);
-      return NextResponse.json({ error: data.error.message }, { status: 500 });
-    }
+    const lastMessage = messages[messages.length - 1].content
+    const result = await chat.sendMessage(lastMessage)
+    const text = result.response.text()
 
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Oops! I got a bit confused. Try again? 🤖";
-
-    return NextResponse.json({ reply });
+    return NextResponse.json({ reply: text })
   } catch (error) {
-    console.error("Chat API Error:", error);
+    console.error("Chat API Error:", error)
     return NextResponse.json(
-      { error: "Internal server error" },
+      { reply: "Oops! I had a little glitch. Please try again! 😅" },
       { status: 500 }
-    );
+    )
   }
 }

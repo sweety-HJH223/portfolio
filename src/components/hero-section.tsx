@@ -1,7 +1,10 @@
+"use client"
+
 import React from "react"
-import { ArrowRight, ExternalLink } from "lucide-react"
+import { Layers, ExternalLink } from "lucide-react"
 import Link from "next/link"
 import { useLanguage } from "@/context/LanguageContext";
+import { useUI } from "@/context/UIContext";
 
 const freelancePlatforms = [
   { name: "Upwork", rating: "New Seller", jobs: "Open to Work", href: "#" },
@@ -9,19 +12,20 @@ const freelancePlatforms = [
 ]
 
 export function HeroSection() {
-  const { getText } = useLanguage();
+  const { getText, language } = useLanguage();
+  const { openProjectsPopup } = useUI();
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background gradient effects */}
-      <div className="absolute inset-0 bg-background">
+      <div className="absolute inset-0 bg-background dark:bg-[#020617]">
         <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
       </div>
 
       {/* Grid pattern overlay */}
       <div
-        className="absolute inset-0 opacity-[0.02]"
+        className="absolute inset-0 opacity-[0.05] dark:opacity-[0.02]"
         style={{
           backgroundImage: `linear-gradient(var(--foreground) 1px, transparent 1px), linear-gradient(90deg, var(--foreground) 1px, transparent 1px)`,
           backgroundSize: "64px 64px",
@@ -38,40 +42,66 @@ export function HeroSection() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
               </span>
-              <span className="text-sm font-medium text-emerald-400">
+              <span className="text-sm font-medium text-emerald-600 dark:text-emerald-400">
                 {getText("Open for Work")}
               </span>
             </div>
 
             {/* Heading */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-[1.1] mb-6">
-              <span className="text-balance">{getText("I build digital experiences that")}</span>
-              <br />
-              <span className="text-balance">
-                {" "}
-                <span className="text-primary">{getText("matter")}</span>
-              </span>
+              {language === "en" ? (
+                <>
+                  <span className="text-balance">I build digital experiences that</span>
+                  <br />
+                  <span className="text-balance">
+                    {" "}
+                    <span className="text-primary">matter</span>
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span className="text-balance">가치 있는</span>
+                  <br />
+                  <span className="text-balance">
+                    <span className="text-primary">디지털 경험</span>을 만듭니다
+                  </span>
+                </>
+              )}
             </h1>
 
             {/* Description */}
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-xl mb-8">
-              CS Graduate specializing in Frontend Development,
-              Python Automation and AI Integration.
-              Hackathon winner targeting global and Korean opportunities.
-            </p>
+            {language === "en" ? (
+              <p className="text-lg text-muted-foreground dark:text-slate-400 leading-relaxed max-w-xl mb-8">
+                An AI-focused Full-Stack Developer passionate about building{" "}
+                <span className="text-foreground dark:text-slate-100 font-semibold">autonomous tools</span> and{" "}
+                <span className="text-foreground dark:text-slate-100 font-semibold">smart web apps</span>. I spend my
+                time bridging the gap between{" "}
+                <span className="text-foreground dark:text-slate-100 font-semibold">AI orchestration</span> and clean,
+                interactive <span className="text-foreground dark:text-slate-100 font-semibold">React interfaces</span>{" "}
+                to create projects that actually solve problems.
+              </p>
+            ) : (
+              <p className="text-lg text-muted-foreground dark:text-slate-400 leading-relaxed max-w-xl mb-8">
+                <span className="text-foreground dark:text-slate-100 font-semibold">자율적인 도구</span>와{" "}
+                <span className="text-foreground dark:text-slate-100 font-semibold">스마트한 웹 앱</span> 구축에 열정적인 AI 중심 풀스택 개발자입니다. 
+                저는 실제로 문제를 해결하는 프로젝트를 만들기 위해{" "}
+                <span className="text-foreground dark:text-slate-100 font-semibold">AI 오케스트레이션</span>과 깔끔하고 상호작용적인{" "}
+                <span className="text-foreground dark:text-slate-100 font-semibold">React 인터페이스</span> 사이의 간극을 메우는 데 집중합니다.
+              </p>
+            )}
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap items-center gap-4">
-              <Link
-                href="#projects"
+              <button
+                onClick={openProjectsPopup}
                 className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-200 shadow-lg shadow-primary/25 hover:shadow-primary/40 group"
               >
                 {getText("View My Work")}
-                <ArrowRight
+                <Layers
                   size={16}
                   className="group-hover:translate-x-0.5 transition-transform"
                 />
-              </Link>
+              </button>
             </div>
           </div>
 
@@ -123,9 +153,12 @@ export function HeroSection() {
                   <p className="text-xl font-bold text-foreground">📜 6+</p>
                   <p className="text-[10px] text-muted-foreground uppercase tracking-tight">{getText("Certs Earned")}</p>
                 </div>
-                <div className="flex flex-col items-center text-center p-2 rounded-lg bg-secondary/20">
+                <div className="flex flex-col items-center text-center p-2 rounded-lg bg-secondary/20 group/stat relative cursor-help">
                   <p className="text-xl font-bold text-foreground">🇰🇷 EN+KR</p>
                   <p className="text-[10px] text-muted-foreground uppercase tracking-tight">{getText("Bilingual Developer")}</p>
+                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-popover text-popover-foreground text-[10px] rounded border border-border/50 opacity-0 group-hover/stat:opacity-100 transition-opacity whitespace-nowrap z-20 shadow-xl pointer-events-none">
+                    Featured in: Vibe Weather
+                  </div>
                 </div>
                 <div className="flex flex-col items-center text-center p-2 rounded-lg bg-secondary/20">
                   <p className="text-xl font-bold text-foreground">💡 100+</p>

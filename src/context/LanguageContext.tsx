@@ -19,7 +19,7 @@ type TextKeys =
   | "Download Resume" | "bioParagraph"
   | "Let's Build Something Together"
   | "Open to remote internships..."
-  | "Email" | "Open Chat" | "Message Me"
+  | "Email" | "KakaoTalk" | "WhatsApp"
   | "Professional Profile" | "Source Code"
   | "Made with ❤️ by SweetyCodes"
   | "Full-Stack Developer & AI Engineer"| "Resume"
@@ -115,7 +115,7 @@ Focused on writing maintainable code and learning new technologies through hands
     "Let's Build Something Together": "Let's Build Something Together",
     "Open to remote internships...": "Open to remote internships, junior developer roles and freelance projects globally. Korean and English communication welcome 🇰🇷",
     Email: "Email",
-    "Open Chat": "Open Chat",
+    "KakaoTalk": "KakaoTalk",
     "Message Me": "Message Me",
     "Professional Profile": "Professional Profile",
     "Source Code": "Source Code",
@@ -219,7 +219,8 @@ Focused on writing maintainable code and learning new technologies through hands
     "Let's Build Something Together": "함께 무언가를 만들어봐요",
     "Open to remote internships...": "원격 인턴십, 주니어 개발자 역할 및 전 세계 프리랜서 프로젝트에 열려 있습니다. 한국어와 영어 소통 환영 🇰🇷",
     Email: "이메일",
-    "Open Chat": "채팅 열기",
+    "KakaoTalk": "카카오톡",
+    "WhatsApp": "왓츠앱",
     "Message Me": "메시지 보내기",
     "Professional Profile": "전문 프로필",
     "Source Code": "소스 코드",

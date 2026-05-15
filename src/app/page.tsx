@@ -56,8 +56,8 @@ export default function Home() {
               <div className="inline-flex p-3 rounded-xl bg-yellow-500/10 text-yellow-500 mb-4 group-hover:scale-110 transition-transform">
                 <KakaoTalkIcon className="w-6 h-6" />
               </div>
-              <h3 className="font-semibold text-foreground mb-1">{getText("Open Chat")}</h3>
-              <p className="text-xs text-muted-foreground">Open Chat</p>
+              <h3 className="font-semibold text-foreground mb-1">{getText("KakaoTalk")}</h3>
+              <p className="text-xs text-muted-foreground">KakaoTalk</p>
             </Link>
 
             <Link
@@ -69,8 +69,8 @@ export default function Home() {
               <div className="inline-flex p-3 rounded-xl bg-emerald-500/10 text-emerald-500 mb-4 group-hover:scale-110 transition-transform">
                 <WhatsAppIcon className="w-6 h-6" />
               </div>
-              <h3 className="font-semibold text-foreground mb-1">{getText("Message Me")}</h3>
-              <p className="text-xs text-muted-foreground">Message Me</p>
+              <h3 className="font-semibold text-foreground mb-1">{getText("WhatsApp")}</h3>
+              <p className="text-xs text-muted-foreground">WhatsApp</p>
             </Link>
 
             <Link

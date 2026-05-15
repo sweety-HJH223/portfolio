@@ -221,7 +221,6 @@ Focused on writing maintainable code and learning new technologies through hands
     Email: "이메일",
     "KakaoTalk": "카카오톡",
     "WhatsApp": "왓츠앱",
-    "Message Me": "메시지 보내기",
     "Professional Profile": "전문 프로필",
     "Source Code": "소스 코드",
     "Made with ❤️ by SweetyCodes": "SweetyCodes가 ❤️로 만들었습니다",

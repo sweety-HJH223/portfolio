@@ -82,8 +82,8 @@ export default function Home() {
               <div className="inline-flex p-3 rounded-xl bg-blue-500/10 text-blue-500 mb-4 group-hover:scale-110 transition-transform">
                 <LinkedInIcon className="w-6 h-6" />
               </div>
-              <h3 className="font-semibold text-foreground mb-1">{getText("Professional Profile")}</h3>
-              <p className="text-xs text-muted-foreground">Professional Profile</p>
+              <h3 className="font-semibold text-foreground mb-1">LinkedIn</h3>
+              <p className="text-xs text-muted-foreground">{getText("Professional Profile")}</p>
             </Link>
 
             <Link
@@ -95,8 +95,8 @@ export default function Home() {
               <div className="inline-flex p-3 rounded-xl bg-slate-500/10 text-slate-500 mb-4 group-hover:scale-110 transition-transform">
                 <GitHubIcon className="w-6 h-6" />
               </div>
-              <h3 className="font-semibold text-foreground mb-1">{getText("Source Code")}</h3>
-              <p className="text-xs text-muted-foreground">Source Code</p>
+              <h3 className="font-semibold text-foreground mb-1">GitHub</h3>
+              <p className="text-xs text-muted-foreground">{getText("Source Code")}</p>
             </Link>
           </div>
 

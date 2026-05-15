@@ -116,7 +116,7 @@ Focused on writing maintainable code and learning new technologies through hands
     "Open to remote internships...": "Open to remote internships, junior developer roles and freelance projects globally. Korean and English communication welcome 🇰🇷",
     Email: "Email",
     "KakaoTalk": "KakaoTalk",
-    "Message Me": "Message Me",
+    "WhatsApp": "WhatsApp",
     "Professional Profile": "Professional Profile",
     "Source Code": "Source Code",
     "Made with ❤️ by SweetyCodes": "Made with ❤️ by SweetyCodes",

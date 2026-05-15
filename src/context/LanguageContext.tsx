@@ -19,7 +19,7 @@ type TextKeys =
   | "Download Resume" | "bioParagraph"
   | "Let's Build Something Together"
   | "Open to remote internships..."
-  | "Email" | "KakaoTalk" | "WhatsApp"
+  | "Email" | "KakaoTalk" | "WhatsApp" | "LinkedIn" | "GitHub"
   | "Professional Profile" | "Source Code"
   | "Made with ❤️ by SweetyCodes"
   | "Full-Stack Developer & AI Engineer"| "Resume"
@@ -117,6 +117,8 @@ Focused on writing maintainable code and learning new technologies through hands
     Email: "Email",
     "KakaoTalk": "KakaoTalk",
     "WhatsApp": "WhatsApp",
+    "LinkedIn": "LinkedIn",
+    "GitHub": "GitHub",
     "Professional Profile": "Professional Profile",
     "Source Code": "Source Code",
     "Made with ❤️ by SweetyCodes": "Made with ❤️ by SweetyCodes",
@@ -221,6 +223,8 @@ Focused on writing maintainable code and learning new technologies through hands
     Email: "이메일",
     "KakaoTalk": "카카오톡",
     "WhatsApp": "왓츠앱",
+    "LinkedIn": "링크드인",
+    "GitHub": "깃허브",
     "Professional Profile": "전문 프로필",
     "Source Code": "소스 코드",
     "Made with ❤️ by SweetyCodes": "SweetyCodes가 ❤️로 만들었습니다",

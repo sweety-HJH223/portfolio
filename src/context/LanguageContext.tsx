@@ -25,7 +25,7 @@ type TextKeys =
   | "Full-Stack Developer & AI Engineer"| "Resume"
   | "What I Can Build For You"
   | "Full-Stack Development" | "End-to-end web apps with React, Next.js, and modern backends"
-  | "AI Bots & Agents" | "Custom AI agents and chatbots using Gemini and OpenAI APIs"
+  | "Custom Internal Tools" | "AI Integrations & Agents" | "Custom AI agents and chatbots using Gemini and OpenAI APIs"
   | "Data Automation" | "Python workflows that eliminate repetitive manual processes"
   | "Web Scrapers" | "Extract and process data from any website ethically"
   | "Mobile Friendly Apps" | "Responsive designs that work seamlessly on any device"
@@ -127,7 +127,8 @@ Focused on writing maintainable code and learning new technologies through hands
     "What I Can Build For You": "What I Can Build For You",
     "Full-Stack Development": "Full-Stack Development",
     "End-to-end web apps with React, Next.js, and modern backends": "End-to-end web apps with React, Next.js, and modern backends",
-    "AI Bots & Agents": "AI Bots & Agents",
+    "Custom Internal Tools": "Custom Internal Tools",
+    "AI Integrations & Agents": "AI Integrations & Agents",
     "Custom AI agents and chatbots using Gemini and OpenAI APIs": "Custom AI agents and chatbots using Gemini and OpenAI APIs",
     "Data Automation": "Data Automation",
     "Python workflows that eliminate repetitive manual processes": "Python workflows that eliminate repetitive manual processes",
@@ -233,7 +234,8 @@ Focused on writing maintainable code and learning new technologies through hands
     "What I Can Build For You": "제공 서비스",
     "Full-Stack Development": "풀스택 개발",
     "End-to-end web apps with React, Next.js, and modern backends": "React, Next.js 및 최신 백엔드로 구축한 엔드 투 엔드 웹 앱",
-    "AI Bots & Agents": "AI 봇 및 에이전트",
+    "Custom Internal Tools": "맞춤형 사내 도구",
+    "AI Integrations & Agents": "AI 통합 및 에이전트",
     "Custom AI agents and chatbots using Gemini and OpenAI APIs": "Gemini와 OpenAI API를 사용한 맞춤형 AI 에이전트 및 챗봇",
     "Data Automation": "데이터 자동화",
     "Python workflows that eliminate repetitive manual processes": "반복적인 수동 프로세스를 제거하는 파이썬 워크플로우",

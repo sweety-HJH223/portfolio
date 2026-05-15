@@ -16,6 +16,7 @@ export interface Project {
   githubUrl?: string;
   liveDemoUrl?: string;
   fullCaseStudyUrl?: string; // For your 50-page PDF or Notion link
+  videoUrl?: string;
   category: ProjectCategory;
   image?: string; 
   images?: string[];

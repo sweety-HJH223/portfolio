@@ -9,6 +9,8 @@ const reasons = [
   "Available immediately for remote work",
   "Self-learner — 100+ hours Python & AI",
   "Multiple certifications — always learning",
+  "Custom Internal Tools",
+  "AI Integrations & Agents",
 ]
 
 export default function WhyHireMe() {

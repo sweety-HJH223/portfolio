@@ -1,4 +1,4 @@
-﻿import type { ComponentType, SVGProps } from "react"
+import type { ComponentType, SVGProps } from "react"
 import { MessageCircle, Mail } from "lucide-react"
 
 export function GitHubIcon({
@@ -134,7 +134,7 @@ export const profileSocialLinks: SocialLinkItem[] = [
     Icon: EmailIcon,
   },
   {
-    href: "https://wa.me/your-phone-number",
+    href: "https://wa.me/917008088959",
     label: "WhatsApp",
     Icon: WhatsAppIcon,
   },

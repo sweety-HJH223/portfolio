@@ -7,8 +7,8 @@ import { useLanguage } from "@/context/LanguageContext";
 import { useUI } from "@/context/UIContext";
 
 const freelancePlatforms = [
-  { name: "Upwork", rating: "New Seller", jobs: "Open to Work", href: "#" },
-  { name: "Fiverr", rating: "New Seller", jobs: "Open to Work", href: "#" },
+  { name: "Upwork", rating: "New Seller", jobs: "Open to Work", href: "https://www.upwork.com/freelancers/~01e8c3956890dbd6bc?mp_source=share" },
+  { name: "Fiverr", rating: "New Seller", jobs: "Open to Work", href: "https://www.fiverr.com/s/387azPA" },
 ]
 
 export function HeroSection() {
@@ -107,6 +107,8 @@ export function HeroSection() {
                   <Link
                     key={platform.name}
                     href={platform.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="group flex items-center justify-between p-4 rounded-xl bg-secondary/30 hover:bg-secondary/50 border border-border/30 hover:border-primary/30 transition-all duration-200"
                   >
                     <div>

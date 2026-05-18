@@ -57,13 +57,13 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold text-primary">Demo Video</h2>
           <div className="aspect-video w-full rounded-lg overflow-hidden border border-border shadow-lg">
-            <iframe
-              src={project.videoUrl}
-              title={`${project.name} Demo Video`}
-              className="w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+            <video
+              controls
+              className="w-full h-full object-cover"
+            >
+              <source src={project.videoUrl} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
         </section>
       )}

@@ -357,7 +357,7 @@ export default function AboutSection() {
               <h3 className="text-2xl font-bold text-primary mb-4 leading-tight">
                 {t.bio1}
               </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed whitespace-pre-line mb-8">
+              <p className="text-muted-foreground text-lg leading-relaxed whitespace-pre-line mb-8">
                 {t.bio2}
               </p>
               
@@ -367,21 +367,21 @@ export default function AboutSection() {
                     <span className="text-primary text-base">🎓</span>
                     <div className="flex flex-col">
                       <p className="text-[10px] font-bold text-primary uppercase tracking-wider">{getText("Education")}</p>
-                      <p className="text-[11px] font-bold text-foreground/80">{t.edu}</p>
+                      <p className="text-sm font-bold text-foreground/80">{t.edu}</p>
                     </div>
                  </div>
                  <div className="flex items-center gap-2">
                     <span className="text-primary text-base">📍</span>
                     <div className="flex flex-col">
                       <p className="text-[10px] font-bold text-primary uppercase tracking-wider">{getText("Location")}</p>
-                      <p className="text-[11px] font-bold text-foreground/80">{t.loc}</p>
+                      <p className="text-sm font-bold text-foreground/80">{t.loc}</p>
                     </div>
                  </div>
                  <div className="flex items-center gap-2">
                     <span className="text-primary text-base">⚡</span>
                     <div className="flex flex-col">
                       <p className="text-[10px] font-bold text-primary uppercase tracking-wider">{getText("Status")}</p>
-                      <p className="text-[11px] font-bold text-foreground/80">{t.stat}</p>
+                      <p className="text-sm font-bold text-foreground/80">{t.stat}</p>
                     </div>
                  </div>
               </div>
@@ -398,10 +398,10 @@ export default function AboutSection() {
                         <div className="w-1 h-1 rounded-full bg-primary" />
                       </div>
                       <div className="flex flex-col gap-1">
-                        <p className="text-[11px] font-bold text-foreground/90 leading-tight group-hover:text-primary transition-colors">
+                        <p className="text-sm font-semibold text-foreground/90 leading-tight group-hover:text-primary transition-colors">
                           <span className="mr-2">{ach.icon}</span> {ach.text}
                         </p>
-                        <p className="text-[10px] text-muted-foreground italic leading-tight">
+                        <p className="text-xs text-muted-foreground italic leading-tight">
                           {ach.sub}
                         </p>
                       </div>
@@ -424,9 +424,9 @@ export default function AboutSection() {
                       <div key={idx} className="group/item">
                         <div className="flex items-center gap-2 mb-1">
                           <span className="text-sm group-hover/item:scale-110 transition-transform">{item.icon}</span>
-                          <p className="text-xs font-bold text-foreground">{item.title}</p>
+                          <p className="text-base font-bold text-foreground">{item.title}</p>
                         </div>
-                        <p className="text-[10px] text-muted-foreground leading-snug">{item.desc}</p>
+                        <p className="text-sm text-muted-foreground leading-snug">{item.desc}</p>
                       </div>
                     ))}
                 </div>

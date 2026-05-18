@@ -2,9 +2,50 @@
 
 import React, { useState, useEffect, useRef } from "react"
 import Image from "next/image"
-import Link from "next/link"
-import { ArrowRight, Languages, Workflow } from "lucide-react"
+import { Languages, Workflow } from "lucide-react"
 import { useLanguage } from "@/context/LanguageContext"
+
+// --- Local Translations for About Refactor ---
+const localAboutTranslations: Record<string, any> = {
+  en: {
+    bio1: "I build software that works. From intelligent web scrapers that extract real business data, to AI chatbots that automate workflows — I focus on building tools that actually solve problems.",
+    bio2: "Currently deepening my expertise in AI integration and agentic automation. Hackathon winner with hands-on experience across the full stack — React interfaces, Python automation, and LLM-powered tools.",
+    timelineTitle: "Achievement Timeline",
+    ach1: "Jan 2026 — 3x Hackathon Winner",
+    ach2: "First Year — Blockchain Keynote Speaker",
+    ach3: "2025 — 100+ Hours Self-learned Python & AI",
+    ach4: "2026 — CS Graduate",
+    edu: "B.Sc Computer Science",
+    loc: "Open to Remote Globally",
+    stat: "Available Immediately",
+    highlightsTitle: "Technical Highlights",
+    h1Title: "AI Integration",
+    h1Desc: "Chatbots and agents using Gemini/OpenAI",
+    h2Title: "Automated Scrapers",
+    h2Desc: "Scalable Python data pipelines",
+    h3Title: "Full-Stack Apps",
+    h3Desc: "React + Next.js production interfaces"
+  },
+  ko: {
+    bio1: "실제로 작동하는 소프트웨어를 만듭니다. 비즈니스 데이터를 추출하는 지능형 웹 스크래퍼부터 워크플로우를 자동화하는 AI 챗봇까지, 저는 실제 문제를 해결하는 도구를 구축하는 데 집중합니다.",
+    bio2: "현재 AI 통합 및 에이전틱 자동화 분야의 전문성을 깊게 다지고 있습니다. 해커톤 우승 경험과 프론트엔드(React), 파이썬 자동화, LLM 기반 도구 등 풀스택 전반에 걸친 실무 경험을 보유하고 있습니다.",
+    timelineTitle: "주요 성과 타임라인",
+    ach1: "2026년 1월 — 해커톤 3회 우승",
+    ach2: "1학년 — 블록체인 기조 연설자",
+    ach3: "2025년 — 파이썬 및 AI 독학 100시간 이상",
+    ach4: "2026년 — 컴퓨터공학 졸업",
+    edu: "컴퓨터공학 학사",
+    loc: "전 세계 원격 근무 가능",
+    stat: "즉시 근무 가능",
+    highlightsTitle: "기술적 하이라이트",
+    h1Title: "AI 통합",
+    h1Desc: "Gemini/OpenAI를 활용한 챗봇 및 에이전트",
+    h2Title: "자동화된 스크래퍼",
+    h2Desc: "확장 가능한 파이썬 데이터 파이프라인",
+    h3Title: "풀스택 앱",
+    h3Desc: "React + Next.js 프로덕션 인터페이스"
+  }
+}
 
 // --- Terminal Typing Logic ---
 const terminalLines = [
@@ -234,16 +275,6 @@ const WorkflowSection = () => {
     <div className="w-full space-y-8">
       <div>
         <h4 className="text-sm font-bold text-foreground uppercase tracking-widest border-b border-border/50 pb-2 mb-4 flex items-center gap-2">
-          <Languages size={14} className="text-primary" /> {getText("Languages")}
-        </h4>
-        <div className="flex flex-wrap gap-2">
-          <span className="px-3 py-1.5 bg-secondary/50 rounded-xl text-xs font-medium border border-border/50">English (Fluent)</span>
-          <span className="px-3 py-1.5 bg-secondary/50 rounded-xl text-xs font-medium border border-border/50">Korean (Conversational) 🇰🇷</span>
-        </div>
-      </div>
-
-      <div>
-        <h4 className="text-sm font-bold text-foreground uppercase tracking-widest border-b border-border/50 pb-2 mb-4 flex items-center gap-2">
           <Workflow size={14} className="text-primary" /> {getText("Dev Workflow")}
         </h4>
         <div className="flex flex-wrap gap-2">
@@ -265,7 +296,9 @@ export default function AboutSection() {
   const [isVisible, setIsVisible] = useState(false)
   const [terminalKey, setTerminalKey] = useState(0)
   const sectionRef = useRef<HTMLElement>(null)
-  const { getText } = useLanguage();
+  const { getText, language } = useLanguage();
+
+  const t = localAboutTranslations[language] || localAboutTranslations.en;
 
   useEffect(() => {
     const currentRef = sectionRef.current;
@@ -283,6 +316,13 @@ export default function AboutSection() {
       if (currentRef) observer.disconnect()
     }
   }, [])
+
+  const achievements = [
+    { text: t.ach1, icon: "🏆" },
+    { text: t.ach2, icon: "🎤" },
+    { text: t.ach3, icon: "💡" },
+    { text: t.ach4, icon: "🎓" },
+  ];
 
   return (
     <section id="about" ref={sectionRef} className="scroll-mt-24 py-24 px-6 bg-background overflow-hidden">
@@ -303,61 +343,81 @@ export default function AboutSection() {
             <TerminalBio key={terminalKey} />
           </BentoBox>
 
-          {/* Tile 3: Bio */}
+          {/* Tile 3: Bio & Achievements */}
           <BentoBox className="md:col-span-4 lg:col-span-4 flex flex-col h-full">
             <div className="flex-1">
               <h3 className="text-2xl font-bold text-primary mb-4 leading-tight">
-                {getText("Building Intelligent Systems for the Global Market.")}
+                {t.bio1}
               </h3>
-              <p className="text-muted-foreground text-base leading-relaxed whitespace-pre-line mb-6">
-                {getText("bioParagraph")}
+              <p className="text-muted-foreground text-sm leading-relaxed whitespace-pre-line mb-8">
+                {t.bio2}
               </p>
               
               {/* Quick Info Row */}
-              <div className="flex flex-wrap gap-x-8 gap-y-4 py-6 border-t border-border/10">
+              <div className="flex flex-wrap gap-x-6 gap-y-4 py-6 border-t border-border/10 mb-8">
                  <div className="flex items-center gap-2">
                     <span className="text-primary text-base">🎓</span>
                     <div className="flex flex-col">
                       <p className="text-[10px] font-bold text-primary uppercase tracking-wider">{getText("Education")}</p>
-                      <p className="text-xs font-bold text-foreground/80">{getText("B.Sc Computer Science")}</p>
+                      <p className="text-[11px] font-bold text-foreground/80">{t.edu}</p>
                     </div>
                  </div>
                  <div className="flex items-center gap-2">
                     <span className="text-primary text-base">📍</span>
                     <div className="flex flex-col">
                       <p className="text-[10px] font-bold text-primary uppercase tracking-wider">{getText("Location")}</p>
-                      <p className="text-xs font-bold text-foreground/80">{getText("Open to Global/KR Remote")}</p>
+                      <p className="text-[11px] font-bold text-foreground/80">{t.loc}</p>
                     </div>
                  </div>
                  <div className="flex items-center gap-2">
                     <span className="text-primary text-base">⚡</span>
                     <div className="flex flex-col">
                       <p className="text-[10px] font-bold text-primary uppercase tracking-wider">{getText("Status")}</p>
-                      <p className="text-xs font-bold text-foreground/80">{getText("Available Immediately")}</p>
+                      <p className="text-[11px] font-bold text-foreground/80">{t.stat}</p>
                     </div>
                  </div>
               </div>
-            </div>
-            
-            <div className="pt-6 border-t border-border/30">
-               <h4 className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mb-4">
-                 {getText("Technical Highlights")}
-               </h4>
-               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                  {[
-                    { title: "AI Orchestration", desc: "Custom agents using Gemini/OpenAI", icon: "🤖" },
-                    { title: "Automated Scrapers", desc: "Scalable Python data pipelines", icon: "🔍" },
-                    { title: "Bilingual UI", desc: "English & Korean web experiences", icon: "🌐" }
-                  ].map((item, idx) => (
-                    <div key={idx} className="group/item">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-sm group-hover/item:scale-110 transition-transform">{item.icon}</span>
-                        <p className="text-xs font-bold text-foreground">{getText(item.title as any)}</p>
+
+              {/* Achievement Timeline */}
+              <div className="mb-10">
+                <h4 className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mb-4">
+                  {t.timelineTitle}
+                </h4>
+                <div className="space-y-4 relative before:absolute before:left-[5px] before:top-2 before:bottom-2 before:w-[1px] before:bg-primary/30">
+                  {achievements.map((ach, idx) => (
+                    <div key={idx} className="flex items-start gap-4 relative group">
+                      <div className="mt-1.5 w-[11px] h-[11px] rounded-full bg-background border border-primary flex items-center justify-center z-10 shadow-[0_0_8px_rgba(34,211,238,0.4)] transition-transform group-hover:scale-125">
+                        <div className="w-1 h-1 rounded-full bg-primary" />
                       </div>
-                      <p className="text-[10px] text-muted-foreground leading-snug">{getText(item.desc as any)}</p>
+                      <p className="text-[11px] font-bold text-foreground/90 leading-tight group-hover:text-primary transition-colors">
+                        {ach.text}
+                      </p>
                     </div>
                   ))}
-               </div>
+                </div>
+              </div>
+
+              {/* Technical Highlights moved inside */}
+              <div className="pt-8 border-t border-border/10">
+                <h4 className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mb-4">
+                  {t.highlightsTitle}
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    {[
+                      { title: t.h1Title, desc: t.h1Desc, icon: "🤖" },
+                      { title: t.h2Title, desc: t.h2Desc, icon: "🔍" },
+                      { title: t.h3Title, desc: t.h3Desc, icon: "⚡" }
+                    ].map((item, idx) => (
+                      <div key={idx} className="group/item">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-sm group-hover/item:scale-110 transition-transform">{item.icon}</span>
+                          <p className="text-xs font-bold text-foreground">{item.title}</p>
+                        </div>
+                        <p className="text-[10px] text-muted-foreground leading-snug">{item.desc}</p>
+                      </div>
+                    ))}
+                </div>
+              </div>
             </div>
           </BentoBox>
 

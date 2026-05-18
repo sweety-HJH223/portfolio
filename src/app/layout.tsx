@@ -6,9 +6,9 @@ import ClientRootLayout from "@/components/ClientRootLayout"; // To be created
 
 export const metadata: Metadata = {
   title: 'SweetyCodes | Full-Stack Developer & AI Engineer',
-  description: 'Portfolio of Sweety — Full-Stack Developer and AI Engineer specializing in React, Python automation, and AI integration. Fast-learner open for remote work globally.',
-  keywords: ['Full-Stack Developer', 'AI Engineer', 'React', 'Python', 'Next.js', 'Web Scraping', 'AI Integration', 'Remote Developer', 'Indian Developer'],
-  authors: [{ name: 'Sweety', url: 'https://portfolio-one-taupe-42.vercel.app' }],
+  description: 'Portfolio of Sweety (Subhashree Behera) — Full-Stack Developer and AI Engineer specializing in React, Python automation, and AI integration. Fast-learner open for remote work globally.',
+  keywords: ['SweetyCodes', 'Subhashree Behera', 'Full-Stack Developer', 'AI Engineer', 'React', 'Python', 'Next.js', 'Web Scraping', 'AI Integration', 'Remote Developer', 'Indian Developer'],
+  authors: [{ name: 'Subhashree Behera (Sweety)', url: 'https://portfolio-one-taupe-42.vercel.app' }],
   creator: 'SweetyCodes',
   openGraph: {
     type: 'website',

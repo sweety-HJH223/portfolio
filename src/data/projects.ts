@@ -60,7 +60,7 @@ export const projects: Project[] = [
     techStack: ['Python', 'PyAutoGUI', 'OpenAI API', 'Clipboard manipulation'],
     githubUrl: 'https://github.com/sweety-HJH223/AI_BOT',
     category: 'AI',
-    images: ['/images/ai-bot-1.png', '/images/ai-bot-2.png'],
+    
   },
   {
     icon: '🌦️',

@@ -37,7 +37,7 @@ type TextKeys =
   | "Why Work With Me?"
   | "Frontend AND Python skills combined"
   | "Already works with AI tools professionally"
-  | "Speaks Korean — rare for Indian developers"
+  | "Fast-learner of new tech stacks"
   | "Hackathon winner — proven under pressure"
   | "Available immediately for remote work"
   | "Self-learner — 100+ hours Python & AI"
@@ -148,7 +148,7 @@ Focused on writing maintainable code and learning new technologies through hands
     "Why Work With Me?": "Why Work With Me?",
     "Frontend AND Python skills combined": "Frontend AND Python skills combined",
     "Already works with AI tools professionally": "Already works with AI tools professionally",
-    "Speaks Korean — rare for Indian developers": "Speaks Korean — rare for Indian developers",
+    "Fast-learner of new tech stacks": "Fast-learner of new tech stacks",
     "Hackathon winner — proven under pressure": "Hackathon winner — proven under pressure",
     "Available immediately for remote work": "Available immediately for remote work",
     "Self-learner — 100+ hours Python & AI": "Self-learner — 100+ hours Python & AI",
@@ -256,7 +256,7 @@ Focused on writing maintainable code and learning new technologies through hands
     "Why Work With Me?": "저와 함께 일해야 하는 이유",
     "Frontend AND Python skills combined": "프론트엔드와 파이썬 기술의 결합",
     "Already works with AI tools professionally": "전문적으로 AI 도구 활용 가능",
-    "Speaks Korean — rare for Indian developers": "한국어 가능 - 인도 개발자로서는 드문 역량",
+    "Fast-learner of new tech stacks": "새로운 기술 스택을 빠르게 습득하는 학습자",
     "Hackathon winner — proven under pressure": "해커톤 수상 - 압박 속에서도 검증된 실력",
     "Available immediately for remote work": "원격 근무 즉시 가능",
     "Self-learner — 100+ hours Python & AI": "자기 주도 학습자 - 파이썬 & AI 100시간 이상 학습",

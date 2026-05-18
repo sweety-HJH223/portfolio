@@ -6,7 +6,7 @@ import { useLanguage } from "@/context/LanguageContext"
 const reasons = [
   "Frontend AND Python skills combined",
   "Already works with AI tools professionally",
-  "Speaks Korean — rare for Indian developers",
+  "Fast-learner of new tech stacks",
   "Hackathon winner — proven under pressure",
   "Available immediately for remote work",
   "Self-learner — 100+ hours Python & AI",

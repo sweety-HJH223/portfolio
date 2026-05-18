@@ -354,7 +354,7 @@ export default function AboutSection() {
           {/* Tile 3: Bio & Journey */}
           <BentoBox className="md:col-span-4 lg:col-span-4 flex flex-col h-full">
             <div className="flex-1">
-              <p className="text-lg font-semibold text-foreground mb-4 leading-tight">
+              <p className="text-xl font-bold text-[#00f3ff] drop-shadow-[0_0_15px_rgba(0,243,255,0.7)] mb-4 leading-tight">
                 {t.bio1}
               </p>
               <p className="text-muted-foreground text-lg leading-relaxed whitespace-pre-line mb-8">

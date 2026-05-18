@@ -13,6 +13,7 @@ const reasons = [
   "Multiple certifications — always learning",
   "Custom Internal Tools",
   "AI Bots & Agents",
+  "Reliable & committed team player",
 ]
 
 export default function WhyHireMe() {

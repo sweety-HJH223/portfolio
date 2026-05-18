@@ -47,6 +47,7 @@ type TextKeys =
   | "Ask me about Sweety!" 
   | "Ask me about skills, projects, or hire her!"
   | "Vibing! 💃" | "Singing! 🎵" | "Wooo! 🌀" | "Peek-a-boo! 👀" | "Zzz... 💤" | "Nom nom! 😋"
+  | "Reliable & committed team player"
   | "CORE DEVELOPMENT" | "AI & DATA" | "AUTOMATION" | "AI TOOLS & DEV" | "ECOSYSTEM"
   | "Python Automation" | "Frontend Development" | "AI Integration" | "Backend Development" | "Data Processing" | "UI/UX Design"
   | "Project-ready" | "Responsive UI" | "API Implementation" | "API Focused" | "Scrapers & Analysis" | "Clean Interfaces"
@@ -152,6 +153,7 @@ Focused on writing maintainable code and learning new technologies through hands
     "Available immediately for remote work": "Available immediately for remote work",
     "Self-learner — 100+ hours Python & AI": "Self-learner — 100+ hours Python & AI",
     "Multiple certifications — always learning": "Multiple certifications — always learning",
+    "Reliable & committed team player": "Reliable & committed team player",
     "Languages & Workflow": "Languages & Workflow",
     "Languages": "Languages",
     "Dev Workflow": "Dev Workflow",
@@ -259,6 +261,7 @@ Focused on writing maintainable code and learning new technologies through hands
     "Available immediately for remote work": "원격 근무 즉시 가능",
     "Self-learner — 100+ hours Python & AI": "자기 주도 학습자 - 파이썬 & AI 100시간 이상 학습",
     "Multiple certifications — always learning": "다양한 자격증 보유 - 끊임없이 학습 중",
+    "Reliable & committed team player": "신뢰할 수 있고 헌신적인 팀 플레이어",
     "Languages & Workflow": "언어 및 작업 환경",
     "Languages": "언어",
     "Dev Workflow": "개발 환경",

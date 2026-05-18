@@ -244,12 +244,12 @@ const BentoBox = ({ children, className = "" }: { children: React.ReactNode, cla
 const SkillBars = () => {
   const { getText } = useLanguage();
   const skills = [
-    { name: "Python Automation", level: 85, label: "Project-ready" },
-    { name: "Frontend (React/Next)", level: 80, label: "Responsive UI" },
-    { name: "AI Integration", level: 75, label: "API Implementation" },
-    { name: "Backend (Node/Flask)", level: 70, label: "API Focused" },
-    { name: "Data Processing", level: 82, label: "Scrapers & Analysis" },
-    { name: "UI/UX Design", level: 75, label: "Clean Interfaces" },
+    { name: "Python Automation", level: 85 },
+    { name: "Frontend Development", level: 80 },
+    { name: "AI Integration", level: 75 },
+    { name: "Backend Development", level: 70 },
+    { name: "Data Processing", level: 82 },
+    { name: "UI/UX Design", level: 75 },
   ]
 
   return (
@@ -261,7 +261,7 @@ const SkillBars = () => {
         {skills.map((skill) => (
           <div key={skill.name}>
             <div className="flex justify-between text-xs mb-1">
-              <span className="font-medium text-foreground">{getText(skill.name as any)} <span className="text-[10px] text-muted-foreground ml-1">({getText(skill.label as any)})</span></span>
+              <span className="font-medium text-foreground">{getText(skill.name as any)}</span>
               <span className="text-primary font-bold">{skill.level}%</span>
             </div>
             <div className="h-1.5 w-full bg-secondary/50 rounded-full overflow-hidden border border-border/30">
@@ -354,9 +354,9 @@ export default function AboutSection() {
           {/* Tile 3: Bio & Journey */}
           <BentoBox className="md:col-span-4 lg:col-span-4 flex flex-col h-full">
             <div className="flex-1">
-              <h3 className="text-2xl font-bold text-primary mb-4 leading-tight">
+              <p className="text-lg font-semibold text-foreground mb-4 leading-tight">
                 {t.bio1}
-              </h3>
+              </p>
               <p className="text-muted-foreground text-lg leading-relaxed whitespace-pre-line mb-8">
                 {t.bio2}
               </p>

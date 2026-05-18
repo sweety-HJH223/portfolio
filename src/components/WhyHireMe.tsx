@@ -6,11 +6,13 @@ import { useLanguage } from "@/context/LanguageContext"
 const reasons = [
   "Frontend AND Python skills combined",
   "Already works with AI tools professionally",
+  "Speaks Korean — rare for Indian developers",
+  "Hackathon winner — proven under pressure",
   "Available immediately for remote work",
   "Self-learner — 100+ hours Python & AI",
   "Multiple certifications — always learning",
   "Custom Internal Tools",
-  "AI Integrations & Agents",
+  "AI Bots & Agents",
 ]
 
 export default function WhyHireMe() {

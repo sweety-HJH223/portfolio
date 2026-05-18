@@ -41,7 +41,7 @@ type TextKeys =
   | "Full-stack versatility & expertise"
   | "Available immediately for remote work"
   | "Self-learner — 100+ hours Python & AI"
-  | "Multiple certifications — always learning"
+  | "Always learning"
   | "Skill Proficiency"
   | "Languages & Workflow" | "Languages" | "Dev Workflow"
   | "Ask me about Sweety!" 
@@ -152,7 +152,7 @@ Focused on writing maintainable code and learning new technologies through hands
     "Full-stack versatility & expertise": "Full-stack versatility & expertise",
     "Available immediately for remote work": "Available immediately for remote work",
     "Self-learner — 100+ hours Python & AI": "Self-learner — 100+ hours Python & AI",
-    "Multiple certifications — always learning": "Multiple certifications — always learning",
+    "Always learning": "Always learning",
     "Reliable & committed team player": "Reliable & committed team player",
     "Languages & Workflow": "Languages & Workflow",
     "Languages": "Languages",
@@ -260,7 +260,7 @@ Focused on writing maintainable code and learning new technologies through hands
     "Full-stack versatility & expertise": "풀스택 다재다능함 및 전문성",
     "Available immediately for remote work": "원격 근무 즉시 가능",
     "Self-learner — 100+ hours Python & AI": "자기 주도 학습자 - 파이썬 & AI 100시간 이상 학습",
-    "Multiple certifications — always learning": "다양한 자격증 보유 - 끊임없이 학습 중",
+    "Always learning": "끊임없이 학습하는 자세",
     "Reliable & committed team player": "신뢰할 수 있고 헌신적인 팀 플레이어",
     "Languages & Workflow": "언어 및 작업 환경",
     "Languages": "언어",

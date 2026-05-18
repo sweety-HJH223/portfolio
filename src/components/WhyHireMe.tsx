@@ -10,7 +10,7 @@ const reasons = [
   "Full-stack versatility & expertise",
   "Available immediately for remote work",
   "Self-learner — 100+ hours Python & AI",
-  "Multiple certifications — always learning",
+  "Always learning",
   "Custom Internal Tools",
   "AI Bots & Agents",
   "Reliable & committed team player",

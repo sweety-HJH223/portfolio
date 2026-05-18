@@ -40,24 +40,6 @@ const services = [
     description: "Professional English and Korean EN/KO web experiences",
     color: "text-cyan-500",
   },
-  {
-    icon: Bot,
-    title: "AI Powered Tools",
-    description: "Intelligent tools for analysis and generation",
-    color: "text-indigo-500",
-  },
-  {
-    icon: Search,
-    title: "Web Scraping & Mining",
-    description: "Turn website data into structured, actionable insights",
-    color: "text-teal-500",
-  },
-  {
-    icon: Globe,
-    title: "Global Scalability",
-    description: "Deploying performant, scalable apps to the global market",
-    color: "text-orange-500",
-  },
 ]
 
 export default function ServicesSection() {

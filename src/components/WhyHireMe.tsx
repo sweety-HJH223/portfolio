@@ -7,7 +7,7 @@ const reasons = [
   "Frontend AND Python skills combined",
   "Already works with AI tools professionally",
   "Fast-learner of new tech stacks",
-  "Hackathon winner — proven under pressure",
+  "Full-stack versatility & expertise",
   "Available immediately for remote work",
   "Self-learner — 100+ hours Python & AI",
   "Multiple certifications — always learning",

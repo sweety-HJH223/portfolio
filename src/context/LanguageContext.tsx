@@ -38,7 +38,7 @@ type TextKeys =
   | "Frontend AND Python skills combined"
   | "Already works with AI tools professionally"
   | "Fast-learner of new tech stacks"
-  | "Hackathon winner — proven under pressure"
+  | "Full-stack versatility & expertise"
   | "Available immediately for remote work"
   | "Self-learner — 100+ hours Python & AI"
   | "Multiple certifications — always learning"
@@ -149,7 +149,7 @@ Focused on writing maintainable code and learning new technologies through hands
     "Frontend AND Python skills combined": "Frontend AND Python skills combined",
     "Already works with AI tools professionally": "Already works with AI tools professionally",
     "Fast-learner of new tech stacks": "Fast-learner of new tech stacks",
-    "Hackathon winner — proven under pressure": "Hackathon winner — proven under pressure",
+    "Full-stack versatility & expertise": "Full-stack versatility & expertise",
     "Available immediately for remote work": "Available immediately for remote work",
     "Self-learner — 100+ hours Python & AI": "Self-learner — 100+ hours Python & AI",
     "Multiple certifications — always learning": "Multiple certifications — always learning",
@@ -257,7 +257,7 @@ Focused on writing maintainable code and learning new technologies through hands
     "Frontend AND Python skills combined": "프론트엔드와 파이썬 기술의 결합",
     "Already works with AI tools professionally": "전문적으로 AI 도구 활용 가능",
     "Fast-learner of new tech stacks": "새로운 기술 스택을 빠르게 습득하는 학습자",
-    "Hackathon winner — proven under pressure": "해커톤 수상 - 압박 속에서도 검증된 실력",
+    "Full-stack versatility & expertise": "풀스택 다재다능함 및 전문성",
     "Available immediately for remote work": "원격 근무 즉시 가능",
     "Self-learner — 100+ hours Python & AI": "자기 주도 학습자 - 파이썬 & AI 100시간 이상 학습",
     "Multiple certifications — always learning": "다양한 자격증 보유 - 끊임없이 학습 중",

@@ -10,11 +10,15 @@ const localAboutTranslations: Record<string, any> = {
   en: {
     bio1: "I build software that works. From responsive React interfaces and full-stack web apps, to intelligent Python scrapers and AI-powered chatbots — I focus on building tools that actually solve real problems.",
     bio2: "Currently deepening my expertise in AI integration and agentic automation. Hands-on experience across the full stack — React interfaces, Python automation pipelines, and LLM-powered tools. Always learning, always shipping.",
-    timelineTitle: "Achievement Timeline",
-    ach1: "2023 — Started B.Sc Computer Science",
-    ach2: "2024 — Blockchain Keynote Speaker",
-    ach3: "2025 — 100+ Hours Self-learned Python & AI",
-    ach4: "2026 — CS Graduate (Expected)",
+    timelineTitle: "My Journey",
+    ach1: "2023 — Started CS Degree",
+    sub1: "Where it all began",
+    ach2: "2024 — Discovered Frontend Development",
+    sub2: "Built first web projects and fell in love with UI",
+    ach3: "2025 — Deep Dived into Python & AI",
+    sub3: "100+ hours self-learning automation and LLMs",
+    ach4: "2026 — Building AI-Powered Tools",
+    sub4: "Available for remote work — let's build something!",
     edu: "B.Sc Computer Science",
     loc: "Open to Remote Globally",
     stat: "Available Immediately",
@@ -29,11 +33,15 @@ const localAboutTranslations: Record<string, any> = {
   ko: {
     bio1: "실제로 작동하는 소프트웨어를 만듭니다. 반응형 React 인터페이스와 풀스택 웹 앱부터 지능형 파이썬 스크래퍼와 AI 기반 챗봇까지, 저는 실제 문제를 해결하는 도구를 구축하는 데 집중합니다.",
     bio2: "현재 AI 통합 및 에이전틱 자동화 분야의 전문성을 깊게 다지고 있습니다. React 인터페이스, 파이썬 자동화 파이프라인, LLM 기반 도구 등 풀스택 전반에 걸친 실무 경험을 보유하고 있습니다. 끊임없이 배우고, 끊임없이 제품을 출시합니다.",
-    timelineTitle: "주요 성과 타임라인",
-    ach1: "2023년 — 컴퓨터공학 학사 시작",
-    ach2: "2024년 — 블록체인 기조 연설자",
-    ach3: "2025년 — 파이썬 및 AI 독학 100시간 이상",
-    ach4: "2026년 — 컴퓨터공학 졸업 예정",
+    timelineTitle: "나의 여정",
+    ach1: "2023년 — 컴퓨터공학 학위 시작",
+    sub1: "모든 것이 시작된 곳",
+    ach2: "2024년 — 프론트엔드 개발 발견",
+    sub2: "첫 웹 프로젝트를 빌드하며 UI와 사랑에 빠지다",
+    ach3: "2025년 — 파이썬 및 AI 심층 학습",
+    sub3: "자동화 및 LLM 독학 100시간 이상",
+    ach4: "2026년 — AI 기반 도구 구축",
+    sub4: "원격 근무 가능 — 함께 만들어봐요!",
     edu: "컴퓨터공학 학사",
     loc: "전 세계 원격 근무 가능",
     stat: "즉시 근무 가능",
@@ -318,10 +326,10 @@ export default function AboutSection() {
   }, [])
 
   const achievements = [
-    { text: t.ach1, icon: "🎓" },
-    { text: t.ach2, icon: "🎤" },
-    { text: t.ach3, icon: "💡" },
-    { text: t.ach4, icon: "🏁" },
+    { text: t.ach1, sub: t.sub1, icon: "🎓" },
+    { text: t.ach2, sub: t.sub2, icon: "⚡" },
+    { text: t.ach3, sub: t.sub3, icon: "🐍" },
+    { text: t.ach4, sub: t.sub4, icon: "🤖" },
   ];
 
   return (
@@ -343,7 +351,7 @@ export default function AboutSection() {
             <TerminalBio key={terminalKey} />
           </BentoBox>
 
-          {/* Tile 3: Bio & Achievements */}
+          {/* Tile 3: Bio & Journey */}
           <BentoBox className="md:col-span-4 lg:col-span-4 flex flex-col h-full">
             <div className="flex-1">
               <h3 className="text-2xl font-bold text-primary mb-4 leading-tight">
@@ -378,20 +386,25 @@ export default function AboutSection() {
                  </div>
               </div>
 
-              {/* Achievement Timeline */}
+              {/* Journey Timeline */}
               <div className="mb-10">
                 <h4 className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mb-4">
                   {t.timelineTitle}
                 </h4>
-                <div className="space-y-4 relative before:absolute before:left-[5px] before:top-2 before:bottom-2 before:w-[1px] before:bg-primary/30">
+                <div className="space-y-6 relative before:absolute before:left-[5px] before:top-2 before:bottom-2 before:w-[1px] before:bg-primary/30">
                   {achievements.map((ach, idx) => (
                     <div key={idx} className="flex items-start gap-4 relative group">
                       <div className="mt-1.5 w-[11px] h-[11px] rounded-full bg-background border border-primary flex items-center justify-center z-10 shadow-[0_0_8px_rgba(34,211,238,0.4)] transition-transform group-hover:scale-125">
                         <div className="w-1 h-1 rounded-full bg-primary" />
                       </div>
-                      <p className="text-[11px] font-bold text-foreground/90 leading-tight group-hover:text-primary transition-colors">
-                        {ach.text}
-                      </p>
+                      <div className="flex flex-col gap-1">
+                        <p className="text-[11px] font-bold text-foreground/90 leading-tight group-hover:text-primary transition-colors">
+                          <span className="mr-2">{ach.icon}</span> {ach.text}
+                        </p>
+                        <p className="text-[10px] text-muted-foreground italic leading-tight">
+                          {ach.sub}
+                        </p>
+                      </div>
                     </div>
                   ))}
                 </div>

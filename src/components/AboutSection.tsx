@@ -8,8 +8,8 @@ import { useLanguage } from "@/context/LanguageContext"
 // --- Local Translations for About Refactor ---
 const localAboutTranslations: Record<string, any> = {
   en: {
-    bio1: "I build software that works. From intelligent web scrapers that extract real business data, to AI chatbots that automate workflows — I focus on building tools that actually solve problems.",
-    bio2: "Currently deepening my expertise in AI integration and agentic automation. Hackathon winner with hands-on experience across the full stack — React interfaces, Python automation, and LLM-powered tools.",
+    bio1: "I build software that works. From responsive React interfaces and full-stack web apps, to intelligent Python scrapers and AI-powered chatbots — I focus on building tools that actually solve real problems.",
+    bio2: "Currently deepening my expertise in AI integration and agentic automation. Hands-on experience across the full stack — React interfaces, Python automation pipelines, and LLM-powered tools. Always learning, always shipping.",
     timelineTitle: "Achievement Timeline",
     ach1: "Jan 2026 — 3x Hackathon Winner",
     ach2: "First Year — Blockchain Keynote Speaker",
@@ -27,8 +27,8 @@ const localAboutTranslations: Record<string, any> = {
     h3Desc: "React + Next.js production interfaces"
   },
   ko: {
-    bio1: "실제로 작동하는 소프트웨어를 만듭니다. 비즈니스 데이터를 추출하는 지능형 웹 스크래퍼부터 워크플로우를 자동화하는 AI 챗봇까지, 저는 실제 문제를 해결하는 도구를 구축하는 데 집중합니다.",
-    bio2: "현재 AI 통합 및 에이전틱 자동화 분야의 전문성을 깊게 다지고 있습니다. 해커톤 우승 경험과 프론트엔드(React), 파이썬 자동화, LLM 기반 도구 등 풀스택 전반에 걸친 실무 경험을 보유하고 있습니다.",
+    bio1: "실제로 작동하는 소프트웨어를 만듭니다. 반응형 React 인터페이스와 풀스택 웹 앱부터 지능형 파이썬 스크래퍼와 AI 기반 챗봇까지, 저는 실제 문제를 해결하는 도구를 구축하는 데 집중합니다.",
+    bio2: "현재 AI 통합 및 에이전틱 자동화 분야의 전문성을 깊게 다지고 있습니다. React 인터페이스, 파이썬 자동화 파이프라인, LLM 기반 도구 등 풀스택 전반에 걸친 실무 경험을 보유하고 있습니다. 끊임없이 배우고, 끊임없이 제품을 출시합니다.",
     timelineTitle: "주요 성과 타임라인",
     ach1: "2026년 1월 — 해커톤 3회 우승",
     ach2: "1학년 — 블록체인 기조 연설자",

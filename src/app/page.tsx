@@ -61,7 +61,7 @@ export default function Home() {
             </Link>
 
             <Link
-              href="https://wa.me/your-phone-number"
+              href="https://wa.me/917008088959"
               target="_blank"
               rel="noopener noreferrer"
               className="group p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/50 transition-all duration-300 text-center flex flex-col items-center justify-center"

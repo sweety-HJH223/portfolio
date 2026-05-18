@@ -48,7 +48,7 @@ type TextKeys =
   | "Ask me about skills, projects, or hire her!"
   | "Vibing! 💃" | "Singing! 🎵" | "Wooo! 🌀" | "Peek-a-boo! 👀" | "Zzz... 💤" | "Nom nom! 😋"
   | "CORE DEVELOPMENT" | "AI & DATA" | "AUTOMATION" | "AI TOOLS & DEV" | "ECOSYSTEM"
-  | "Python Automation" | "Frontend (React/Next)" | "AI Integration" | "Backend (Node/Flask)" | "Data Processing" | "UI/UX Design"
+  | "Python Automation" | "Frontend Development" | "AI Integration" | "Backend Development" | "Data Processing" | "UI/UX Design"
   | "Project-ready" | "Responsive UI" | "API Implementation" | "API Focused" | "Scrapers & Analysis" | "Clean Interfaces"
   | "Technical Highlights" | "AI Orchestration" | "Custom agents using Gemini/OpenAI" | "Automated Scrapers" | "Scalable Python data pipelines" | "Bilingual UI" | "English & Korean web experiences"
   | "Education" | "B.Sc Computer Science" | "Location" | "Open to Global/KR Remote" | "Status" | "Available Immediately"
@@ -98,9 +98,9 @@ const translations = {
     "ECOSYSTEM": "ECOSYSTEM",
     "Skill Proficiency": "Skill Proficiency",
     "Python Automation": "Python Automation",
-    "Frontend (React/Next)": "Frontend (React/Next)",
+    "Frontend Development": "Frontend Development",
     "AI Integration": "AI Integration",
-    "Backend (Node/Flask)": "Backend (Node/Flask)",
+    "Backend Development": "Backend Development",
     "Data Processing": "Data Processing",
     "UI/UX Design": "UI/UX Design",
     "Project-ready": "Project-ready",
@@ -205,9 +205,9 @@ Focused on writing maintainable code and learning new technologies through hands
     "ECOSYSTEM": "생태계 및 배포",
     "Skill Proficiency": "기술 숙련도",
     "Python Automation": "파이썬 자동화",
-    "Frontend (React/Next)": "프론트엔드 (React/Next)",
+    "Frontend Development": "프론트엔드 개발",
     "AI Integration": "AI 통합",
-    "Backend (Node/Flask)": "백엔드 (Node/Flask)",
+    "Backend Development": "백엔드 개발",
     "Data Processing": "데이터 처리",
     "UI/UX Design": "UI/UX 디자인",
     "Project-ready": "프로젝트 수행 가능",

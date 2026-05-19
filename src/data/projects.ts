@@ -94,7 +94,7 @@ export const projects: Project[] = [
     learned: 'Advanced state management, media asset handling, UX/UI aesthetic engineering',
     techStack: ['HTML', 'CSS', 'JavaScript', 'OpenWeather API', 'Weather Data Modeling'],
     githubUrl: 'https://github.com/sweety-HJH223/toggle-weather',
-    liveDemoUrl: 'https://sweety-hjh223.github.io/toggle-weather/',
+    liveDemoUrl: 'https://korean-weather-app.vercel.app',
     fullCaseStudyUrl: '/Vibe_Weather_Case_Study.pdf',
     category: 'Frontend',
     images: [

@@ -58,7 +58,7 @@ const localAboutTranslations: Record<string, any> = {
 // --- Terminal Typing Logic ---
 const terminalLines = [
   { type: "command", text: "whoami" },
-  { type: "output", text: "SweetyCodes — Full-Stack Developer & AI Engineer", delay: 500 },
+  { type: "output", text: "SweetyCodes — AI & Full-Stack Developer | Building AI-Powered Web Apps", delay: 500 },
   { type: "command", text: "realname" },
   { type: "output", text: "Subhashree Behera — (Open for professional inquiries)", delay: 500 },
   { type: "command", text: "skills" },

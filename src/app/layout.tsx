@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import ClientRootLayout from "@/components/ClientRootLayout"; // To be created
 
 export const metadata: Metadata = {
-  title: 'SweetyCodes | Full-Stack Developer & AI Engineer',
+  title: 'SweetyCodes | AI & Full-Stack Developer | Building AI-Powered Web Apps',
   description: 'Portfolio of Sweety (Subhashree Behera) — Full-Stack Developer and AI Engineer specializing in React, Python automation, and AI integration. Fast-learner open for remote work globally.',
   keywords: ['SweetyCodes', 'Subhashree Behera', 'Full-Stack Developer', 'AI Engineer', 'React', 'Python', 'Next.js', 'Web Scraping', 'AI Integration', 'Remote Developer', 'Indian Developer'],
   authors: [{ name: 'Subhashree Behera (Sweety)', url: 'https://portfolio-one-taupe-42.vercel.app' }],
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: 'https://portfolio-one-taupe-42.vercel.app',
-    title: 'SweetyCodes | Full-Stack Developer & AI Engineer',
+    title: 'SweetyCodes | AI & Full-Stack Developer | Building AI-Powered Web Apps',
     description: 'Building responsive web apps, Python automation systems and AI-powered tools. Fast-learner open for remote work.',
     siteName: 'SweetyCodes Portfolio',
     images: [
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'SweetyCodes | Full-Stack Developer & AI Engineer',
+    title: 'SweetyCodes | AI & Full-Stack Developer | Building AI-Powered Web Apps',
     description: 'Building web apps, Python automation and AI tools. Open for remote work!',
     images: ['/profile.png'],
   },

@@ -11,12 +11,26 @@ const achievements = [
 ]
 
 const certifications = [
-  { title: "HackerRank Python Basic", year: "2025" },
-  { title: "KMOOC Data Science and AI", year: "Sep-Oct 2025" },
-  { title: "DeepLearning.ai AI and Agentic Automation", year: "Sep 2025" },
-  { title: "Coursera Machine Learning Specialization", year: "Dec 2025" },
-  { title: "FreeCodeCamp Full Stack Web CS50W", year: "Jun 2024" },
-  { title: "Git and GitHub Version Control", year: "Jan 2026" },
+  { 
+    title: "HackerRank Python Basic", 
+    year: "2025",
+    link: "https://www.hackerrank.com/certificates/iframe/e6fcdb602387"
+  },
+  { 
+    title: "KMOOC Data Science and AI", 
+    year: "Oct 2025",
+    link: "/kmooc-certificate.pdf"
+  },
+  {
+    title: "Full Stack Web Development",
+    year: "Self-Learned — FreeCodeCamp + CS50W",
+    badge: "Self-Learned"
+  },
+  {
+    title: "Git and GitHub Version Control",
+    year: "Self-Learned — Practiced Daily",
+    badge: "Self-Learned"
+  }
 ]
 
 const education = [
@@ -57,15 +71,37 @@ export default function WorkSection() {
             <BookOpen /> {getText("CERTIFICATIONS")}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {certifications.map((cert, idx) => (
-              <div key={idx} className="p-6 bg-card rounded-xl border border-border flex items-center justify-between group hover:shadow-lg hover:border-primary transition-all">
-                <div>
-                  <h4 className="font-semibold text-foreground">{cert.title}</h4>
-                  <p className="text-sm text-muted-foreground">{cert.year}</p>
+            {certifications.map((cert, idx) => {
+              const Content = (
+                <div className={`p-6 bg-card rounded-xl border border-border flex items-center justify-between group transition-all ${cert.link ? 'hover:shadow-lg hover:border-primary' : ''}`}>
+                  <div>
+                    <h4 className="font-semibold text-foreground">{cert.title}</h4>
+                    <p className="text-sm text-muted-foreground">{cert.year}</p>
+                  </div>
+                  {cert.badge ? (
+                    <span className="text-[10px] font-bold bg-primary/10 text-primary px-2 py-1 rounded-full border border-primary/20">
+                      {cert.badge}
+                    </span>
+                  ) : (
+                    <ExternalLink className="text-muted-foreground group-hover:text-primary transition-colors" />
+                  )}
                 </div>
-                <ExternalLink className="text-muted-foreground group-hover:text-primary transition-colors" />
-              </div>
-            ))}
+              );
+
+              return cert.link ? (
+                <a 
+                  key={idx} 
+                  href={cert.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  {Content}
+                </a>
+              ) : (
+                <div key={idx}>{Content}</div>
+              );
+            })}
           </div>
         </div>
 

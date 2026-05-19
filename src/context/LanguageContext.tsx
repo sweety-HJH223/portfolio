@@ -123,7 +123,7 @@ Focused on writing maintainable code and learning new technologies through hands
     "Professional Profile": "Professional Profile",
     "Source Code": "Source Code",
     "Made with ❤️ by SweetyCodes": "Made with ❤️ by SweetyCodes",
-    "Full-Stack Developer & AI Engineer": "Full-Stack Developer & AI Engineer",
+    "Full-Stack Developer & AI Engineer": "AI & Full-Stack Developer | Building AI-Powered Web Apps",
     "Resume": "Resume",
     "What I Can Build For You": "What I Can Build For You",
     "Full-Stack Development": "Full-Stack Development",

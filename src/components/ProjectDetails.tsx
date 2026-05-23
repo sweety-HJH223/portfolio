@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Project } from '@/data/projects';
 import { GitHubIcon } from '@/components/social-icons';
-
+import { useLanguage } from '@/context/LanguageContext';
 
 interface ProjectDetailsProps {
   project: Project;
@@ -20,6 +20,26 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
   nextProject,
 }) => {
   const router = useRouter();
+  const { language, getText } = useLanguage();
+
+  const getProjectName = (p: Project) => {
+    return (language === 'ko' && p.nameKo) ? p.nameKo : p.name;
+  };
+  const getProjectOverview = (p: Project) => {
+    return (language === 'ko' && p.overviewKo) ? p.overviewKo : p.overview;
+  };
+  const getProjectWhatItDoes = (p: Project) => {
+    return (language === 'ko' && p.whatItDoesKo) ? p.whatItDoesKo : p.whatItDoes;
+  };
+  const getChallenge = (cs: any) => {
+    return (language === 'ko' && cs.challengeKo) ? cs.challengeKo : cs.challenge;
+  };
+  const getSolution = (cs: any) => {
+    return (language === 'ko' && cs.solutionKo) ? cs.solutionKo : cs.solution;
+  };
+  const getLearned = (p: Project) => {
+    return (language === 'ko' && p.learnedKo) ? p.learnedKo : p.learned;
+  };
 
   return (
     <div className="space-y-8 pb-16">
@@ -29,16 +49,16 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
         className="inline-flex items-center gap-2 text-primary hover:text-primary-foreground transition-colors group"
       >
         <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
-        <span className="font-medium">Back to Projects</span>
+        <span className="font-medium">{language === 'ko' ? '프로젝트로 돌아가기' : 'Back to Projects'}</span>
       </button>
 
       {/* Project Header */}
       <div className="flex items-center gap-4">
         <span className="text-5xl">{project.icon}</span>
-        <h1 className="text-4xl font-bold text-foreground">{project.name}</h1>
+        <h1 className="text-4xl font-bold text-foreground">{getProjectName(project)}</h1>
         {project.featured && (
           <span className="ml-2 px-3 py-1 bg-primary/20 text-primary text-xs font-semibold rounded-full">
-            ⭐ Featured
+            ⭐ {language === 'ko' ? '추천' : 'Featured'}
           </span>
         )}
       </div>
@@ -46,16 +66,16 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
       {/* Project Image (Placeholder) */}
       <div className="w-full h-64 bg-secondary rounded-lg flex items-center justify-center text-muted-foreground text-xl">
         {project.image ? (
-          <img src={project.image} alt={project.name} className="w-full h-full object-cover rounded-lg" />
+          <img src={project.image} alt={getProjectName(project)} className="w-full h-full object-cover rounded-lg" />
         ) : (
-          <span>Screenshot/Image Placeholder</span>
+          <span>{language === 'ko' ? '스크린샷/이미지 플레이스홀더' : 'Screenshot/Image Placeholder'}</span>
         )}
       </div>
 
       {/* Video Support */}
       {project.videoUrl && (
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold text-primary">Demo Video</h2>
+          <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '데모 영상' : 'Demo Video'}</h2>
           <div className="aspect-video w-full rounded-lg overflow-hidden border border-border shadow-lg">
             <video
               controls
@@ -71,13 +91,13 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
       {/* Project Images */}
       {project.images && project.images.length > 0 && (
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold text-primary">Project Gallery</h2>
+          <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '프로젝트 갤러리' : 'Project Gallery'}</h2>
           <div className="columns-1 md:columns-2 gap-4 space-y-4">
             {project.images.map((img, index) => (
               <img 
                 key={index} 
                 src={img} 
-                alt={`${project.name} screenshot ${index + 1}`} 
+                alt={`${getProjectName(project)} screenshot ${index + 1}`} 
                 className="w-full rounded-lg shadow-md break-inside-avoid hover:scale-[1.02] transition-transform duration-300" 
               />
             ))}
@@ -87,15 +107,15 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
 
       {/* Overview */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold text-primary">Overview</h2>
-        <p className="text-muted-foreground leading-relaxed">{project.overview}</p>
+        <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '개요' : 'Overview'}</h2>
+        <p className="text-muted-foreground leading-relaxed">{getProjectOverview(project)}</p>
       </section>
 
       {/* What It Does */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold text-primary">What It Does</h2>
+        <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '주요 기능' : 'What It Does'}</h2>
         <ul className="list-none space-y-2">
-          {project.whatItDoes.map((item, index) => (
+          {getProjectWhatItDoes(project).map((item, index) => (
             <li key={index} className="flex items-start gap-2 text-muted-foreground">
               <span className="text-primary mt-1">✅</span>
               <span>{item}</span>
@@ -106,14 +126,14 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
 
       {/* Challenges & Solutions */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold text-primary">Challenges & Solutions</h2>
+        <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '도전 과제 및 해결 방법' : 'Challenges & Solutions'}</h2>
         {project.challengesSolutions.map((cs, index) => (
           <div key={index} className="bg-secondary p-4 rounded-lg">
             <p className="text-muted-foreground">
-              <span className="font-semibold text-foreground">Challenge {index + 1}:</span> {cs.challenge}
+              <span className="font-semibold text-foreground">{language === 'ko' ? `도전 과제 ${index + 1}:` : `Challenge ${index + 1}:`}</span> {getChallenge(cs)}
             </p>
             <p className="text-muted-foreground mt-2">
-              <span className="font-semibold text-foreground">Solution:</span> {cs.solution}
+              <span className="font-semibold text-foreground">{language === 'ko' ? '해결 방법:' : 'Solution:'}</span> {getSolution(cs)}
             </p>
           </div>
         ))}
@@ -121,13 +141,13 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
 
       {/* What I Learned */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold text-primary">What I Learned</h2>
-        <p className="text-muted-foreground leading-relaxed">{project.learned}</p>
+        <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '배운 점' : 'What I Learned'}</h2>
+        <p className="text-muted-foreground leading-relaxed">{getLearned(project)}</p>
       </section>
 
       {/* Tech Stack */}
       <section className="space-y-4">
-        <h2 className="text-2xl font-semibold text-primary">Tech Stack</h2>
+        <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '기술 스택' : 'Tech Stack'}</h2>
         <div className="flex flex-wrap gap-2">
           {project.techStack.map((tech, index) => (
             <span
@@ -143,30 +163,30 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
       {/* Case Study Report */}
       {project.caseStudy && (
         <section className="space-y-6">
-          <h2 className="text-2xl font-semibold text-primary">Case Study Report</h2>
+          <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '케이스 스터디 보고서' : 'Case Study Report'}</h2>
           <div className="grid gap-6">
             <div className="bg-secondary/30 p-6 rounded-2xl border border-border/50">
               <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
-                <span className="text-primary text-xl">❓</span> The Problem
+                <span className="text-primary text-xl">❓</span> {language === 'ko' ? '문제점' : 'The Problem'}
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                {project.caseStudy.problem}
+                {(language === 'ko' && project.caseStudy.problemKo) ? project.caseStudy.problemKo : project.caseStudy.problem}
               </p>
             </div>
             <div className="bg-secondary/30 p-6 rounded-2xl border border-border/50">
               <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
-                <span className="text-primary text-xl">🛠️</span> My Approach
+                <span className="text-primary text-xl">🛠️</span> {language === 'ko' ? '접근 방식' : 'My Approach'}
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                {project.caseStudy.approach}
+                {(language === 'ko' && project.caseStudy.approachKo) ? project.caseStudy.approachKo : project.caseStudy.approach}
               </p>
             </div>
             <div className="bg-secondary/30 p-6 rounded-2xl border border-border/50">
               <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
-                <span className="text-primary text-xl">✅</span> The Result
+                <span className="text-primary text-xl">✅</span> {language === 'ko' ? '결과' : 'The Result'}
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                {project.caseStudy.result}
+                {(language === 'ko' && project.caseStudy.resultKo) ? project.caseStudy.resultKo : project.caseStudy.result}
               </p>
             </div>
           </div>
@@ -176,7 +196,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
       {/* PDF Case Study Link */}
       {project.caseStudyPdfUrl && (
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold text-primary">Case Study PDF</h2>
+          <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '케이스 스터디 PDF' : 'Case Study PDF'}</h2>
           <a
             href={project.caseStudyPdfUrl}
             target="_blank"
@@ -184,7 +204,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
             className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-200 shadow-lg shadow-emerald-500/25"
           >
             <span className="text-xl">📄</span>
-            View Case Study PDF
+            {language === 'ko' ? '케이스 스터디 PDF 보기' : 'View Case Study PDF'}
           </a>
         </section>
       )
@@ -200,7 +220,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
             className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-200 shadow-lg shadow-primary/25"
           >
             <GitHubIcon />
-            View Source Code
+            {language === 'ko' ? '소스 코드 보기' : 'View Source Code'}
           </a>
         )}
         {project.liveDemoUrl && (
@@ -211,7 +231,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
             className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/70 transition-all duration-200 border border-border shadow-sm"
           >
             <ExternalLink className="w-5 h-5" />
-            Launch Live Demo
+            {language === 'ko' ? '라이브 데모 실행' : 'Launch Live Demo'}
           </a>
         )}
         {project.fullCaseStudyUrl && !project.caseStudyPdfUrl && (
@@ -222,7 +242,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
             className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-200 shadow-lg shadow-emerald-500/25"
           >
             <span className="text-xl">📄</span>
-            Read Full Case Study (50+ Pages)
+            {language === 'ko' ? '전체 케이스 스터디 읽기 (50+ 페이지)' : 'Read Full Case Study (50+ Pages)'}
           </a>
         )}
       </div>
@@ -235,7 +255,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
           >
             <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
-            <span className="text-sm font-medium">{previousProject.name}</span>
+            <span className="text-sm font-medium">{getProjectName(previousProject)}</span>
           </Link>
         ) : (
           <div />
@@ -245,7 +265,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({
             href={`/projects/${nextProject.slug}`}
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
           >
-            <span className="text-sm font-medium">{nextProject.name}</span>
+            <span className="text-sm font-medium">{getProjectName(nextProject)}</span>
             <ArrowLeft className="w-5 h-5 rotate-180 transition-transform group-hover:translate-x-1" />
           </Link>
         ) : (

@@ -103,7 +103,7 @@ export default function Navigation() {
                 </li>
                 <li>
                   <Link
-                    href="https://velog.io/@sweetycodes"
+                    href="https://velog.io/@sweety_jh223/posts"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors relative group"

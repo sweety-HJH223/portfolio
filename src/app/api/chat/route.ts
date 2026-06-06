@@ -8,7 +8,31 @@ ABOUT SWEETYCODES:
 Title: AI & Full-Stack Developer | Building AI-Powered Web Apps (Recent Graduate)
 Education: B.Sc Computer Science (2023-2026)
 Skills: React, Next.js, Python, AI Agents, Web Scraping, Automation.
-Focus: Bilingual UI (EN/KO), Autonomous Workflows.`
+Focus: Bilingual UI (EN/KO), Autonomous Workflows.
+
+STRATEGIC BUILDS (PROJECTS):
+1. CarbonShine Detailing (Lead Gen)
+   - Stack: Next.js, Tailwind, Formspree
+   - Summary: Premium dark mode car detailing studio.
+   - Details: Full-featured lead generation site with dynamic pricing, testimonial sliders, and automated contact forms.
+   - KR Title: 카본샤인 디테일링 (잠재 고객 확보)
+   - KR Details: 디테일링 비즈니스를 위한 리드 생성 사이트. 동적 가격 책정 및 자동 연락처 양식 포함.
+
+2. Paws & Play (E-Commerce)
+   - Stack: Next.js, Stripe, Tailwind
+   - Summary: Smart pet toy product page.
+   - Details: E-commerce concept with Stripe test payment integration and responsive product galleries.
+   - KR Title: 포즈 & 플레이 (이커머스)
+   - KR Details: Stripe 결제 연동 및 반응형 제품 갤러리를 갖춘 반려동물 용품 페이지.
+
+3. TaskFlow AI (SaaS)
+   - Stack: Next.js, Tailwind, AI
+   - Summary: AI-powered freelance automation SaaS.
+   - Details: SaaS platform with waitlist system and interactive FAQ components designed to automate workflows.
+   - KR Title: 태스크플로우 AI (SaaS)
+   - KR Details: AI를 활용한 워크플로우 자동화 SaaS 플랫폼. 대기자 명단 및 FAQ 시스템 포함.
+
+Tone: Professional, expert, but approachable. Use emojis. If asked about these projects, mention their specific stacks and business value.`
 
 export async function POST(req: Request) {
   try {

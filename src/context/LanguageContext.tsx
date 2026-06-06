@@ -22,7 +22,7 @@ type TextKeys =
   | "Email" | "KakaoTalk" | "WhatsApp" | "LinkedIn" | "GitHub"
   | "Professional Profile" | "Source Code"
   | "Made with ❤️ by SweetyCodes"
-  | "Full-Stack Developer & AI Engineer"| "Resume"
+  | "Full-Stack Developer & AI Engineer" | "Resume"
   | "What I Can Build For You"
   | "Full-Stack Development" | "End-to-end web apps with React, Next.js, and modern backends"
   | "Custom Internal Tools" | "AI Bots & Agents" | "Custom AI agents and chatbots using Gemini and OpenAI APIs"
@@ -55,15 +55,15 @@ type TextKeys =
   | "FREELANCE WORK" | "FEATURED SOLUTIONS" | "Strategic Builds" | "Transforming complex business requirements into intelligent, production-ready digital experiences."
   | "My Projects" | "Portfolio demo projects built for global clients"
   | "In Progress" | "Live Demo →"
-  | "View Gallery" | "Project Details" | "Tech Stack"
+  | "View Gallery" | "Project Details"
   | "CarbonShine Detailing" | "Premium dark mode car detailing studio..."
-  | "CarbonShine_Long_Desc" | "Full-featured lead generation site for a detailing business. Includes dynamic pricing, testimonial sliders, and an automated contact form."
+  | "CarbonShine_Long_Desc"
   | "Paws & Play" | "Smart pet toy product page..."
-  | "Paws_Play_Long_Desc" | "E-commerce concept for smart pet technology. Integrated with Stripe for seamless payment processing and a responsive product gallery."
+  | "Paws_Play_Long_Desc"
   | "TaskFlow AI" | "AI-powered freelance automation SaaS..."
-  | "TaskFlow_AI_Long_Desc" | "SaaS platform designed to automate freelance workflows using AI. Features a waitlist system and interactive FAQ components."
+  | "TaskFlow_AI_Long_Desc"
   | "Lead Gen" | "E-Commerce" | "SaaS"
-  | "Education" | "B.Sc Computer Science" | "Location" | "Open to Global/KR Remote" | "Status" | "Available Immediately"
+  | "Education" | "B.Sc Computer Science" | "Location" | "Open to Global/KR remote" | "Status" | "Available Immediately"
 
 interface LanguageContextType {
   language: Language
@@ -71,7 +71,7 @@ interface LanguageContextType {
   getText: (key: TextKeys) => string
 }
 
-const translations = {
+const translations: Record<Language, Record<string, string>> = {
   en: {
     About: "About",
     Work: "Work",
@@ -94,12 +94,6 @@ const translations = {
     "Scalable Python data pipelines": "Scalable Python data pipelines",
     "Bilingual UI": "Bilingual UI",
     "English & Korean web experiences": "English & Korean web experiences",
-    "Education": "Education",
-    "B.Sc Computer Science": "B.Sc Computer Science",
-    "Location": "Location",
-    "Open to Global/KR Remote": "Open to Global/KR Remote",
-    "Status": "Status",
-    "Available Immediately": "Available Immediately",
     "Tech Stack": "Tech Stack",
     "Currently Learning:": "Currently Learning:",
     "Download Resume": "Download Resume",
@@ -189,7 +183,6 @@ Focused on writing maintainable code and learning new technologies through hands
     "Live Demo →": "Live Demo →",
     "View Gallery": "View Gallery",
     "Project Details": "Project Details",
-    "Tech Stack": "Tech Stack",
     "CarbonShine Detailing": "CarbonShine Detailing",
     "Premium dark mode car detailing studio...": "Premium dark mode car detailing studio with pricing cards and working lead capture form.",
     "CarbonShine_Long_Desc": "Full-featured lead generation site for a detailing business. Includes dynamic pricing, testimonial sliders, and an automated contact form.",
@@ -202,6 +195,12 @@ Focused on writing maintainable code and learning new technologies through hands
     "Lead Gen": "Lead Gen",
     "E-Commerce": "E-Commerce",
     "SaaS": "SaaS",
+    "Education": "Education",
+    "B.Sc Computer Science": "B.Sc Computer Science",
+    "Location": "Location",
+    "Open to Global/KR remote": "Open to Global/KR remote",
+    "Status": "Status",
+    "Available Immediately": "Available Immediately",
   },
   ko: {
     About: "소개",
@@ -225,12 +224,6 @@ Focused on writing maintainable code and learning new technologies through hands
     "Scalable Python data pipelines": "확장 가능한 파이썬 데이터 파이프라인",
     "Bilingual UI": "다국어 UI 디자인",
     "English & Korean web experiences": "영어 및 한국어 웹 경험 제공",
-    "Education": "학력",
-    "B.Sc Computer Science": "컴퓨터공학 학사",
-    "Location": "희망 근무지",
-    "Open to Global/KR Remote": "글로벌/한국 원격 근무 가능",
-    "Status": "현재 상태",
-    "Available Immediately": "즉시 근무 가능",
     "Tech Stack": "기술 스택",
     "Currently Learning:": "현재 학습 중:",
     "Download Resume": "이력서 다운로드",
@@ -320,7 +313,6 @@ Focused on writing maintainable code and learning new technologies through hands
     "Live Demo →": "라이브 데모 →",
     "View Gallery": "갤러리 보기",
     "Project Details": "프로젝트 상세",
-    "Tech Stack": "기술 스택",
     "CarbonShine Detailing": "카본샤인 디테일링",
     "Premium dark mode car detailing studio...": "가격 카드와 작동하는 리드 캡처 양식을 갖춘 프리미엄 다크 모드 자동차 디테일링 스튜디오입니다.",
     "CarbonShine_Long_Desc": "디테일링 비즈니스를 위한 기능이 완비된 리드 생성 사이트입니다. 동적 가격 책정, 고객 후기 슬라이더 및 자동 연락처 양식이 포함되어 있습니다.",
@@ -333,6 +325,12 @@ Focused on writing maintainable code and learning new technologies through hands
     "Lead Gen": "잠재 고객 확보",
     "E-Commerce": "이커머스",
     "SaaS": "SaaS",
+    "Education": "학력",
+    "B.Sc Computer Science": "컴퓨터공학 학사",
+    "Location": "희망 근무지",
+    "Open to Global/KR remote": "글로벌/한국 원격 근무 가능",
+    "Status": "현재 상태",
+    "Available Immediately": "즉시 근무 가능",
   },
 }
 
@@ -346,7 +344,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   }
 
   const getText = (key: TextKeys): string => {
-    return translations[language][key] || translations.en[key] || ""
+    return (translations[language] as Record<string, string>)[key] || (translations.en as Record<string, string>)[key] || ""
   }
 
   return (

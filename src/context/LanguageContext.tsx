@@ -52,6 +52,17 @@ type TextKeys =
   | "Python Automation" | "Frontend Development" | "AI Integration" | "Backend Development" | "Data Processing" | "UI/UX Design"
   | "Project-ready" | "Responsive UI" | "API Implementation" | "API Focused" | "Scrapers & Analysis" | "Clean Interfaces"
   | "Technical Highlights" | "AI Orchestration" | "Custom agents using Gemini/OpenAI" | "Automated Scrapers" | "Scalable Python data pipelines" | "Bilingual UI" | "English & Korean web experiences"
+  | "FREELANCE WORK" | "FEATURED SOLUTIONS" | "Strategic Builds" | "Transforming complex business requirements into intelligent, production-ready digital experiences."
+  | "My Projects" | "Portfolio demo projects built for global clients"
+  | "In Progress" | "Live Demo →"
+  | "View Gallery" | "Project Details" | "Tech Stack"
+  | "CarbonShine Detailing" | "Premium dark mode car detailing studio..."
+  | "CarbonShine_Long_Desc" | "Full-featured lead generation site for a detailing business. Includes dynamic pricing, testimonial sliders, and an automated contact form."
+  | "Paws & Play" | "Smart pet toy product page..."
+  | "Paws_Play_Long_Desc" | "E-commerce concept for smart pet technology. Integrated with Stripe for seamless payment processing and a responsive product gallery."
+  | "TaskFlow AI" | "AI-powered freelance automation SaaS..."
+  | "TaskFlow_AI_Long_Desc" | "SaaS platform designed to automate freelance workflows using AI. Features a waitlist system and interactive FAQ components."
+  | "Lead Gen" | "E-Commerce" | "SaaS"
   | "Education" | "B.Sc Computer Science" | "Location" | "Open to Global/KR Remote" | "Status" | "Available Immediately"
 
 interface LanguageContextType {
@@ -168,6 +179,29 @@ Focused on writing maintainable code and learning new technologies through hands
     "ACHIEVEMENTS": "ACHIEVEMENTS",
     "CERTIFICATIONS": "CERTIFICATIONS",
     "EDUCATION": "EDUCATION",
+    "FREELANCE WORK": "FREELANCE WORK",
+    "FEATURED SOLUTIONS": "FEATURED SOLUTIONS",
+    "Strategic Builds": "Strategic Builds",
+    "Transforming complex business requirements into intelligent, production-ready digital experiences.": "Transforming complex business requirements into intelligent, production-ready digital experiences.",
+    "My Projects": "My Projects",
+    "Portfolio demo projects built for global clients": "Portfolio demo projects built for global clients",
+    "In Progress": "In Progress",
+    "Live Demo →": "Live Demo →",
+    "View Gallery": "View Gallery",
+    "Project Details": "Project Details",
+    "Tech Stack": "Tech Stack",
+    "CarbonShine Detailing": "CarbonShine Detailing",
+    "Premium dark mode car detailing studio...": "Premium dark mode car detailing studio with pricing cards and working lead capture form.",
+    "CarbonShine_Long_Desc": "Full-featured lead generation site for a detailing business. Includes dynamic pricing, testimonial sliders, and an automated contact form.",
+    "Paws & Play": "Paws & Play",
+    "Smart pet toy product page...": "Smart pet toy product page with image gallery and Stripe test payment integration.",
+    "Paws_Play_Long_Desc": "E-commerce concept for smart pet technology. Integrated with Stripe for seamless payment processing and a responsive product gallery.",
+    "TaskFlow AI": "TaskFlow AI",
+    "AI-powered freelance automation SaaS...": "AI-powered freelance automation SaaS landing page with FAQ accordion and waitlist form.",
+    "TaskFlow_AI_Long_Desc": "SaaS platform designed to automate freelance workflows using AI. Features a waitlist system and interactive FAQ components.",
+    "Lead Gen": "Lead Gen",
+    "E-Commerce": "E-Commerce",
+    "SaaS": "SaaS",
   },
   ko: {
     About: "소개",
@@ -276,6 +310,29 @@ Focused on writing maintainable code and learning new technologies through hands
     "ACHIEVEMENTS": "수상 내역",
     "CERTIFICATIONS": "자격증",
     "EDUCATION": "학력",
+    "FREELANCE WORK": "프리랜서 작업",
+    "FEATURED SOLUTIONS": "주요 솔루션",
+    "Strategic Builds": "전략적 구축 사례",
+    "Transforming complex business requirements into intelligent, production-ready digital experiences.": "복잡한 비즈니스 요구사항을 지능적이고 즉시 서비스 가능한 디지털 경험으로 전환합니다.",
+    "My Projects": "나의 프로젝트",
+    "Portfolio demo projects built for global clients": "글로벌 고객을 위해 구축된 포트폴리오 데모 프로젝트",
+    "In Progress": "진행 중",
+    "Live Demo →": "라이브 데모 →",
+    "View Gallery": "갤러리 보기",
+    "Project Details": "프로젝트 상세",
+    "Tech Stack": "기술 스택",
+    "CarbonShine Detailing": "카본샤인 디테일링",
+    "Premium dark mode car detailing studio...": "가격 카드와 작동하는 리드 캡처 양식을 갖춘 프리미엄 다크 모드 자동차 디테일링 스튜디오입니다.",
+    "CarbonShine_Long_Desc": "디테일링 비즈니스를 위한 기능이 완비된 리드 생성 사이트입니다. 동적 가격 책정, 고객 후기 슬라이더 및 자동 연락처 양식이 포함되어 있습니다.",
+    "Paws & Play": "포즈 & 플레이",
+    "Smart pet toy product page...": "이미지 갤러리와 Stripe 테스트 결제 연동 기능이 포함된 스마트 반려동물 장난감 제품 페이지입니다.",
+    "Paws_Play_Long_Desc": "스마트 반려동물 기술을 위한 이커머스 컨셉입니다. 원활한 결제 처리를 위해 Stripe와 통합되었으며 반응형 제품 갤러리를 갖추고 있습니다.",
+    "TaskFlow AI": "태스크플로우 AI",
+    "AI-powered freelance automation SaaS...": "FAQ 아코디언과 대기자 명단 양식을 갖춘 AI 기반 프리랜서 자동화 SaaS 랜딩 페이지입니다.",
+    "TaskFlow_AI_Long_Desc": "AI를 사용하여 프리랜서 워크플로우를 자동화하도록 설계된 SaaS 플랫폼입니다. 대기자 명단 시스템과 인터랙티브 FAQ 구성 요소가 특징입니다.",
+    "Lead Gen": "잠재 고객 확보",
+    "E-Commerce": "이커머스",
+    "SaaS": "SaaS",
   },
 }
 

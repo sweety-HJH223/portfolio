@@ -2,6 +2,7 @@
 import React from "react"
 import { useLanguage } from "@/context/LanguageContext"
 import { ExternalLink, Award, BookOpen, GraduationCap } from "lucide-react"
+import ProjectsCarousel from "./ProjectsCarousel"
 
 const achievements = [
   { title: "1st Place Solution Sprint", org: "Intercollege Hackathon", date: "Jan 2026", type: "Team" },
@@ -44,8 +45,10 @@ export default function WorkSection() {
 
   return (
     <section id="work" className="py-20 px-6 bg-background">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <h2 className="text-4xl font-bold text-foreground mb-12 text-center">{getText("Work")}</h2>
+
+        <ProjectsCarousel />
 
         {/* Achievements */}
         <div className="mb-16">

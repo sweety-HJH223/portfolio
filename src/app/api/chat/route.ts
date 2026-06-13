@@ -11,7 +11,15 @@ Skills: React, Next.js, Python, AI Agents, Web Scraping, Automation.
 Focus: Bilingual UI (EN/KO), Autonomous Workflows.
 
 STRATEGIC BUILDS (PROJECTS):
-1. CarbonShine Detailing (Lead Gen)
+1. InterviewLens (AI Interview Simulator)
+   - Stack: Google Gemini 2.5 Flash, Firebase, Next.js 15
+   - Summary: 3-agent AI interview simulator.
+   - Details: Researches target company interview style and simulates it. Built for Google Gen AI Academy APAC 2026.
+   - Live: https://interview-lense.vercel.app/
+   - KR Title: 인터뷰렌즈 (AI 면접 시뮬레이터)
+   - KR Details: 타겟 기업의 면접 스타일을 분석하고 시뮬레이션하는 3-에이전트 AI 시스템. Google Gen AI Academy APAC 2026 프로젝트.
+
+2. CarbonShine Detailing (Lead Gen)
    - Stack: Next.js, Tailwind, Formspree
    - Summary: Premium dark mode car detailing studio.
    - Details: Full-featured lead generation site with dynamic pricing, testimonial sliders, and automated contact forms.

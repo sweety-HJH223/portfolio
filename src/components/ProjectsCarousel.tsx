@@ -41,24 +41,43 @@ export default function ProjectsCarousel() {
       stack: ["Next.js", "Stripe", "Tailwind"],
       description: getText("Smart pet toy product page..."),
       longDescription: getText("Paws_Play_Long_Desc"),
-      image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&q=80",
-      gallery: [],
-      liveUrl: "#",
-      githubUrl: "#",
-      comingSoon: true
+      image: "/images/payplay 1.png",
+      gallery: [
+        "/images/payplay 1.png",
+        "/images/payplay 2.png",
+        "/images/payplay 3.png",
+        "/images/payplay 4.png",
+        "/images/payplay 5.png",
+        "/images/payplay 6.png",
+        "/images/payplay 7.png",
+        "/images/payplay 8.png",
+      ],
+      liveUrl: "https://paws-play-ten.vercel.app/",
+      githubUrl: "https://github.com/sweety-HJH223/paws-play",
+      comingSoon: false
+
+      
     },
     {
       name: getText("TaskFlow AI"),
       badge: getText("SaaS"),
       badgeColor: "bg-purple-500/20 text-purple-400",
-      stack: ["Next.js", "Tailwind", "AI"],
+      stack: ["Next.js", "Tailwind", "AI", "Framer Motion", "Formspree"],
       description: getText("AI-powered freelance automation SaaS..."),
       longDescription: getText("TaskFlow_AI_Long_Desc"),
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-      gallery: [],
-      liveUrl: "#",
-      githubUrl: "#",
-      comingSoon: true
+      image: "/images/taskflow 1.png",
+      gallery: [
+        "/images/taskflow 1.png",
+        "/images/taskflow 2.png",
+        "/images/taskflow 3.png",
+        "/images/taskflow 4.png",
+        "/images/taskflow 5.png",
+        "/images/taskflow 6.png",
+        "/images/taskflow 7.png",
+      ],
+      liveUrl: "https://taskflow-ai-orcin.vercel.app/",
+      githubUrl: "https://github.com/sweety-HJH223/taskflow-ai",
+      comingSoon: false
     }
   ];
 

@@ -74,7 +74,7 @@ export default function Home() {
             </Link>
 
             <Link
-              href="https://www.linkedin.com/in/sweety-jh-39a96a405"
+              href="https://www.linkedin.com/in/sweetycodes"
               target="_blank"
               rel="noopener noreferrer"
               className="group p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/50 transition-all duration-300 text-center flex flex-col items-center justify-center"

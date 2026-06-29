@@ -35,7 +35,7 @@ Welcome to my personal portfolio! This site is designed to showcase my journey a
 
  ## Live Demo
 
-Check out the live site here: https://portfolio-one-taupe-42.vercel.app/
+Check out the live site here: [https://portfolio-one-taupe-42.vercel.app/](https://sweetycodes-jh.vercel.app/)
 
 
 ## Getting Started

@@ -124,7 +124,7 @@ export const profileSocialLinks: SocialLinkItem[] = [
     Icon: GitHubIcon,
   },
   {
-    href: "https://www.linkedin.com/in/sweety-jh-39a96a405",
+    href:"https://www.linkedin.com/in/sweetycodes",
     label: "LinkedIn",
     Icon: LinkedInIcon,
   },

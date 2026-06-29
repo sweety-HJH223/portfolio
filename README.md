@@ -65,4 +65,4 @@ npm run dev
 
 **GitHub:** [github.com/sweety-HJH223](https://github.com/sweety-HJH223)
 
-**LinkedIn:** [linkedin.com/in/sweety-jh-39a96a405](https://www.linkedin.com/in/sweety-jh-39a96a405)
+**LinkedIn:** [linkedin.com/in/sweety-jh-39a96a405](https://www.linkedin.com/in/sweetycodes/) 

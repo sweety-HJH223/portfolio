@@ -12,7 +12,7 @@ Welcome to my personal portfolio! This site is designed to showcase my journey a
 
  **Project Gallery:** Interactive project showcase with lightbox zoom functionality and detailed case studies.
 
-##Tech Stack
+## Tech Stack
 
  **Framework:** Next.js 15, React
 
@@ -25,9 +25,9 @@ Welcome to my personal portfolio! This site is designed to showcase my journey a
 ## Projects Overview
 
 
-**AI Chatbot Desktop Automation: ** An AI-powered tool for desktop interaction and intelligent message replying.
+**AI Chatbot Desktop Automation:** An AI-powered tool for desktop interaction and intelligent message replying.
 
-**Vibe Weather (EN/KO): ** A high-performance, bilingual weather app with real-feel calculations and dynamic assets.
+**Vibe Weather (EN/KO):** A high-performance, bilingual weather app with real-feel calculations and dynamic assets.
 
  **Sales Analysis Reporter:** Python-based data pipeline for professional business reporting.
 
@@ -35,12 +35,12 @@ Welcome to my personal portfolio! This site is designed to showcase my journey a
 
  ## Live Demo
 
-Check out the live site here: https://portfolio-one-taupe-42.vercel.app/
+Check out the live site here: [https://sweetycodes-jh.vercel.app/](https://sweetycodes-jh.vercel.app/)
 
 
 ## Getting Started
 
- 1. **Clone the repository: **
+ 1. **Clone the repository:**
 
 git clone https://github.com/sweety-HJH223/portfolio.git
 
@@ -65,4 +65,4 @@ npm run dev
 
 **GitHub:** [github.com/sweety-HJH223](https://github.com/sweety-HJH223)
 
-**LinkedIn:** [linkedin.com/in/sweety-jh-39a96a405](https://www.linkedin.com/in/sweety-jh-39a96a405)
+**LinkedIn:** [linkedin.com/in/sweety-jh-39a96a405](https://www.linkedin.com/in/sweetycodes/) 

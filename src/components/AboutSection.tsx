@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { Languages, Workflow } from "lucide-react"
 import { useLanguage } from "@/context/LanguageContext"
+import { useUI } from "@/context/UIContext"
 
 // --- Local Translations for About Refactor ---
 const localAboutTranslations: Record<string, any> = {
@@ -56,26 +57,29 @@ const localAboutTranslations: Record<string, any> = {
 }
 
 // --- Terminal Typing Logic ---
-const terminalLines = [
-  { type: "command", text: "whoami" },
-  { type: "output", text: "SweetyCodes — AI & Full-Stack Developer | Building AI-Powered Web Apps", delay: 500 },
-  { type: "command", text: "realname" },
-  { type: "output", text: "Subhashree Behera — (Open for professional inquiries)", delay: 500 },
-  { type: "command", text: "skills" },
-  { type: "output", text: "Frontend: React, Next.js, JavaScript, Tailwind", delay: 300 },
-  { type: "output", text: "Python: Automation, Scraping, Data Analysis", delay: 300 },
-  { type: "output", text: "AI: OpenAI API, Gemini API, LLM Integration", delay: 500 },
-  { type: "command", text: "languages" },
-  { type: "output", text: "English (Fluent) | Korean (Conversational) 🇰🇷", delay: 500 },
-  { type: "command", text: "status" },
-  { type: "output", text: "🟢 Available — Internship | Junior Dev | Freelance", delay: 500 },
-]
-
 const TerminalBio = () => {
+  const { language } = useLanguage()
   const [displayedLines, setDisplayedLines] = useState<any[]>([])
   const [isTyping, setIsTyping] = useState(false)
   const [typingLine, setTypingLine] = useState<{type: string, text: string}>({type: "", text: ""})
   const terminalRef = useRef<HTMLDivElement>(null)
+
+  const terminalLines = [
+    { type: "command", text: "whoami" },
+    { type: "output", text: "SweetyCodes — AI & Full-Stack Developer | Building AI-Powered Web Apps", delay: 500 },
+    { type: "command", text: "realname" },
+    { type: "output", text: "Subhashree Behera — (Open for professional inquiries)", delay: 500 },
+    { type: "command", text: "skills" },
+    { type: "output", text: "Frontend: React, Next.js, JavaScript, Tailwind", delay: 300 },
+    { type: "output", text: "Python: Automation, Scraping, Data Analysis", delay: 300 },
+    { type: "output", text: "AI: OpenAI API, Gemini API, LLM Integration", delay: 500 },
+    { type: "command", text: "languages" },
+    { type: "output", text: "English (Fluent) | Korean (Conversational) 🇰🇷", delay: 500 },
+    { type: "command", text: "currentwork" },
+    { type: "output", text: language === "ko" ? "AI 평가 엔지니어 (계약직) — Handshake AI를 통해" : "AI Evaluation Engineer (Contract) — via Handshake AI", delay: 500 },
+    { type: "command", text: "status" },
+    { type: "output", text: "🟢 Available — Internship | Junior Dev | Freelance", delay: 500 },
+  ]
 
   useEffect(() => {
     setDisplayedLines([])
@@ -106,7 +110,7 @@ const TerminalBio = () => {
     
     typeLines()
     return () => { isCancelled = true }
-  }, [])
+  }, [language])
 
   useEffect(() => {
     if (terminalRef.current) {
@@ -182,8 +186,8 @@ const skillCategories = [
     skills: [
       { name: "OpenAI API", icon: "🧠", tooltip: "Used in AI Chatbot project" },
       { name: "Gemini API", icon: "💎", tooltip: "Used in Portfolio Chatbot" },
-      { name: "Prompt Engineering", icon: "📐", tooltip: "Used in all AI projects" },
-      { name: "RAG", icon: "📚", tooltip: "Currently learning via IBM RAG course" },
+      { name: "Prompt Engineering", icon: "📐", tooltip: "Used in K-Trust and InterviewLens" },
+      { name: "RAG", icon: "📚", tooltip: "Used in K-Trust" },
       { name: "Kaggle", icon: "📊", tooltip: "Used for ML datasets" },
     ],
   },
@@ -216,16 +220,36 @@ const skillCategories = [
       { name: "Netlify", icon: "🌐", tooltip: "Deployed Weather App" },
       { name: "Figma", icon: "🎨", tooltip: "UI/UX design tool" },
       { name: "Railway", icon: "🚂", tooltip: "Backend app deployment" },
-      { name: "Command Line", icon: "💻", tooltip: "Daily development tool" },
+      { name: "Command Line", icon: "💻", tooltip: "all projects" },
     ],
   },
 ]
 
 const SkillTag = ({ skill }: { skill: any }) => {
+  const { selectedSkill, setSelectedSkill, openProjectsPopup } = useUI()
+  const isActive = selectedSkill?.toLowerCase() === skill.name.toLowerCase()
+
+  const handleClick = () => {
+    if (isActive) {
+      setSelectedSkill(null)
+    } else {
+      setSelectedSkill(skill.name)
+      openProjectsPopup()
+    }
+  }
+
   return (
-    <div className="relative group/tag">
-      <div className="flex items-center gap-2.5 px-4 py-2 rounded-full border border-border/50 bg-secondary/50 text-foreground dark:bg-[#1a2235] dark:hover:border-primary/50 transition-all duration-300 hover:scale-105 cursor-default hover:shadow-[0_0_15px_rgba(34,211,238,0.3)]">
-        <span className="transition-transform text-base group-hover/tag:rotate-[10deg]">{skill.icon}</span>
+    <div className="relative group/tag" onClick={handleClick}>
+      <div 
+        className={`flex items-center gap-2.5 px-4 py-2 rounded-full border transition-all duration-300 hover:scale-105 cursor-pointer hover:shadow-[0_0_15px_rgba(34,211,238,0.3)] ${
+          isActive 
+            ? "border-primary bg-primary/25 text-primary shadow-[0_0_15px_rgba(34,211,238,0.5)]" 
+            : "border-border/50 bg-secondary/50 text-foreground dark:bg-[#1a2235] dark:hover:border-primary/50"
+        }`}
+      >
+        <span className={`transition-transform text-base group-hover/tag:rotate-[10deg] ${isActive ? "rotate-[10deg]" : ""}`}>
+          {skill.icon}
+        </span>
         <span className="text-sm font-semibold tracking-wide">{skill.name}</span>
       </div>
       <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max max-w-[150px] px-2 py-1 bg-popover text-popover-foreground text-[10px] rounded border border-border/50 opacity-0 group-hover/tag:opacity-100 transition-opacity pointer-events-none z-50 shadow-xl">
@@ -236,7 +260,7 @@ const SkillTag = ({ skill }: { skill: any }) => {
 }
 
 const BentoBox = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
-  <div className={`p-6 rounded-[2.5rem] border border-border/50 bg-white/60 dark:bg-[#1a2235]/40 backdrop-blur-sm shadow-xl hover:border-primary/30 transition-all duration-500 group ${className}`}>
+  <div className={`p-6 rounded-[2.5rem] border border-border/50 bg-white/60 dark:bg-[#1a2235]/40 backdrop-blur-sm shadow-xl hover:border-primary/40 hover:shadow-[0_0_30px_rgba(34,211,238,0.15)] hover:-translate-y-1 transition-all duration-500 group ${className}`}>
     {children}
   </div>
 )

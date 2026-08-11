@@ -6,6 +6,7 @@ import { XIcon, ChevronLeft, Globe } from 'lucide-react';
 import { GitHubIcon } from './social-icons';
 import { Lightbox } from './Lightbox';
 import { useLanguage } from '@/context/LanguageContext';
+import { useUI } from '@/context/UIContext';
 
 interface ProjectsPopupProps {
   isOpen: boolean;
@@ -17,12 +18,19 @@ const ProjectsPopup: React.FC<ProjectsPopupProps> = ({ isOpen, onClose }) => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const { language, getText } = useLanguage();
+  const { selectedSkill, setSelectedSkill } = useUI();
 
   if (!isOpen) return null;
 
-  const filteredProjects = filter === 'All'
+  let filteredProjects = filter === 'All'
     ? projects
     : projects.filter(p => p.category === filter);
+
+  if (selectedSkill) {
+    filteredProjects = filteredProjects.filter(p =>
+      p.techStack.some(tech => tech.toLowerCase() === selectedSkill.toLowerCase())
+    );
+  }
 
   const categories: ProjectCategory[] = ['All', 'Frontend', 'Python', 'AI', 'Automation'];
 
@@ -132,6 +140,19 @@ const ProjectsPopup: React.FC<ProjectsPopupProps> = ({ isOpen, onClose }) => {
                 </button>
               ))}
             </div>
+            {selectedSkill && (
+              <div className="mx-6 mt-4 p-3 bg-cyan-500/10 border border-cyan-500/20 rounded-xl flex items-center justify-between text-xs animate-pulse">
+                <span className="text-cyan-400">
+                  {language === 'ko' ? '다음 스택을 포함하는 프로젝트 표시 중: ' : 'Showing projects matching stack: '} <strong>{selectedSkill}</strong>
+                </span>
+                <button 
+                  onClick={() => setSelectedSkill(null)}
+                  className="bg-cyan-500 text-white px-2.5 py-1 rounded-md hover:bg-cyan-600 font-extrabold text-[11px]"
+                >
+                  {language === 'ko' ? '필터 해제' : 'Clear Filter'}
+                </button>
+              </div>
+            )}
             <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto custom-scrollbar">
               {filteredProjects.map(project => (
                 <div key={project.slug} onClick={() => setSelectedProject(project)} className="p-4 bg-secondary rounded-xl hover:border-primary border border-transparent transition-all cursor-pointer group">

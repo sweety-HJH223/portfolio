@@ -4,9 +4,11 @@ import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { Lightbox } from './Lightbox';
 import { XIcon, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useUI } from '@/context/UIContext';
 
 export default function ProjectsCarousel() {
   const { getText } = useLanguage();
+  const { selectedSkill, setSelectedSkill } = useUI();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedGallery, setSelectedGallery] = useState<string[] | null>(null);
   const [galleryIndex, setGalleryIndex] = useState(0);
@@ -109,20 +111,40 @@ export default function ProjectsCarousel() {
           <p className="text-gray-400 text-lg max-w-3xl mx-auto md:mx-0">
             {getText("Transforming complex business requirements into intelligent, production-ready digital experiences.")}
           </p>
+          {selectedSkill && (
+            <div className="mt-4 flex items-center justify-center md:justify-start gap-2 animate-pulse">
+              <span className="text-xs text-gray-400">Filtering by stack:</span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-xs font-bold text-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.2)]">
+                {selectedSkill}
+                <button onClick={() => setSelectedSkill(null)} className="hover:text-white ml-1 font-extrabold text-[14px]">
+                  ×
+                </button>
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
       {/* Desktop Grid */}
       <div className="hidden md:grid grid-cols-3 gap-8">
         {projects.map((project, index) => (
-          <ProjectCard key={index} project={project} onOpenGallery={() => openGallery(project.gallery)} />
+          <ProjectCard 
+            key={index} 
+            project={project} 
+            onOpenGallery={() => openGallery(project.gallery)} 
+            selectedSkill={selectedSkill}
+          />
         ))}
       </div>
 
       {/* Mobile Carousel */}
       <div className="md:hidden relative px-12">
         <div className="overflow-hidden">
-           <ProjectCard project={projects[currentIndex]} onOpenGallery={() => openGallery(projects[currentIndex].gallery)} />
+           <ProjectCard 
+             project={projects[currentIndex]} 
+             onOpenGallery={() => openGallery(projects[currentIndex].gallery)} 
+             selectedSkill={selectedSkill}
+           />
         </div>
         
         <button 
@@ -187,10 +209,23 @@ export default function ProjectsCarousel() {
   );
 }
 
-function ProjectCard({ project, onOpenGallery }: { project: any; onOpenGallery: () => void }) {
+function ProjectCard({ project, onOpenGallery, selectedSkill }: { project: any; onOpenGallery: () => void; selectedSkill: string | null }) {
   const { getText } = useLanguage();
+  const isFilterActive = !!selectedSkill;
+  const isMatch = isFilterActive 
+    ? project.stack.some((tech: string) => tech.toLowerCase() === selectedSkill.toLowerCase()) 
+    : false;
+
   return (
-    <div className="group relative bg-[#111827] border border-white/10 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
+    <div 
+      className={`group relative bg-[#111827] rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-1 h-full flex flex-col border ${
+        isFilterActive
+          ? isMatch
+            ? "border-cyan-400/60 shadow-[0_0_25px_rgba(34,211,238,0.2)] scale-[1.01]"
+            : "border-white/5 opacity-30 grayscale-[30%]"
+          : "border-white/10 hover:border-cyan-400/30 hover:shadow-[0_0_20px_rgba(34,211,238,0.08)]"
+      }`}
+    >
       {/* Top Image - Flexible Aspect Ratio */}
       <div className="relative w-full shrink-0 overflow-hidden cursor-pointer" onClick={onOpenGallery}>
         <img 
@@ -223,11 +258,21 @@ function ProjectCard({ project, onOpenGallery }: { project: any; onOpenGallery: 
 
         {/* Stack Tags */}
         <div className="flex flex-wrap gap-2 mb-4">
-          {project.stack.map((tech: string, i: number) => (
-            <span key={i} className="text-[10px] text-gray-400 bg-white/5 px-2 py-0.5 rounded-full border border-white/5">
-              {tech}
-            </span>
-          ))}
+          {project.stack.map((tech: string, i: number) => {
+            const isTagActive = selectedSkill?.toLowerCase() === tech.toLowerCase();
+            return (
+              <span 
+                key={i} 
+                className={`text-[10px] px-2 py-0.5 rounded-full border transition-all duration-300 ${
+                  isTagActive 
+                    ? "text-cyan-400 bg-cyan-400/10 border-cyan-400/30 shadow-[0_0_8px_rgba(34,211,238,0.3)]" 
+                    : "text-gray-400 bg-white/5 border-white/5"
+                }`}
+              >
+                {tech}
+              </span>
+            );
+          })}
         </div>
 
         {/* Description */}

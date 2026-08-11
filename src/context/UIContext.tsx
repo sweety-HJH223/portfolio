@@ -6,18 +6,29 @@ interface UIContextType {
   isProjectsPopupOpen: boolean
   openProjectsPopup: () => void
   closeProjectsPopup: () => void
+  selectedSkill: string | null
+  setSelectedSkill: (skill: string | null) => void
 }
 
 const UIContext = createContext<UIContextType | undefined>(undefined)
 
 export const UIProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isProjectsPopupOpen, setIsProjectsPopupOpen] = useState(false)
+  const [selectedSkill, setSelectedSkill] = useState<string | null>(null)
 
   const openProjectsPopup = () => setIsProjectsPopupOpen(true)
   const closeProjectsPopup = () => setIsProjectsPopupOpen(false)
 
   return (
-    <UIContext.Provider value={{ isProjectsPopupOpen, openProjectsPopup, closeProjectsPopup }}>
+    <UIContext.Provider
+      value={{
+        isProjectsPopupOpen,
+        openProjectsPopup,
+        closeProjectsPopup,
+        selectedSkill,
+        setSelectedSkill,
+      }}
+    >
       {children}
     </UIContext.Provider>
   )

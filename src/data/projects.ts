@@ -557,4 +557,51 @@ export const projects: Project[] = [
       '/images/carbon iq 7.png',
     ],
   },
+  {
+    icon: '👗',
+    name: 'Draping',
+    nameKo: '드레이핑 (Draping)',
+    slug: 'draping',
+    featured: true,
+    overview:
+      'An AI-powered personal color analysis and outfit styling app. Upload a selfie to get your seasonal color palette (Warm Spring, Cool Summer, Deep Autumn, Soft Winter), then search for or upload outfits and see them virtually tried on — all powered by YouCam\'s Skin AI and Clothes Virtual Try-On APIs combined with Gemini for color reasoning and Q&A. Built for the YouCam API Skin AI & Apparel VTO Hackathon.',
+    overviewKo:
+      'AI 기반 퍼스널 컬러 분석 및 의상 스타일링 앱입니다. 셀카를 업로드하면 시즌 컬러 팔레트(웜 스프링, 쿨 썸머, 딥 오텀, 소프트 윈터)를 받고, 의상을 검색하거나 업로드하여 가상 피팅을 확인할 수 있습니다. YouCam Skin AI 및 Clothes Virtual Try-On API와 Gemini 기반 컬러 분석 및 Q&A로 구동됩니다. YouCam API Skin AI & Apparel VTO 해커톤을 위해 제작되었습니다.',
+    whatItDoes: [
+      'Upload a selfie to get your seasonal color palette (Warm Spring, Cool Summer, Deep Autumn, Soft Winter)',
+      'Search for outfits via SerpAPI or upload your own clothing images',
+      'Virtually try on outfits using YouCam Clothes Virtual Try-On API',
+      'Skin tone analysis powered by YouCam Skin AI',
+      'Gemini-powered color reasoning and styling Q&A',
+      'Cloudinary image hosting and Firebase Firestore for session data',
+    ],
+    whatItDoesKo: [
+      '셀카 업로드로 시즌 컬러 팔레트 분석 (웜 스프링, 쿨 썸머, 딥 오텀, 소프트 윈터)',
+      'SerpAPI를 통한 의상 검색 또는 직접 의류 이미지 업로드',
+      'YouCam Clothes Virtual Try-On API를 활용한 가상 피팅',
+      'YouCam Skin AI 기반 피부톤 분석',
+      'Gemini 기반 컬러 추론 및 스타일링 Q&A',
+      'Cloudinary 이미지 호스팅 및 Firebase Firestore 세션 데이터 저장',
+    ],
+    challengesSolutions: [
+      {
+        challenge: 'Combining multiple AI APIs (Skin AI, VTO, Gemini) into a seamless color-to-outfit pipeline.',
+        challengeKo: '여러 AI API(Skin AI, VTO, Gemini)를 원활한 컬러-의상 파이프라인으로 통합하는 작업.',
+        solution: 'Built a Next.js orchestration layer that chains YouCam Skin AI color analysis → Gemini seasonal palette reasoning → VTO try-on, with Cloudinary handling image preprocessing between API calls.',
+        solutionKo: 'YouCam Skin AI 컬러 분석 → Gemini 시즌 팔레트 추론 → VTO 피팅으로 연결되는 Next.js 오케스트레이션 레이어를 구축하고, Cloudinary로 API 호출 간 이미지 전처리를 처리했습니다.',
+      },
+      {
+        challenge: 'Delivering accurate seasonal color classification from a single selfie under varying lighting conditions.',
+        challengeKo: '다양한 조명 조건에서 단일 셀카로 정확한 시즌 컬러 분류를 제공하는 문제.',
+        solution: 'Combined YouCam Skin AI undertone detection with Gemini reasoning to map skin characteristics to the four-season palette system with explainable color recommendations.',
+        solutionKo: 'YouCam Skin AI의 언더톤 감지와 Gemini 추론을 결합하여 피부 특성을 사계절 팔레트 시스템에 매핑하고 설명 가능한 컬러 추천을 제공했습니다.',
+      },
+    ],
+    learned: 'Multi-API orchestration with YouCam Skin AI and VTO, Gemini color reasoning, Cloudinary image pipeline, SerpAPI product search integration, Firebase Firestore session management',
+    learnedKo: 'YouCam Skin AI 및 VTO 멀티 API 오케스트레이션, Gemini 컬러 추론, Cloudinary 이미지 파이프라인, SerpAPI 제품 검색 통합, Firebase Firestore 세션 관리',
+    techStack: ['Next.js', 'YouCam API', 'Gemini API', 'Cloudinary', 'Firebase Firestore', 'SerpAPI'],
+    githubUrl: 'https://github.com/sweety-HJH223/Draping',
+    liveDemoUrl: 'https://draping-nine.vercel.app/',
+    category: 'AI',
+  },
 ];

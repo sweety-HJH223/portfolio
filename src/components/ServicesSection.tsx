@@ -68,7 +68,7 @@ export default function ServicesSection() {
   const ko = language === "ko"
 
   return (
-    <section id="services" className="scroll-mt-24 px-6 py-24">
+    <section className="px-6 py-24">
       <div className="mx-auto max-w-7xl">
         <SectionHeading index="02" title={getText("What I Can Build For You")} />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import { Lightbox } from './Lightbox';
@@ -169,7 +170,7 @@ export default function ProjectsCarousel() {
       </div>
 
       {/* Gallery Lightbox */}
-      {selectedGallery && (
+      {selectedGallery && createPortal(
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm p-4 md:p-10">
           <button 
             className="absolute top-6 right-6 text-white hover:text-cyan-400 transition-colors z-[110]"
@@ -208,7 +209,8 @@ export default function ProjectsCarousel() {
           >
             <ChevronRight size={48} />
           </button>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

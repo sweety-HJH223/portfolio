@@ -542,7 +542,7 @@ export default function AboutSection() {
   }
 
   return (
-    <section id="about" ref={sectionRef} className="scroll-mt-24 py-24 px-6 overflow-hidden">
+    <section ref={sectionRef} className="py-24 px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <SectionHeading index="01" title={getText("About")} />
         <div className="grid grid-cols-1 md:grid-cols-6 gap-6">

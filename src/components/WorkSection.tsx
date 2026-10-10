@@ -83,7 +83,7 @@ export default function WorkSection() {
   const ko = language === "ko"
 
   return (
-    <section id="work" className="scroll-mt-24 px-6 py-24">
+    <section className="px-6 py-24">
       <div className="mx-auto max-w-7xl">
         <SectionHeading index="03" title={getText("Work")} />
 

@@ -21,20 +21,11 @@ export const metadata: Metadata = {
     title: 'SweetyCodes | AI Engineer & Full-Stack Developer',
     description: 'Multi-agent systems, LLM apps with structured output and AI agent benchmarks — shipped as full-stack products. Open to remote AI and full-stack roles.',
     siteName: 'SweetyCodes Portfolio',
-    images: [
-      {
-        url: '/profile.png',
-        width: 1200,
-        height: 630,
-        alt: 'SweetyCodes Portfolio',
-      }
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'SweetyCodes | AI Engineer & Full-Stack Developer',
     description: 'Multi-agent systems, LLM apps and AI agent benchmarks — shipped as full-stack products.',
-    images: ['/profile.png'],
   },
   robots: {
     index: true,

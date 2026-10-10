@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { projects, ProjectCategory, Project } from '@/data/projects';
-import { XIcon, ChevronLeft, Globe } from 'lucide-react';
+import { XIcon, ChevronLeft, Globe, FileText } from 'lucide-react';
 import { GitHubIcon } from './social-icons';
 import { Lightbox } from './Lightbox';
 import { useLanguage } from '@/context/LanguageContext';
@@ -27,8 +28,9 @@ const ProjectsPopup: React.FC<ProjectsPopupProps> = ({ isOpen, onClose }) => {
     : projects.filter(p => p.category === filter);
 
   if (selectedSkill) {
+    const skill = selectedSkill.toLowerCase();
     filteredProjects = filteredProjects.filter(p =>
-      p.techStack.some(tech => tech.toLowerCase() === selectedSkill.toLowerCase())
+      p.techStack.some(tech => tech.toLowerCase().includes(skill))
     );
   }
 
@@ -51,12 +53,12 @@ const ProjectsPopup: React.FC<ProjectsPopupProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="relative w-full max-w-4xl max-h-[90vh] bg-card text-card-foreground rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-border">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 animate-in fade-in duration-300">
+      <div className="glass-strong gradient-border relative w-full max-w-4xl max-h-[90vh] text-card-foreground rounded-[2rem] shadow-[0_40px_100px_-30px_hsl(var(--accent)/0.5)] flex flex-col overflow-hidden animate-in zoom-in-95 slide-in-from-bottom-4 duration-300">
         
         {/* Header */}
         <div className="flex justify-between items-center p-6 border-b border-border">
-          <h2 className="text-2xl font-bold text-primary flex items-center gap-2">
+          <h2 className="text-2xl font-bold text-foreground flex items-center gap-2">
             {selectedProject ? (
               <button onClick={() => setSelectedProject(null)} className="hover:text-foreground">
                 <ChevronLeft />
@@ -128,6 +130,16 @@ const ProjectsPopup: React.FC<ProjectsPopupProps> = ({ isOpen, onClose }) => {
                   📄 {language === 'ko' ? '케이스 스터디 PDF' : 'Case Study PDF'}
                 </a>
               )}
+              <Link
+                href={`/projects/${selectedProject.slug}`}
+                onClick={onClose}
+                className="flex items-center gap-2 px-4 py-2 bg-brand-gradient text-white rounded-lg font-bold hover:opacity-90"
+              >
+                <FileText className="w-[18px] h-[18px]" />
+                {selectedProject.caseStudy
+                  ? (language === 'ko' ? '전체 케이스 스터디' : 'Full Case Study')
+                  : (language === 'ko' ? '프로젝트 페이지' : 'Project Page')}
+              </Link>
             </div>
           </div>
         ) : (
@@ -155,7 +167,7 @@ const ProjectsPopup: React.FC<ProjectsPopupProps> = ({ isOpen, onClose }) => {
             )}
             <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto custom-scrollbar">
               {filteredProjects.map(project => (
-                <div key={project.slug} onClick={() => setSelectedProject(project)} className="p-4 bg-secondary rounded-xl hover:border-primary border border-transparent transition-all cursor-pointer group">
+                <div key={project.slug} onClick={() => setSelectedProject(project)} className="p-5 bg-secondary/60 rounded-2xl hover:border-primary/50 border border-border/60 transition-all duration-300 cursor-pointer group hover:-translate-y-1 hover:shadow-[0_20px_40px_-20px_hsl(var(--accent)/0.6)]">
                   <span className="text-2xl mb-2 block">{project.icon}</span>
                   <h3 className="font-bold text-lg mb-1 group-hover:text-primary">{getProjectName(project)}</h3>
                   <p className="text-xs text-muted-foreground truncate">{getProjectOverview(project)}</p>

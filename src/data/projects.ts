@@ -35,6 +35,12 @@ export interface Project {
     resultKo?: string;
   };
   caseStudyPdfUrl?: string;
+  pipeline?: {
+    title: string;
+    titleKo: string;
+    steps: { name: string; nameKo: string; desc: string; descKo: string }[];
+  };
+  reliability?: { title: string; titleKo: string; desc: string; descKo: string }[];
 }
 
 export const projects: Project[] = [
@@ -96,33 +102,45 @@ export const projects: Project[] = [
     overview: 'AI that researches how your target company actually interviews — then simulates it. No generic questions. Google is not Amazon. Amazon is not Toss.',
     overviewKo: '타겟 기업의 실제 인터뷰 방식을 분석하고 시뮬레이션하는 AI입니다. 일반적인 질문이 아닌, 구글, 아마존, 토스 등 각 기업별 맞춤형 인터뷰를 제공합니다.',
     whatItDoes: [
-      'Agent A researches target company real interview style',
-      'Agent B simulates the actual interviewer from that company',
-      'Agent C evaluates answers against company-specific criteria',
-      'Returns score, strengths, improvements and cultural tips',
-      'Works for any company worldwide',
-      'Save and review past interview sessions',
+      '5-agent pipeline simulates a full company-specific hiring process end to end',
+      'Research agent studies how the target company actually interviews',
+      'Interviewer agent asks culturally specific follow-up questions',
+      'Evaluator, Round Summary and Final Verdict agents score, summarize and decide',
+      'Resume-aware via Gemini multimodal PDF parsing',
+      'Candidate memory compounds across sessions via Firestore',
     ],
     whatItDoesKo: [
-      '에이전트 A: 타겟 기업의 실제 인터뷰 스타일 조사',
-      '에이전트 B: 해당 기업의 실제 면접관 시뮬레이션',
-      '에이전트 C: 기업별 맞춤 기준에 따른 답변 평가',
-      '점수, 강점, 개선점 및 문화적 팁 반환',
-      '전 세계 모든 기업 지원',
-      '과거 인터뷰 세션 저장 및 복습 기능',
+      '5-에이전트 파이프라인으로 기업별 채용 과정 전체를 시뮬레이션',
+      '리서치 에이전트가 타겟 기업의 실제 면접 방식을 조사',
+      '면접관 에이전트가 문화적 맥락에 맞는 꼬리 질문 진행',
+      '평가 · 라운드 요약 · 최종 판정 에이전트가 채점, 요약, 결정',
+      'Gemini 멀티모달 PDF 파싱으로 이력서 내용 반영',
+      'Firestore 기반 지원자 메모리가 세션마다 누적',
     ],
     challengesSolutions: [
       {
         challenge: 'Most prep tools give generic questions — but every company interviews differently',
         challengeKo: '대부분의 준비 도구들이 일반적인 질문만 제공하지만, 기업마다 인터뷰 방식은 모두 다릅니다.',
-        solution: '3-agent AI pipeline: Researcher → Interviewer → Evaluator, each specialized for company-specific simulation',
-        solutionKo: '3-agent AI 파이프라인(조사자 → 면접관 → 평가자)을 구축하여 각 기업에 특화된 시뮬레이션을 제공합니다.',
+        solution: '5-agent pipeline: Research → Interviewer → Evaluator → Round Summary → Final Verdict, each agent with one narrow, focused job',
+        solutionKo: '리서치 → 면접관 → 평가 → 라운드 요약 → 최종 판정으로 이어지는 5-에이전트 파이프라인을 구축하고, 각 에이전트에 하나의 좁고 명확한 역할을 부여했습니다.',
+      },
+      {
+        challenge: 'A single failed AI call could crash a live interview session halfway through',
+        challengeKo: 'AI 호출 하나만 실패해도 진행 중인 면접 세션 전체가 중단될 수 있음',
+        solution: 'Exponential backoff retries with layered fallbacks, so a failed AI call degrades gracefully instead of crashing the session',
+        solutionKo: '지수 백오프 재시도와 단계별 폴백을 적용하여 AI 호출이 실패해도 세션이 중단되지 않고 안정적으로 이어지도록 했습니다.',
+      },
+      {
+        challenge: 'Returning users started from zero every time',
+        challengeKo: '재방문 사용자가 매번 처음부터 다시 시작해야 함',
+        solution: 'Candidate memory stored in Firestore compounds across sessions, so evaluation gets more personalized over time',
+        solutionKo: 'Firestore에 저장된 지원자 메모리가 세션마다 누적되어, 사용할수록 더 개인화된 평가를 제공합니다.',
       },
     ],
-    learned: '3-agent AI orchestration pipeline, Google Gemini 2.5 Flash, Firebase Firestore for session saving, real-time agent pipeline logging, culturally aware AI feedback',
-    learnedKo: '3-에이전트 AI 오케스트레이션 파이프라인, Google Gemini 2.5 Flash, Firebase Firestore를 이용한 세션 저장, 실시간 에이전트 파이프라인 로깅, 문화적 맥락을 고려한 AI 피드백',
+    learned: 'Multi-agent orchestration with narrow agent roles, retry and fallback design for LLM calls, persistent agent memory, multimodal PDF parsing with Gemini',
+    learnedKo: '역할이 명확한 멀티 에이전트 오케스트레이션, LLM 호출을 위한 재시도 및 폴백 설계, 영속적인 에이전트 메모리, Gemini 멀티모달 PDF 파싱',
     techStack: [
-      'Google Gemini 2.5 Flash',
+      'Gemini 2.5 Flash Lite',
       'Firebase Firestore',
       'Firebase Hosting',
       'Next.js 15',
@@ -152,11 +170,28 @@ export const projects: Project[] = [
     caseStudy: {
       problem: 'Generic interview prep tools ask the same questions to everyone. But Google interviews differently than Amazon, which interviews differently than Korean startups like Toss. Candidates were preparing for the wrong interview.',
       problemKo: '기존의 인터뷰 준비 도구들은 누구에게나 똑같은 질문을 던집니다. 하지만 구글은 아마존과 다르고, 토스와 같은 한국 스타트업은 또 다른 방식을 취합니다. 지원자들은 잘못된 방식으로 인터뷰를 준비하고 있었습니다.',
-      approach: 'Built a 3-agent AI pipeline using Google Gemini 2.5 Flash. Agent A (Researcher) analyzes the company and extracts interview rounds, what they reward and what gets candidates rejected. Agent B (Interviewer) acts as a real interviewer from that company, asking culturally specific follow-up questions. Agent C (Evaluator) scores every answer against that company\'s actual criteria with cultural tips.',
-      approachKo: 'Google Gemini 2.5 Flash를 사용하여 3-에이전트 AI 파이프라인을 구축했습니다. 에이전트 A(조사자)는 기업을 분석하여 면접 단계와 평가 요소, 탈락 사유 등을 추출합니다. 에이전트 B(면접관)는 해당 기업의 면접관 역할을 수행하며 문화적 맥락에 맞는 꼬리 질문을 던집니다. 에이전트 C(평가자)는 해당 기업의 실제 기준에 맞춰 답변을 채점하고 문화적 팁을 제공합니다.',
-      result: 'A fully personalized interview simulator that adapts to any company worldwide. Firebase Firestore saves sessions for review. Built for Google Gen AI Academy APAC 2026 Meet the Builders Campaign.',
-      resultKo: '전 세계 어떤 기업에도 적응하는 완전 개인화된 인터뷰 시뮬레이터를 개발했습니다. Firebase Firestore를 통해 세션을 저장하고 복습할 수 있게 했습니다. Google Gen AI Academy APAC 2026 Meet the Builders 캠페인을 위해 제작되었습니다.'
-    }
+      approach: 'Split the hiring process into five agents on Gemini 2.5 Flash Lite, each with one narrow, focused job. Narrow agents are easier to prompt, test and debug than one giant prompt, and a failure in one stage never corrupts the others. Every AI call is wrapped in exponential backoff retries with layered fallbacks, and candidate memory lives in Firestore so it compounds across sessions.',
+      approachKo: 'Gemini 2.5 Flash Lite 기반으로 채용 과정을 5개의 에이전트로 나누고, 각 에이전트에 하나의 좁고 명확한 역할을 부여했습니다. 역할이 좁은 에이전트는 하나의 거대한 프롬프트보다 프롬프트 작성, 테스트, 디버깅이 쉽고, 한 단계의 실패가 다른 단계를 오염시키지 않습니다. 모든 AI 호출은 지수 백오프 재시도와 단계별 폴백으로 감싸고, 지원자 메모리는 Firestore에 저장하여 세션마다 누적되도록 했습니다.',
+      result: 'A live, company-specific interview simulator that remembers returning candidates and survives failed AI calls without crashing. Resume-aware via Gemini multimodal PDF parsing. Built solo, end to end in TypeScript, and submitted to Google Gen AI Academy APAC — Meet the Builders.',
+      resultKo: '재방문 지원자를 기억하고, AI 호출이 실패해도 중단되지 않는 기업 맞춤형 인터뷰 시뮬레이터를 배포했습니다. Gemini 멀티모달 PDF 파싱으로 이력서 내용도 반영합니다. TypeScript로 혼자 처음부터 끝까지 구축했으며, Google Gen AI Academy APAC — Meet the Builders에 제출했습니다.'
+    },
+    pipeline: {
+      title: '5-Agent Pipeline',
+      titleKo: '5-에이전트 파이프라인',
+      steps: [
+        { name: 'Research', nameKo: '리서치', desc: 'Studies how the target company interviews — rounds, what it rewards, what gets candidates rejected', descKo: '타겟 기업의 면접 방식 분석 — 단계, 평가 요소, 탈락 사유' },
+        { name: 'Interviewer', nameKo: '면접관', desc: 'Plays a real interviewer from that company and asks culturally specific follow-ups', descKo: '해당 기업의 면접관 역할로 문화적 맥락에 맞는 꼬리 질문 진행' },
+        { name: 'Evaluator', nameKo: '평가', desc: "Scores each answer against the company's own criteria", descKo: '기업 고유의 기준으로 각 답변 채점' },
+        { name: 'Round Summary', nameKo: '라운드 요약', desc: 'Condenses each round into strengths and gaps', descKo: '각 라운드를 강점과 부족한 점으로 정리' },
+        { name: 'Final Verdict', nameKo: '최종 판정', desc: 'Delivers the hiring-style verdict with improvements and cultural tips', descKo: '개선점과 문화적 팁을 담은 채용 판정 제공' },
+      ],
+    },
+    reliability: [
+      { title: 'Narrow agents', titleKo: '좁은 역할의 에이전트', desc: 'One job per agent keeps prompts small, testable and easy to debug.', descKo: '에이전트마다 하나의 역할만 맡겨 프롬프트를 작고 테스트·디버깅하기 쉽게 유지합니다.' },
+      { title: 'Retries & fallbacks', titleKo: '재시도 & 폴백', desc: 'Exponential backoff plus layered fallbacks — a failed AI call never crashes the session.', descKo: '지수 백오프와 단계별 폴백으로 AI 호출이 실패해도 세션이 중단되지 않습니다.' },
+      { title: 'Compounding memory', titleKo: '누적되는 메모리', desc: 'Candidate memory in Firestore makes every session more personalized than the last.', descKo: 'Firestore의 지원자 메모리로 세션마다 더 개인화된 평가를 제공합니다.' },
+      { title: 'Multimodal input', titleKo: '멀티모달 입력', desc: 'Gemini parses the uploaded resume PDF so questions match the candidate.', descKo: 'Gemini가 업로드된 이력서 PDF를 분석하여 지원자에 맞는 질문을 생성합니다.' },
+    ],
   },
   {
     icon: '🌦️',
@@ -467,10 +502,35 @@ export const projects: Project[] = [
     ],
     learned: 'High-speed AI inference, FastAPI backend architecture, B2B compliance standards',
     learnedKo: '고속 AI 추론 처리, FastAPI 백엔드 아키텍처, B2B 컴플라이언스 표준 실무',
-    techStack: ['Next.js', 'FastAPI', 'Python', 'Google Gemini 2.5', 'Vercel', 'Railway'],
+    techStack: ['Next.js 15', 'TypeScript', 'FastAPI', 'Python', 'Gemini 2.5 Flash', 'Pydantic', 'Firebase', 'Vercel', 'Railway'],
     githubUrl: 'https://github.com/sweety-HJH223/K-Trust',
     liveDemoUrl: 'https://project-4xzgu-blush.vercel.app/',
     category: 'AI',
+    caseStudy: {
+      problem: 'Deciding whether a South Korean merchant is trustworthy means piecing together court records, tax filings and Naver/Kakao sentiment — scattered, unstructured and in Korean. And when an LLM summarizes that, "mostly valid JSON" is not good enough: one missing field and the dashboard breaks.',
+      problemKo: '한국 판매자의 신뢰도를 판단하려면 법원 기록, 세금 신고, 네이버/카카오 여론처럼 흩어져 있고 비구조화된 한국어 정보를 모아야 합니다. 그리고 LLM이 이를 요약할 때 "대체로 유효한 JSON"으로는 부족합니다 — 필드 하나만 빠져도 대시보드가 깨집니다.',
+      approach: 'Enforced the output schema at generation time instead of parsing it afterwards: Pydantic models are passed to Gemini as response_schema, so every report comes back as typed JSON with trust score, legal status and public sentiment. Built prompt rubrics that simulate scraped court records, tax filings and Naver/Kakao sentiment as messy, unstructured LLM input. Split the architecture so Next.js on Vercel and FastAPI on Railway deploy independently.',
+      approachKo: '출력을 사후에 파싱하는 대신 생성 단계에서 스키마를 강제했습니다. Pydantic 모델을 Gemini의 response_schema로 전달하여 모든 보고서가 신뢰도 점수, 법적 상태, 여론을 담은 타입이 지정된 JSON으로 반환됩니다. 법원 기록, 세금 신고, 네이버/카카오 여론을 비구조화된 LLM 입력으로 시뮬레이션하는 프롬프트 루브릭을 만들었고, Vercel의 Next.js와 Railway의 FastAPI가 독립적으로 배포되도록 아키텍처를 분리했습니다.',
+      result: 'A live compliance portal where every AI report matches the schema exactly — no defensive JSON parsing or markdown stripping on the frontend. Merchant lookups are O(1) from a mock intelligence database.',
+      resultKo: '모든 AI 보고서가 스키마와 정확히 일치하는 컴플라이언스 포털을 배포했습니다 — 프론트엔드에서 방어적 JSON 파싱이나 마크다운 제거가 필요 없습니다. 판매자 조회는 모의 인텔리전스 데이터베이스에서 O(1)로 처리됩니다.',
+    },
+    pipeline: {
+      title: 'Request Flow',
+      titleKo: '요청 흐름',
+      steps: [
+        { name: 'Next.js UI', nameKo: 'Next.js UI', desc: 'Merchant search on Vercel', descKo: 'Vercel에서 판매자 검색' },
+        { name: 'FastAPI', nameKo: 'FastAPI', desc: 'O(1) lookup in the mock intelligence DB on Railway', descKo: 'Railway의 모의 인텔리전스 DB에서 O(1) 조회' },
+        { name: 'Gemini 2.5 Flash', nameKo: 'Gemini 2.5 Flash', desc: 'Reads unstructured court, tax and sentiment signals', descKo: '비구조화된 법원·세금·여론 신호 분석' },
+        { name: 'Pydantic Schema', nameKo: 'Pydantic 스키마', desc: 'response_schema forces typed JSON at generation time', descKo: 'response_schema로 생성 단계에서 타입 JSON 강제' },
+        { name: 'Trust Report', nameKo: '신뢰도 보고서', desc: 'Trust score, legal status and sentiment, rendered as-is', descKo: '신뢰도 점수, 법적 상태, 여론을 그대로 렌더링' },
+      ],
+    },
+    reliability: [
+      { title: 'Schema at generation', titleKo: '생성 단계 스키마', desc: 'response_schema guarantees exact field types — nothing to clean up afterwards.', descKo: 'response_schema가 정확한 필드 타입을 보장하여 사후 정리가 필요 없습니다.' },
+      { title: 'Messy input by design', titleKo: '의도된 비정형 입력', desc: 'Prompt rubrics simulate real-world, unstructured Korean data sources.', descKo: '프롬프트 루브릭으로 실제와 같은 비구조화 한국어 데이터를 시뮬레이션합니다.' },
+      { title: 'Split deploys', titleKo: '분리된 배포', desc: 'Frontend on Vercel and backend on Railway ship and scale independently.', descKo: 'Vercel의 프론트엔드와 Railway의 백엔드가 독립적으로 배포·확장됩니다.' },
+      { title: 'Async backend', titleKo: '비동기 백엔드', desc: 'Async FastAPI tasks keep latency low while Gemini does the heavy lifting.', descKo: '비동기 FastAPI 태스크로 Gemini 처리 중에도 지연 시간을 낮게 유지합니다.' },
+    ],
     images: [
       '/images/K-Trust-1.png',
       '/images/K-Trust-2.png',

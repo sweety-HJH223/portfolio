@@ -1,8 +1,11 @@
 "use client"
 import React from "react"
 import { useLanguage } from "@/context/LanguageContext"
-import { ExternalLink, Award, BookOpen, GraduationCap, Briefcase } from "lucide-react"
+import { ExternalLink, Award, BookOpen, GraduationCap, Briefcase, Trophy, CheckCircle2 } from "lucide-react"
 import ProjectsCarousel from "./ProjectsCarousel"
+import { TiltCard } from "./fx/TiltCard"
+import { Reveal } from "./fx/Reveal"
+import { SectionHeading } from "./fx/SectionHeading"
 
 const achievements = [
   { title: "1st Place Solution Sprint", org: "Intercollege Hackathon", date: "Jan 2026", type: "Team" },
@@ -12,11 +15,6 @@ const achievements = [
 ]
 
 const certifications = [
-  { 
-    title: "HackerRank Python Basic", 
-    year: "2025",
-    link: "https://www.hackerrank.com/certificates/iframe/e6fcdb602387"
-  },
   { 
     title: "KMOOC Data Science and AI", 
     year: "Oct 2025",
@@ -40,12 +38,12 @@ const experiences = [
     roleKo: "AI 평가 엔지니어 (계약직)",
     company: "via Handshake AI",
     companyKo: "Handshake AI를 통해",
-    duration: "july 2026 — ongoing",
-    durationKo: "july 2026 — 진행 중",
+    duration: "Jul 2026 — Present",
+    durationKo: "2026년 7월 — 현재",
     description: [
       "Designed and built agentic, terminal-based benchmark tasks to evaluate AI coding agents, including Dockerized environments, reference solutions, and automated verifiers",
       "Calibrated task difficulty empirically by measuring real oracle output variance to set verification tolerances, ensuring tasks reliably distinguish genuine agent failure from task/infra bugs",
-      "Navigated a multi-stage automated review pipeline (static checks, rubric review, similarity detection, agent trial gating) to deliver production-ready evaluation tasks end-to-end"
+      "Navigated a multi-stage automated review pipeline (static checks, rubric review, similarity detection, pass@2 and pass@5 agent trial gating) to deliver production-ready evaluation tasks end-to-end"
     ],
     descriptionKo: [
       "AI 코딩 에이전트를 평가하기 위한 에이전틱(agentic) 터미널 기반 벤치마크 태스크를 설계 및 구축 — Docker 환경, 참조 솔루션(reference solution), 자동 검증기(verifier) 포함",
@@ -61,115 +59,147 @@ const education = [
   { degree: "Secondary X CBSE", school: "Kendriya Vidyalaya", year: "2019", details: "91.4%" },
 ]
 
+function SubHeading({ icon: Icon, children }: { icon: React.ComponentType<{ size?: number }>; children: React.ReactNode }) {
+  return (
+    <h3 className="mb-6 flex items-center gap-3 text-xl font-bold tracking-tight text-foreground">
+      <span className="icon-3d inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-gradient text-white">
+        <Icon size={20} />
+      </span>
+      {children}
+    </h3>
+  )
+}
+
 export default function WorkSection() {
   const { getText, language } = useLanguage()
 
   return (
-    <section id="work" className="py-20 px-6 bg-background">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold text-foreground mb-12 text-center">{getText("Work")}</h2>
+    <section id="work" className="scroll-mt-24 px-6 py-24">
+      <div className="mx-auto max-w-7xl">
+        <SectionHeading index="03" title={getText("Work")} />
 
         {/* Experience */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-bold text-primary mb-6 flex items-center gap-2">
-            <Briefcase /> {language === "ko" ? "경력" : "EXPERIENCE"}
-          </h3>
+        <Reveal className="mb-24">
+          <SubHeading icon={Briefcase}>{language === "ko" ? "경력" : "EXPERIENCE"}</SubHeading>
           <div className="space-y-6">
             {experiences.map((exp, idx) => (
-              <div key={idx} className="relative pl-8 border-l-2 border-border">
-                <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-primary" />
-                <h4 className="font-bold text-foreground text-lg">
-                  {language === "ko" ? exp.roleKo : exp.role}
-                </h4>
-                <p className="text-muted-foreground">
-                  {language === "ko" ? exp.companyKo : exp.company} • {language === "ko" ? exp.durationKo : exp.duration}
-                </p>
-                <ul className="list-disc pl-5 mt-2 space-y-1 text-sm text-muted-foreground">
+              <div key={idx} className="glass gradient-border relative overflow-hidden rounded-3xl p-8 md:p-10">
+                <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[hsl(var(--accent)/0.18)] blur-3xl" />
+                <div className="relative flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+                  <div>
+                    <h4 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+                      {language === "ko" ? exp.roleKo : exp.role}
+                    </h4>
+                    <p className="mt-2 font-medium text-gradient">
+                      {language === "ko" ? exp.companyKo : exp.company}
+                    </p>
+                  </div>
+                  <span className="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                    <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
+                    {language === "ko" ? exp.durationKo : exp.duration}
+                  </span>
+                </div>
+                <ul className="relative mt-8 grid gap-4 md:grid-cols-3">
                   {(language === "ko" ? exp.descriptionKo : exp.description).map((bullet, bIdx) => (
-                    <li key={bIdx}>{bullet}</li>
+                    <li key={bIdx} className="rounded-2xl border border-border/60 bg-background/40 p-5 text-sm leading-relaxed text-muted-foreground">
+                      <CheckCircle2 size={18} className="mb-3 text-primary" />
+                      {bullet}
+                    </li>
                   ))}
                 </ul>
               </div>
             ))}
           </div>
-        </div>
+        </Reveal>
 
         <ProjectsCarousel />
 
-        {/* Achievements */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-bold text-primary mb-6 flex items-center gap-2">
-            <Award /> {getText("ACHIEVEMENTS")}
-          </h3>
-          <div className="space-y-4">
-            {achievements.map((item, idx) => (
-              <div key={idx} className="p-4 bg-card rounded-lg border border-border flex items-center justify-between hover:border-primary transition-colors">
-                <div>
-                  <h4 className="font-semibold text-foreground">{item.title}</h4>
-                  <p className="text-sm text-muted-foreground">{item.org} • {item.date}</p>
-                </div>
-                <span className="text-xs font-bold bg-secondary px-2 py-1 rounded">{item.type}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Certifications */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-bold text-primary mb-6 flex items-center gap-2">
-            <BookOpen /> {getText("CERTIFICATIONS")}
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {certifications.map((cert, idx) => {
-              const Content = (
-                <div className={`p-6 bg-card rounded-xl border border-border flex items-center justify-between group transition-all ${cert.link ? 'hover:shadow-lg hover:border-primary' : ''}`}>
-                  <div>
-                    <h4 className="font-semibold text-foreground">{cert.title}</h4>
-                    <p className="text-sm text-muted-foreground">{cert.year}</p>
-                  </div>
-                  {cert.badge ? (
-                    <span className="text-[10px] font-bold bg-primary/10 text-primary px-2 py-1 rounded-full border border-primary/20">
-                      {cert.badge}
+        {/* Achievements + Certifications */}
+        <div className="mb-24 grid gap-12 lg:grid-cols-2">
+          <Reveal>
+            <SubHeading icon={Award}>{getText("ACHIEVEMENTS")}</SubHeading>
+            <div className="space-y-4">
+              {achievements.map((item, idx) => (
+                <TiltCard key={idx} max={5} className="glass rounded-2xl">
+                  <div className="flex items-center gap-4 p-5">
+                    <span className={`icon-3d inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${
+                      item.title.startsWith("1st")
+                        ? "bg-gradient-to-br from-amber-300 to-yellow-600 text-white"
+                        : item.title.startsWith("2nd")
+                        ? "bg-gradient-to-br from-slate-200 to-slate-500 text-white"
+                        : "bg-gradient-to-br from-violet-400 to-fuchsia-600 text-white"
+                    }`}>
+                      <Trophy size={22} />
                     </span>
-                  ) : (
-                    <ExternalLink className="text-muted-foreground group-hover:text-primary transition-colors" />
-                  )}
-                </div>
-              );
+                    <div className="min-w-0 flex-1">
+                      <h4 className="font-semibold text-foreground">{item.title}</h4>
+                      <p className="text-sm text-muted-foreground">{item.org} • {item.date}</p>
+                    </div>
+                    {item.type && (
+                      <span className="rounded-full border border-border/60 bg-secondary/60 px-3 py-1 text-[11px] font-bold text-foreground/80">
+                        {item.type}
+                      </span>
+                    )}
+                  </div>
+                </TiltCard>
+              ))}
+            </div>
+          </Reveal>
 
-              return cert.link ? (
-                <a 
-                  key={idx} 
-                  href={cert.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  {Content}
-                </a>
-              ) : (
-                <div key={idx}>{Content}</div>
-              );
-            })}
-          </div>
+          <Reveal delay={0.1}>
+            <SubHeading icon={BookOpen}>{getText("CERTIFICATIONS")}</SubHeading>
+            <div className="space-y-4">
+              {certifications.map((cert, idx) => {
+                const Content = (
+                  <TiltCard max={5} className="glass rounded-2xl">
+                    <div className="flex items-center justify-between gap-4 p-5">
+                      <div>
+                        <h4 className="font-semibold text-foreground">{cert.title}</h4>
+                        <p className="text-sm text-muted-foreground">{cert.year}</p>
+                      </div>
+                      {cert.badge ? (
+                        <span className="shrink-0 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-[11px] font-bold text-primary">
+                          {cert.badge}
+                        </span>
+                      ) : (
+                        <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border/60 text-muted-foreground transition-colors group-hover/tilt:border-primary group-hover/tilt:text-primary">
+                          <ExternalLink size={16} />
+                        </span>
+                      )}
+                    </div>
+                  </TiltCard>
+                );
+
+                return cert.link ? (
+                  <a key={idx} href={cert.link} target="_blank" rel="noopener noreferrer" className="block">
+                    {Content}
+                  </a>
+                ) : (
+                  <div key={idx}>{Content}</div>
+                );
+              })}
+            </div>
+          </Reveal>
         </div>
 
         {/* Education */}
-        <div>
-          <h3 className="text-2xl font-bold text-primary mb-6 flex items-center gap-2">
-            <GraduationCap /> {getText("EDUCATION")}
-          </h3>
-          <div className="space-y-6">
+        <Reveal>
+          <SubHeading icon={GraduationCap}>{getText("EDUCATION")}</SubHeading>
+          <div className="grid gap-6 md:grid-cols-3">
             {education.map((edu, idx) => (
-              <div key={idx} className="relative pl-8 border-l-2 border-border">
-                <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-primary" />
-                <h4 className="font-bold text-foreground text-lg">{edu.degree}</h4>
-                <p className="text-muted-foreground">{edu.school} • {edu.year}</p>
-                {edu.details && <p className="text-sm font-semibold text-primary mt-1">{edu.details}</p>}
-              </div>
+              <TiltCard key={idx} className="glass gradient-border h-full rounded-3xl">
+                <div className="flex h-full flex-col p-7">
+                  <span className="mb-6 font-display text-sm font-semibold text-muted-foreground">{edu.year}</span>
+                  <h4 className="text-lg font-bold leading-snug text-foreground">{edu.degree}</h4>
+                  <p className="mt-1 text-sm text-muted-foreground">{edu.school}</p>
+                  {edu.details && (
+                    <p className="mt-auto pt-6 font-display text-3xl font-bold text-gradient">{edu.details}</p>
+                  )}
+                </div>
+              </TiltCard>
             ))}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   )

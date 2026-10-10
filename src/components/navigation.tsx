@@ -39,13 +39,17 @@ export default function Navigation() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-background/60 backdrop-blur-xl border-b border-border/50 shadow-lg shadow-primary/5"
-            : "bg-transparent"
+        className={`fixed top-0 left-0 right-0 z-50 px-4 transition-all duration-500 ${
+          isScrolled ? "pt-3" : "pt-5"
         }`}
       >
-        <nav className="mx-auto max-w-7xl px-6 py-3">
+        <nav
+          className={`mx-auto max-w-7xl rounded-2xl px-5 py-2.5 transition-all duration-500 ${
+            isScrolled
+              ? "glass-strong shadow-[0_20px_60px_-20px_hsl(var(--shadow)/0.6)]"
+              : "glass"
+          }`}
+        >
           <div className="flex items-center">
             {/* Logo - Left */}
             <div className="flex-1 flex justify-start">
@@ -53,10 +57,10 @@ export default function Navigation() {
                 href="/"
                 className="group flex items-center gap-2 text-xl font-bold tracking-tighter"
               >
-                <div className="flex items-center text-foreground transition-colors group-hover:text-primary">
-                  <span className="text-primary">{"<"}</span>
+                <div className="flex items-center font-display text-foreground transition-colors">
+                  <span className="text-gradient">{"<"}</span>
                   dev
-                  <span className="text-primary">{" />"}</span>
+                  <span className="text-gradient">{" />"}</span>
                 </div>
                 <span className="hidden sm:inline-block text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
                   SweetyCodes
@@ -152,7 +156,7 @@ export default function Navigation() {
     onClick={() => language === "ko" && toggleLanguage()}
     className={`px-3 py-1.5 text-xs font-medium transition-all duration-300 ${
       language === "en"
-        ? "bg-cyan-500 text-white shadow-lg shadow-cyan-500/25"
+        ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
         : "text-muted-foreground hover:text-foreground"
     }`}
   >
@@ -162,7 +166,7 @@ export default function Navigation() {
     onClick={() => language === "en" && toggleLanguage()}
     className={`px-3 py-1.5 text-xs font-medium transition-all duration-300 ${
       language === "ko"
-        ? "bg-cyan-500 text-white shadow-lg shadow-cyan-500/25"
+        ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
         : "text-muted-foreground hover:text-foreground"
     }`}
   >
@@ -173,7 +177,7 @@ export default function Navigation() {
                 {/* Resume Button */}
                 <button
                   onClick={() => setIsResumeOpen(true)}
-                  className="ml-2 inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-all duration-200 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40"
+                  className="btn-3d ml-2 inline-flex items-center gap-2 rounded-xl bg-brand-gradient px-4 py-2 text-sm font-semibold text-white [--btn-depth:3px]"
                 >
                  Resume
                 </button>
@@ -263,7 +267,7 @@ export default function Navigation() {
                       setIsResumeOpen(true);
                       setIsMobileMenuOpen(false);
                     }}
-                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-all duration-200"
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-brand-gradient px-5 py-2.5 text-sm font-semibold text-white"
                   >
                     Resume
                   </button>

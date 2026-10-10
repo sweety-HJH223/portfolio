@@ -27,7 +27,7 @@ type TextKeys =
   | "Full-Stack Development" | "End-to-end web apps with React, Next.js, and modern backends"
   | "Custom Internal Tools" | "AI Bots & Agents" | "Custom AI agents and chatbots using Gemini and OpenAI APIs"
   | "Data Automation" | "Python workflows that eliminate repetitive manual processes"
-  | "Web Scrapers" | "Extract and process data from any website ethically"
+  | "AI Evaluation & Benchmarks" | "Benchmarks and automated verifiers that test how well LLMs and AI agents really perform"
   | "Mobile Friendly Apps" | "Responsive designs that work seamlessly on any device"
   | "Bilingual Applications" | "Professional English and Korean EN/KO web experiences"
   | "AI Powered Tools" | "Intelligent tools for analysis and generation"
@@ -138,8 +138,8 @@ Focused on writing maintainable code and learning new technologies through hands
     "Custom AI agents and chatbots using Gemini and OpenAI APIs": "Custom AI agents and chatbots using Gemini and OpenAI APIs",
     "Data Automation": "Data Automation",
     "Python workflows that eliminate repetitive manual processes": "Python workflows that eliminate repetitive manual processes",
-    "Web Scrapers": "Web Scrapers",
-    "Extract and process data from any website ethically": "Extract and process data from any website ethically",
+    "AI Evaluation & Benchmarks": "AI Evaluation & Benchmarks",
+    "Benchmarks and automated verifiers that test how well LLMs and AI agents really perform": "Benchmarks and automated verifiers that test how well LLMs and AI agents really perform",
     "Mobile Friendly Apps": "Mobile Friendly Apps",
     "Responsive designs that work seamlessly on any device": "Responsive designs that work seamlessly on any device",
     "Bilingual Applications": "Bilingual Applications",
@@ -268,8 +268,8 @@ Focused on writing maintainable code and learning new technologies through hands
     "Custom AI agents and chatbots using Gemini and OpenAI APIs": "Gemini와 OpenAI API를 사용한 맞춤형 AI 에이전트 및 챗봇",
     "Data Automation": "데이터 자동화",
     "Python workflows that eliminate repetitive manual processes": "반복적인 수동 프로세스를 제거하는 파이썬 워크플로우",
-    "Web Scrapers": "웹 스크래퍼",
-    "Extract and process data from any website ethically": "윤리적으로 웹사이트 데이터를 추출 및 처리",
+    "AI Evaluation & Benchmarks": "AI 평가 및 벤치마크",
+    "Benchmarks and automated verifiers that test how well LLMs and AI agents really perform": "LLM과 AI 에이전트의 실제 성능을 검증하는 벤치마크 및 자동 검증기",
     "Mobile Friendly Apps": "모바일 최적화 앱",
     "Responsive designs that work seamlessly on any device": "모든 기기에서 원활하게 작동하는 반응형 디자인",
     "Bilingual Applications": "다국어 애플리케이션",

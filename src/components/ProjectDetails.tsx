@@ -2,11 +2,23 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  CheckCircle2,
+  FileText,
+  Lightbulb,
+  ShieldCheck,
+  Target,
+  Wrench,
+  Trophy,
+} from 'lucide-react';
 import { Project } from '@/data/projects';
 import { GitHubIcon } from '@/components/social-icons';
 import { useLanguage } from '@/context/LanguageContext';
+import { Reveal } from '@/components/fx/Reveal';
+import { TiltCard } from '@/components/fx/TiltCard';
 
 interface ProjectDetailsProps {
   project: Project;
@@ -14,264 +26,289 @@ interface ProjectDetailsProps {
   nextProject: Project | null;
 }
 
-const ProjectDetails: React.FC<ProjectDetailsProps> = ({
-  project,
-  previousProject,
-  nextProject,
-}) => {
-  const router = useRouter();
-  const { language, getText } = useLanguage();
+const Heading = ({ children }: { children: React.ReactNode }) => (
+  <h2 className="mb-5 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.22em] text-primary">
+    <span className="h-px w-8 bg-brand-gradient" />
+    {children}
+  </h2>
+);
 
-  const getProjectName = (p: Project) => {
-    return (language === 'ko' && p.nameKo) ? p.nameKo : p.name;
-  };
-  const getProjectOverview = (p: Project) => {
-    return (language === 'ko' && p.overviewKo) ? p.overviewKo : p.overview;
-  };
-  const getProjectWhatItDoes = (p: Project) => {
-    return (language === 'ko' && p.whatItDoesKo) ? p.whatItDoesKo : p.whatItDoes;
-  };
-  const getChallenge = (cs: any) => {
-    return (language === 'ko' && cs.challengeKo) ? cs.challengeKo : cs.challenge;
-  };
-  const getSolution = (cs: any) => {
-    return (language === 'ko' && cs.solutionKo) ? cs.solutionKo : cs.solution;
-  };
-  const getLearned = (p: Project) => {
-    return (language === 'ko' && p.learnedKo) ? p.learnedKo : p.learned;
-  };
+const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project, previousProject, nextProject }) => {
+  const { language } = useLanguage();
+  const ko = language === 'ko';
+  const pick = (en?: string, k?: string) => (ko && k ? k : en ?? '');
+
+  const name = (p: Project) => pick(p.name, p.nameKo);
+  const whatItDoes = ko && project.whatItDoesKo ? project.whatItDoesKo : project.whatItDoes;
+
+  const caseCards = project.caseStudy
+    ? [
+        { icon: Target, label: ko ? '문제점' : 'The Problem', text: pick(project.caseStudy.problem, project.caseStudy.problemKo), tone: 'from-rose-400 to-pink-500' },
+        { icon: Wrench, label: ko ? '접근 방식' : 'My Approach', text: pick(project.caseStudy.approach, project.caseStudy.approachKo), tone: 'from-violet-500 to-fuchsia-500' },
+        { icon: Trophy, label: ko ? '결과' : 'The Result', text: pick(project.caseStudy.result, project.caseStudy.resultKo), tone: 'from-emerald-400 to-cyan-500' },
+      ]
+    : [];
+
+  const pdfUrl = project.caseStudyPdfUrl ?? project.fullCaseStudyUrl;
 
   return (
-    <div className="space-y-8 pb-16">
-      {/* Back button */}
-      <button
-        onClick={() => router.push('/')}
-        className="inline-flex items-center gap-2 text-primary hover:text-primary-foreground transition-colors group"
+    <div className="space-y-16 pb-16">
+      <Link
+        href="/#work"
+        className="group inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
-        <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
-        <span className="font-medium">{language === 'ko' ? '프로젝트로 돌아가기' : 'Back to Projects'}</span>
-      </button>
+        <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+        {ko ? '프로젝트로 돌아가기' : 'Back to Projects'}
+      </Link>
 
-      {/* Project Header */}
-      <div className="flex items-center gap-4">
-        <span className="text-5xl">{project.icon}</span>
-        <h1 className="text-4xl font-bold text-foreground">{getProjectName(project)}</h1>
-        {project.featured && (
-          <span className="ml-2 px-3 py-1 bg-primary/20 text-primary text-xs font-semibold rounded-full">
-            ⭐ {language === 'ko' ? '추천' : 'Featured'}
-          </span>
-        )}
-      </div>
-
-      {/* Project Image (Placeholder) */}
-      <div className="w-full h-64 bg-secondary rounded-lg flex items-center justify-center text-muted-foreground text-xl">
-        {project.image ? (
-          <img src={project.image} alt={getProjectName(project)} className="w-full h-full object-cover rounded-lg" />
-        ) : (
-          <span>{language === 'ko' ? '스크린샷/이미지 플레이스홀더' : 'Screenshot/Image Placeholder'}</span>
-        )}
-      </div>
-
-      {/* Video Support */}
-      {project.videoUrl && (
-        <section className="space-y-4">
-          <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '데모 영상' : 'Demo Video'}</h2>
-          <div className="aspect-video w-full rounded-lg overflow-hidden border border-border shadow-lg">
-            <video
-              controls
-              className="w-full h-full object-cover"
-            >
-              <source src={project.videoUrl} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+      {/* Header */}
+      <Reveal>
+        <div className="glass gradient-border relative overflow-hidden rounded-[2rem] p-8 md:p-12">
+          <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[hsl(var(--accent)/0.25)] blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-[hsl(var(--primary)/0.18)] blur-3xl" />
+          <div className="relative">
+            <div className="mb-6 flex flex-wrap items-center gap-3">
+              <span className="icon-3d inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-gradient text-3xl">
+                {project.icon}
+              </span>
+              <span className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-primary">
+                {project.category}
+              </span>
+              {project.caseStudy && (
+                <span className="rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-accent">
+                  {ko ? '케이스 스터디' : 'Case Study'}
+                </span>
+              )}
+            </div>
+            <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-6xl">{name(project)}</h1>
+            <p className="mt-5 max-w-3xl text-lg leading-relaxed text-muted-foreground">
+              {pick(project.overview, project.overviewKo)}
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {project.techStack.map((tech) => (
+                <span key={tech} className="rounded-full border border-border/60 bg-secondary/50 px-3 py-1 text-xs font-medium text-foreground/80">
+                  {tech}
+                </span>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              {project.liveDemoUrl && (
+                <a
+                  href={project.liveDemoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-3d group inline-flex items-center gap-2 rounded-xl bg-brand-gradient px-6 py-3 text-sm font-semibold text-white"
+                >
+                  {ko ? '라이브 데모' : 'Live Demo'}
+                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </a>
+              )}
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="glass inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-foreground transition-all hover:-translate-y-0.5 hover:!border-primary/50"
+                >
+                  <GitHubIcon />
+                  {ko ? '소스 코드' : 'Source Code'}
+                </a>
+              )}
+              {pdfUrl && (
+                <a
+                  href={pdfUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="glass inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-foreground transition-all hover:-translate-y-0.5 hover:!border-primary/50"
+                >
+                  <FileText className="h-4 w-4" />
+                  {ko ? '케이스 스터디 PDF' : 'Case Study PDF'}
+                </a>
+              )}
+            </div>
           </div>
-        </section>
-      )}
+        </div>
+      </Reveal>
 
-      {/* Project Images */}
-      {project.images && project.images.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '프로젝트 갤러리' : 'Project Gallery'}</h2>
-          <div className="columns-1 md:columns-2 gap-4 space-y-4">
-            {project.images.map((img, index) => (
-              <img 
-                key={index} 
-                src={img} 
-                alt={`${getProjectName(project)} screenshot ${index + 1}`} 
-                className="w-full rounded-lg shadow-md break-inside-avoid hover:scale-[1.02] transition-transform duration-300" 
-              />
+      {/* Case study: problem / approach / result */}
+      {caseCards.length > 0 && (
+        <section>
+          <Heading>{ko ? '케이스 스터디' : 'Case Study'}</Heading>
+          <div className="grid gap-5 lg:grid-cols-3">
+            {caseCards.map(({ icon: Icon, label, text, tone }, idx) => (
+              <Reveal key={label} delay={idx * 0.08} className="h-full">
+                <TiltCard max={6} className="h-full rounded-3xl">
+                  <div className="glass relative h-full overflow-hidden rounded-3xl p-7">
+                    <div className={`pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-gradient-to-br ${tone} opacity-20 blur-2xl`} />
+                    <span className={`icon-3d mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${tone} text-white`}>
+                      <Icon size={20} />
+                    </span>
+                    <h3 className="mb-3 text-lg font-bold text-foreground">{label}</h3>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{text}</p>
+                  </div>
+                </TiltCard>
+              </Reveal>
             ))}
           </div>
         </section>
       )}
 
-      {/* Overview */}
-      <section className="space-y-4">
-        <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '개요' : 'Overview'}</h2>
-        <p className="text-muted-foreground leading-relaxed">{getProjectOverview(project)}</p>
-      </section>
+      {/* Pipeline diagram */}
+      {project.pipeline && (
+        <section>
+          <Heading>{pick(project.pipeline.title, project.pipeline.titleKo)}</Heading>
+          <div className="glass gradient-border relative rounded-[2rem] p-6 md:p-8">
+            <ol className="relative grid gap-4 lg:grid-cols-5">
+              <span
+                aria-hidden
+                className="absolute left-[27px] top-6 bottom-6 w-[2px] rounded-full bg-gradient-to-b from-primary via-accent to-[hsl(var(--pink))] lg:left-7 lg:right-[calc((100%_-_4rem)/5_-_28px)] lg:top-[27px] lg:bottom-auto lg:h-[2px] lg:w-auto lg:bg-gradient-to-r"
+              />
+              {project.pipeline.steps.map((step, idx) => (
+                <Reveal key={step.name} delay={idx * 0.08}>
+                  <li className="relative flex gap-4 lg:flex-col lg:gap-3">
+                    <span className="icon-3d relative z-10 inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-gradient font-display text-lg font-bold text-white">
+                      {String(idx + 1).padStart(2, '0')}
+                    </span>
+                    <div className="pt-1 lg:pt-0">
+                      <p className="font-display text-base font-bold text-foreground">{pick(step.name, step.nameKo)}</p>
+                      <p className="mt-1 text-sm leading-snug text-muted-foreground">{pick(step.desc, step.descKo)}</p>
+                    </div>
+                  </li>
+                </Reveal>
+              ))}
+            </ol>
+          </div>
+        </section>
+      )}
 
-      {/* What It Does */}
-      <section className="space-y-4">
-        <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '주요 기능' : 'What It Does'}</h2>
-        <ul className="list-none space-y-2">
-          {getProjectWhatItDoes(project).map((item, index) => (
-            <li key={index} className="flex items-start gap-2 text-muted-foreground">
-              <span className="text-primary mt-1">✅</span>
+      {/* Reliability */}
+      {project.reliability && project.reliability.length > 0 && (
+        <section>
+          <Heading>{ko ? '신뢰성을 위한 설계' : 'Engineered for Reliability'}</Heading>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {project.reliability.map((item, idx) => (
+              <Reveal key={item.title} delay={idx * 0.06} className="h-full">
+                <TiltCard max={6} className="h-full rounded-2xl">
+                  <div className="glass flex h-full items-start gap-4 rounded-2xl p-5">
+                    <span className="icon-3d inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-cyan-500 text-white">
+                      <ShieldCheck size={18} />
+                    </span>
+                    <div>
+                      <p className="font-bold text-foreground">{pick(item.title, item.titleKo)}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{pick(item.desc, item.descKo)}</p>
+                    </div>
+                  </div>
+                </TiltCard>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* What it does */}
+      <section>
+        <Heading>{ko ? '주요 기능' : 'What It Does'}</Heading>
+        <ul className="grid gap-3 sm:grid-cols-2">
+          {whatItDoes.map((item) => (
+            <li key={item} className="glass flex items-start gap-3 rounded-2xl p-4 text-sm leading-relaxed text-muted-foreground">
+              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
               <span>{item}</span>
             </li>
           ))}
         </ul>
       </section>
 
-      {/* Challenges & Solutions */}
-      <section className="space-y-4">
-        <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '도전 과제 및 해결 방법' : 'Challenges & Solutions'}</h2>
-        {project.challengesSolutions.map((cs, index) => (
-          <div key={index} className="bg-secondary p-4 rounded-lg">
-            <p className="text-muted-foreground">
-              <span className="font-semibold text-foreground">{language === 'ko' ? `도전 과제 ${index + 1}:` : `Challenge ${index + 1}:`}</span> {getChallenge(cs)}
-            </p>
-            <p className="text-muted-foreground mt-2">
-              <span className="font-semibold text-foreground">{language === 'ko' ? '해결 방법:' : 'Solution:'}</span> {getSolution(cs)}
-            </p>
-          </div>
-        ))}
-      </section>
-
-      {/* What I Learned */}
-      <section className="space-y-4">
-        <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '배운 점' : 'What I Learned'}</h2>
-        <p className="text-muted-foreground leading-relaxed">{getLearned(project)}</p>
-      </section>
-
-      {/* Tech Stack */}
-      <section className="space-y-4">
-        <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '기술 스택' : 'Tech Stack'}</h2>
-        <div className="flex flex-wrap gap-2">
-          {project.techStack.map((tech, index) => (
-            <span
-              key={index}
-              className="px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full border border-border"
-            >
-              {tech}
-            </span>
+      {/* Challenges & solutions */}
+      <section>
+        <Heading>{ko ? '도전 과제 및 해결 방법' : 'Challenges & Solutions'}</Heading>
+        <div className="space-y-4">
+          {project.challengesSolutions.map((cs, index) => (
+            <Reveal key={cs.challenge} delay={index * 0.05}>
+              <div className="glass grid gap-4 rounded-2xl p-6 md:grid-cols-2 md:gap-8">
+                <div>
+                  <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-rose-400">
+                    {ko ? `도전 과제 ${index + 1}` : `Challenge ${index + 1}`}
+                  </p>
+                  <p className="text-sm leading-relaxed text-foreground">{pick(cs.challenge, cs.challengeKo)}</p>
+                </div>
+                <div className="border-t border-border/50 pt-4 md:border-l md:border-t-0 md:pl-8 md:pt-0">
+                  <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-400">
+                    {ko ? '해결 방법' : 'Solution'}
+                  </p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{pick(cs.solution, cs.solutionKo)}</p>
+                </div>
+              </div>
+            </Reveal>
           ))}
         </div>
       </section>
 
-      {/* Case Study Report */}
-      {project.caseStudy && (
-        <section className="space-y-6">
-          <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '케이스 스터디 보고서' : 'Case Study Report'}</h2>
-          <div className="grid gap-6">
-            <div className="bg-secondary/30 p-6 rounded-2xl border border-border/50">
-              <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
-                <span className="text-primary text-xl">❓</span> {language === 'ko' ? '문제점' : 'The Problem'}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                {(language === 'ko' && project.caseStudy.problemKo) ? project.caseStudy.problemKo : project.caseStudy.problem}
-              </p>
-            </div>
-            <div className="bg-secondary/30 p-6 rounded-2xl border border-border/50">
-              <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
-                <span className="text-primary text-xl">🛠️</span> {language === 'ko' ? '접근 방식' : 'My Approach'}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                {(language === 'ko' && project.caseStudy.approachKo) ? project.caseStudy.approachKo : project.caseStudy.approach}
-              </p>
-            </div>
-            <div className="bg-secondary/30 p-6 rounded-2xl border border-border/50">
-              <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
-                <span className="text-primary text-xl">✅</span> {language === 'ko' ? '결과' : 'The Result'}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                {(language === 'ko' && project.caseStudy.resultKo) ? project.caseStudy.resultKo : project.caseStudy.result}
-              </p>
-            </div>
+      {/* Demo video */}
+      {project.videoUrl && (
+        <section>
+          <Heading>{ko ? '데모 영상' : 'Demo Video'}</Heading>
+          <div className="glass aspect-video w-full overflow-hidden rounded-3xl">
+            <video controls className="h-full w-full object-cover">
+              <source src={project.videoUrl} type="video/mp4" />
+            </video>
           </div>
         </section>
       )}
 
-      {/* PDF Case Study Link */}
-      {project.caseStudyPdfUrl && (
-        <section className="space-y-4">
-          <h2 className="text-2xl font-semibold text-primary">{language === 'ko' ? '케이스 스터디 PDF' : 'Case Study PDF'}</h2>
-          <a
-            href={project.caseStudyPdfUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-200 shadow-lg shadow-emerald-500/25"
-          >
-            <span className="text-xl">📄</span>
-            {language === 'ko' ? '케이스 스터디 PDF 보기' : 'View Case Study PDF'}
-          </a>
+      {/* Gallery */}
+      {project.images && project.images.length > 0 && (
+        <section>
+          <Heading>{ko ? '프로젝트 갤러리' : 'Project Gallery'}</Heading>
+          <div className="columns-1 gap-4 space-y-4 md:columns-2">
+            {project.images.map((img, index) => (
+              <img
+                key={img}
+                src={img}
+                alt={`${name(project)} screenshot ${index + 1}`}
+                loading="lazy"
+                className="w-full break-inside-avoid rounded-2xl border border-border/50 shadow-lg transition-transform duration-300 hover:scale-[1.02]"
+              />
+            ))}
+          </div>
         </section>
-      )
-      }
+      )}
 
-      {/* GitHub + Live Demo + Case Study Buttons */}
-      <div className="flex flex-wrap gap-4 mt-8">
-        {project.githubUrl && (
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-200 shadow-lg shadow-primary/25"
-          >
-            <GitHubIcon />
-            {language === 'ko' ? '소스 코드 보기' : 'View Source Code'}
-          </a>
-        )}
-        {project.liveDemoUrl && (
-          <a
-            href={project.liveDemoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/70 transition-all duration-200 border border-border shadow-sm"
-          >
-            <ExternalLink className="w-5 h-5" />
-            {language === 'ko' ? '라이브 데모 실행' : 'Launch Live Demo'}
-          </a>
-        )}
-        {project.fullCaseStudyUrl && !project.caseStudyPdfUrl && (
-          <a
-            href={project.fullCaseStudyUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-all duration-200 shadow-lg shadow-emerald-500/25"
-          >
-            <span className="text-xl">📄</span>
-            {language === 'ko' ? '전체 케이스 스터디 읽기 (50+ 페이지)' : 'Read Full Case Study (50+ Pages)'}
-          </a>
-        )}
-      </div>
+      {/* What I learned */}
+      <section>
+        <Heading>{ko ? '배운 점' : 'What I Learned'}</Heading>
+        <div className="glass flex items-start gap-4 rounded-2xl p-6">
+          <span className="icon-3d inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 text-white">
+            <Lightbulb size={18} />
+          </span>
+          <p className="leading-relaxed text-muted-foreground">{pick(project.learned, project.learnedKo)}</p>
+        </div>
+      </section>
 
-      {/* Previous/Next Navigation */}
-      <div className="flex justify-between mt-12 pt-8 border-t border-border">
+      {/* Previous / next */}
+      <nav className="flex items-center justify-between gap-4 border-t border-border/50 pt-8">
         {previousProject ? (
           <Link
             href={`/projects/${previousProject.slug}`}
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
-            <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
-            <span className="text-sm font-medium">{getProjectName(previousProject)}</span>
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+            {name(previousProject)}
           </Link>
         ) : (
-          <div />
+          <span />
         )}
         {nextProject ? (
           <Link
             href={`/projects/${nextProject.slug}`}
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
+            className="group inline-flex items-center gap-2 text-right text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
-            <span className="text-sm font-medium">{getProjectName(nextProject)}</span>
-            <ArrowLeft className="w-5 h-5 rotate-180 transition-transform group-hover:translate-x-1" />
+            {name(nextProject)}
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         ) : (
-          <div />
+          <span />
         )}
-      </div>
+      </nav>
     </div>
   );
 };

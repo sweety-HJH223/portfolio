@@ -5,6 +5,8 @@ import { useLanguage } from '@/context/LanguageContext';
 import { Lightbox } from './Lightbox';
 import { XIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useUI } from '@/context/UIContext';
+import { TiltCard } from './fx/TiltCard';
+import { Reveal } from './fx/Reveal';
 
 export default function ProjectsCarousel() {
   const { getText } = useLanguage();
@@ -99,41 +101,43 @@ export default function ProjectsCarousel() {
   };
 
   return (
-    <div className="mb-20">
+    <div className="mb-24">
       {/* Header */}
-      <div className="mb-10 text-center md:text-left">
-        <div className="flex flex-col gap-2">
-          <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-            <span className="text-cyan-400 uppercase text-sm md:text-base mr-3">{getText("FEATURED SOLUTIONS")}</span>
-            <span className="text-gray-400 mr-3">:</span>
+      <Reveal className="mb-10 text-center md:text-left">
+        <div className="flex flex-col gap-3">
+          <span className="font-display text-xs font-semibold uppercase tracking-[0.3em] text-primary">{getText("FEATURED SOLUTIONS")}</span>
+          <h3 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
             {getText("Strategic Builds")}
           </h3>
-          <p className="text-gray-400 text-lg max-w-3xl mx-auto md:mx-0">
+          <p className="text-muted-foreground text-lg max-w-3xl mx-auto md:mx-0">
             {getText("Transforming complex business requirements into intelligent, production-ready digital experiences.")}
           </p>
           {selectedSkill && (
-            <div className="mt-4 flex items-center justify-center md:justify-start gap-2 animate-pulse">
-              <span className="text-xs text-gray-400">Filtering by stack:</span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-xs font-bold text-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.2)]">
+            <div className="mt-2 flex items-center justify-center md:justify-start gap-2">
+              <span className="text-xs text-muted-foreground">Filtering by stack:</span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/25 text-xs font-bold text-primary">
                 {selectedSkill}
-                <button onClick={() => setSelectedSkill(null)} className="hover:text-white ml-1 font-extrabold text-[14px]">
+                <button onClick={() => setSelectedSkill(null)} className="hover:text-foreground ml-1 font-extrabold text-[14px]">
                   ×
                 </button>
               </span>
             </div>
           )}
         </div>
-      </div>
+      </Reveal>
 
       {/* Desktop Grid */}
-      <div className="hidden md:grid grid-cols-3 gap-8">
+      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project, index) => (
-          <ProjectCard 
-            key={index} 
-            project={project} 
-            onOpenGallery={() => openGallery(project.gallery)} 
-            selectedSkill={selectedSkill}
-          />
+          <Reveal key={index} delay={index * 0.1}>
+            <TiltCard max={6} className="h-full rounded-3xl">
+              <ProjectCard
+                project={project}
+                onOpenGallery={() => openGallery(project.gallery)}
+                selectedSkill={selectedSkill}
+              />
+            </TiltCard>
+          </Reveal>
         ))}
       </div>
 
@@ -149,14 +153,14 @@ export default function ProjectsCarousel() {
         
         <button 
           onClick={prevSlide}
-          className="absolute left-0 top-1/2 -translate-y-1/2 p-2 text-white hover:text-cyan-400 transition-colors"
+          className="glass absolute left-0 top-1/2 -translate-y-1/2 rounded-full p-1.5 text-foreground hover:text-primary transition-colors"
           aria-label="Previous project"
         >
           <ChevronLeft size={32} />
         </button>
         <button 
           onClick={nextSlide}
-          className="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-white hover:text-cyan-400 transition-colors"
+          className="glass absolute right-0 top-1/2 -translate-y-1/2 rounded-full p-1.5 text-foreground hover:text-primary transition-colors"
           aria-label="Next project"
         >
           <ChevronRight size={32} />
@@ -218,12 +222,12 @@ function ProjectCard({ project, onOpenGallery, selectedSkill }: { project: any; 
 
   return (
     <div 
-      className={`group relative bg-[#111827] rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-1 h-full flex flex-col border ${
+      className={`glass group relative rounded-3xl overflow-hidden transition-all duration-500 h-full flex flex-col ${
         isFilterActive
           ? isMatch
-            ? "border-cyan-400/60 shadow-[0_0_25px_rgba(34,211,238,0.2)] scale-[1.01]"
-            : "border-white/5 opacity-30 grayscale-[30%]"
-          : "border-white/10 hover:border-cyan-400/30 hover:shadow-[0_0_20px_rgba(34,211,238,0.08)]"
+            ? "!border-primary/60 shadow-[0_0_30px_hsl(var(--primary)/0.25)]"
+            : "opacity-30 grayscale-[30%]"
+          : "hover:!border-primary/30 hover:shadow-[0_30px_60px_-25px_hsl(var(--accent)/0.5)]"
       }`}
     >
       {/* Top Image - Flexible Aspect Ratio */}
@@ -234,7 +238,7 @@ function ProjectCard({ project, onOpenGallery, selectedSkill }: { project: any; 
           className="w-full h-auto display-block transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-          <span className="bg-cyan-400 text-black px-4 py-2 rounded-full text-sm font-bold shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform">
+          <span className="bg-white text-slate-900 px-5 py-2 rounded-full text-sm font-bold shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform">
             {getText("View Gallery")}
           </span>
         </div>
@@ -250,7 +254,7 @@ function ProjectCard({ project, onOpenGallery, selectedSkill }: { project: any; 
       {/* Content */}
       <div className="p-6 flex flex-col flex-grow">
         <div className="flex items-center justify-between mb-2">
-          <h3 className="text-white font-bold text-[18px]">{project.name}</h3>
+          <h3 className="text-foreground font-bold text-lg">{project.name}</h3>
           <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider ${project.badgeColor}`}>
             {project.badge}
           </span>
@@ -265,8 +269,8 @@ function ProjectCard({ project, onOpenGallery, selectedSkill }: { project: any; 
                 key={i} 
                 className={`text-[10px] px-2 py-0.5 rounded-full border transition-all duration-300 ${
                   isTagActive 
-                    ? "text-cyan-400 bg-cyan-400/10 border-cyan-400/30 shadow-[0_0_8px_rgba(34,211,238,0.3)]" 
-                    : "text-gray-400 bg-white/5 border-white/5"
+                    ? "text-primary bg-primary/10 border-primary/30" 
+                    : "text-muted-foreground bg-secondary/60 border-border/60"
                 }`}
               >
                 {tech}
@@ -276,13 +280,13 @@ function ProjectCard({ project, onOpenGallery, selectedSkill }: { project: any; 
         </div>
 
         {/* Description */}
-        <p className="text-gray-400 text-sm mb-4 line-clamp-2">
+        <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
           {project.description}
         </p>
         
         <div className="mb-6">
-           <h4 className="text-xs font-bold text-cyan-400 uppercase mb-2 tracking-tighter">{getText("Project Details")}</h4>
-           <p className="text-xs text-gray-500 leading-relaxed italic line-clamp-3">
+           <h4 className="text-xs font-bold text-primary uppercase mb-2 tracking-wider">{getText("Project Details")}</h4>
+           <p className="text-xs text-muted-foreground/80 leading-relaxed line-clamp-3">
              {project.longDescription}
            </p>
         </div>
@@ -293,10 +297,10 @@ function ProjectCard({ project, onOpenGallery, selectedSkill }: { project: any; 
             href={project.comingSoon ? '#' : project.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg border text-sm font-medium transition-all
+            className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold transition-all
               ${project.comingSoon 
-                ? 'border-gray-700 text-gray-600 cursor-not-allowed' 
-                : 'border-cyan-400/50 text-cyan-400 hover:bg-cyan-400/10'}`}
+                ? 'border border-border text-muted-foreground cursor-not-allowed' 
+                : 'btn-3d bg-brand-gradient text-white [--btn-depth:4px]'}`}
             onClick={(e) => project.comingSoon && e.preventDefault()}
           >
             {getText("Live Demo →")}
@@ -305,10 +309,10 @@ function ProjectCard({ project, onOpenGallery, selectedSkill }: { project: any; 
             href={project.comingSoon ? '#' : project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex items-center justify-center py-2.5 px-4 rounded-lg border text-sm font-medium transition-all
+            className={`flex items-center justify-center py-2.5 px-4 rounded-xl border text-sm font-semibold transition-all
               ${project.comingSoon 
-                ? 'border-gray-700 text-gray-600 cursor-not-allowed' 
-                : 'border-white/10 text-gray-400 hover:bg-white/5'}`}
+                ? 'border-border text-muted-foreground cursor-not-allowed' 
+                : 'border-border/80 text-foreground hover:border-primary/50 hover:text-primary'}`}
             onClick={(e) => project.comingSoon && e.preventDefault()}
           >
             GitHub

@@ -48,6 +48,8 @@ STRATEGIC BUILDS (PROJECTS):
    - Summary: Log activities in plain language or upload a bill photo; one Gemini call extracts the activity and CO2 estimate. Low-confidence extractions ask the user before saving. Built for PromptWars Virtual.
    - Live: https://carbon-emission-iq.vercel.app
 
+Projects 5-7 are business website templates (self-initiated demo sites, not paid client work). Never describe them as client projects.
+
 5. CarbonShine Detailing (Lead Gen)
    - Stack: Next.js, Tailwind, Formspree
    - Summary: Premium dark mode car detailing studio.

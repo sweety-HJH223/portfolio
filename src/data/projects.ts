@@ -43,7 +43,7 @@ export interface Project {
   reliability?: { title: string; titleKo: string; desc: string; descKo: string }[];
 }
 
-export const projects: Project[] = [
+const projectList: Project[] = [
   {
     icon: '🤖',
     name: 'AI Chatbot Desktop Automation',
@@ -665,3 +665,12 @@ export const projects: Project[] = [
     category: 'AI',
   },
 ];
+
+const displayOrder = [
+  'k-trust', 'interview-lens', 'carbon-iq', 'draping', 'ai-chatbot',
+  'weather-app', 'portfolio', 'web-scraper', 'sales-reporter', 'file-organizer',
+];
+
+export const projects: Project[] = [...projectList].sort(
+  (a, b) => displayOrder.indexOf(a.slug) - displayOrder.indexOf(b.slug)
+);

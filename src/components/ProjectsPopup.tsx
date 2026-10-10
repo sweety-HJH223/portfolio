@@ -34,7 +34,7 @@ const ProjectsPopup: React.FC<ProjectsPopupProps> = ({ isOpen, onClose }) => {
     );
   }
 
-  const categories: ProjectCategory[] = ['All', 'Frontend', 'Python', 'AI', 'Automation'];
+  const categories: ProjectCategory[] = ['All', 'AI', 'Frontend', 'Python', 'Automation'];
 
   const getProjectName = (p: Project) => {
     return (language === 'ko' && p.nameKo) ? p.nameKo : p.name;

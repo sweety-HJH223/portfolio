@@ -119,7 +119,7 @@ const translations: Record<Language, Record<string, string>> = {
 
 Focused on writing maintainable code and learning new technologies through hands-on building, I specialize in deploying agentic tools and bilingual EN/KO platforms.`,
     "Let's Build Something Together": "Let's Build What's Next",
-    "Open to remote internships...": "Open to remote internships, junior developer roles and freelance projects globally. Korean and English communication welcome 🇰🇷",
+    "Open to remote internships...": "Open to remote internships, junior developer roles and freelance projects globally.",
     Email: "Email",
     "KakaoTalk": "KakaoTalk",
     "WhatsApp": "WhatsApp",
@@ -249,7 +249,7 @@ Focused on writing maintainable code and learning new technologies through hands
 
 유지보수가 용이한 코드를 작성하고 직접 부딪치며 새로운 기술을 배우는 것을 즐기며, 특히 에이전틱(Agentic) 도구 배포와 다국어(영어/한국어) 플랫폼 구축에 특화되어 있습니다.`,
     "Let's Build Something Together": "다음을 함께 만들어요",
-    "Open to remote internships...": "원격 인턴십, 주니어 개발자 역할 및 전 세계 프리랜서 프로젝트에 열려 있습니다. 한국어와 영어 소통 환영 🇰🇷",
+    "Open to remote internships...": "원격 인턴십, 주니어 개발자 역할 및 전 세계 프리랜서 프로젝트에 열려 있습니다.",
     Email: "이메일",
     "KakaoTalk": "카카오톡",
     "WhatsApp": "왓츠앱",

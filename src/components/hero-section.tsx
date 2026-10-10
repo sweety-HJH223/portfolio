@@ -3,7 +3,7 @@
 import React, { useRef } from "react"
 import dynamic from "next/dynamic"
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion"
-import { ArrowUpRight, Layers } from "lucide-react"
+import { Layers } from "lucide-react"
 import { useLanguage } from "@/context/LanguageContext";
 import { useUI } from "@/context/UIContext";
 import { TiltCard } from "./fx/TiltCard"
@@ -129,14 +129,6 @@ export function HeroSection() {
               {getText("View My Work")}
               <Layers size={16} className="transition-transform group-hover:translate-x-0.5" />
             </button>
-            <a
-              href="#contact"
-              className="glass group inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:!border-primary/50"
-            >
-              {language === "ko" ? "연락하기" : "Let's Talk"}
-              <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </a>
-
           </motion.div>
 
           {/* Stats */}

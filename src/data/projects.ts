@@ -467,7 +467,7 @@ export const projects: Project[] = [
     overview:
       'AI-powered B2B compliance verification system for South Korean merchants, auditing sellers using a live AI pipeline.',
     overviewKo:
-      '한국 상인을 위한 AI 기반 B2B 컴플라이언스 검증 시스템으로, 실시간 AI 파이프라인을 통해 판매자 신뢰도를 감사합니다.',
+      '한국 상인을 위한 AI 기반 B2B 컴플라이언스 검증 시스템으로, 실시간 AI 파이프라인을 통해 판매자 신뢰도를 검증합니다.',
     whatItDoes: [
       'Audits South Korean merchants using a live AI pipeline',
       'Uses Gemini 2.5 Flash to analyze raw market data and return structured risk reports',
@@ -475,7 +475,7 @@ export const projects: Project[] = [
       'Generates AI compliance summaries for B2B stakeholders',
     ],
     whatItDoesKo: [
-      '실시간 AI 파이프라인을 통한 한국 상인 감사 및 검증',
+      '실시간 AI 파이프라인을 통한 한국 상인 신뢰도 검증',
       'Gemini 2.5 Flash를 활용한 시장 데이터 분석 및 구조화된 리스크 보고서 생성',
       '실시간 신뢰도 점수 산출 및 법적 상태 확인 기능',
       'B2B 이해관계자를 위한 AI 기반 컴플라이언스 요약 보고서 제공',

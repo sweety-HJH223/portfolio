@@ -51,14 +51,21 @@ export function RobotIcon({
   const [blink, setBlink] = useState(false)
 
   useEffect(() => {
+    let frame = 0
     const onMove = (e: MouseEvent) => {
-      setLook({
-        x: Math.max(-4, Math.min(4, (e.clientX / window.innerWidth - 0.5) * 8)),
-        y: Math.max(-2.5, Math.min(2.5, (e.clientY / window.innerHeight - 0.5) * 5)),
+      if (frame) return
+      frame = requestAnimationFrame(() => {
+        frame = 0
+        const x = Math.round(Math.max(-4, Math.min(4, (e.clientX / window.innerWidth - 0.5) * 8)))
+        const y = Math.round(Math.max(-2.5, Math.min(2.5, (e.clientY / window.innerHeight - 0.5) * 5)))
+        setLook(prev => (prev.x === x && prev.y === y ? prev : { x, y }))
       })
     }
-    window.addEventListener("mousemove", onMove)
-    return () => window.removeEventListener("mousemove", onMove)
+    window.addEventListener("mousemove", onMove, { passive: true })
+    return () => {
+      window.removeEventListener("mousemove", onMove)
+      cancelAnimationFrame(frame)
+    }
   }, [])
 
   useEffect(() => {
@@ -86,7 +93,7 @@ export function RobotIcon({
       const heart = (cx: number) =>
         `M${cx} ${44} c-1.6 -3.2 -7.2 -3 -7.2 1.6 c0 3.4 4.4 6.2 7.2 8.4 c2.8 -2.2 7.2 -5 7.2 -8.4 c0 -4.6 -5.6 -4.8 -7.2 -1.6 z`
       return (
-        <g filter={`url(#${id("glow")})`}>
+        <g>
           <motion.path d={heart(38)} fill={EYE_HOT} animate={{ scale: [1, 1.18, 1] }} transition={{ repeat: Infinity, duration: 0.8 }} />
           <motion.path d={heart(62)} fill={EYE_HOT} animate={{ scale: [1, 1.18, 1] }} transition={{ repeat: Infinity, duration: 0.8, delay: 0.1 }} />
         </g>
@@ -98,11 +105,11 @@ export function RobotIcon({
           <path d={`M${cx} 46 m0 -5 a5 5 0 1 1 -4.5 3 a3 3 0 1 1 2.7 -1.8`} stroke={EYE} strokeWidth="2.2" fill="none" strokeLinecap="round" />
         </motion.g>
       )
-      return <g filter={`url(#${id("glow")})`}>{spiral(38, 1)}{spiral(62, -1)}</g>
+      return <g>{spiral(38, 1)}{spiral(62, -1)}</g>
     }
     if (isSleepy) {
       return (
-        <g filter={`url(#${id("glow")})`} stroke={EYE} strokeWidth="2.6" strokeLinecap="round" fill="none">
+        <g stroke={EYE} strokeWidth="2.6" strokeLinecap="round" fill="none">
           <path d="M32 47 Q38 50 44 47" />
           <path d="M56 47 Q62 50 68 47" />
         </g>
@@ -110,7 +117,7 @@ export function RobotIcon({
     }
     if (state === "winking") {
       return (
-        <g filter={`url(#${id("glow")})`}>
+        <g>
           <rect x={34 + ex} y={40 + ey} width="8" height="12" rx="4" fill={EYE} />
           <path d="M56 47 Q62 41 68 47" stroke={EYE} strokeWidth="2.6" strokeLinecap="round" fill="none" />
         </g>
@@ -118,7 +125,7 @@ export function RobotIcon({
     }
     if (isHappy) {
       return (
-        <g filter={`url(#${id("glow")})`} stroke={EYE} strokeWidth="2.8" strokeLinecap="round" fill="none">
+        <g stroke={EYE} strokeWidth="2.8" strokeLinecap="round" fill="none">
           <path d="M32 48 Q38 40 44 48" />
           <path d="M56 48 Q62 40 68 48" />
         </g>
@@ -127,7 +134,7 @@ export function RobotIcon({
     const w = isTyping ? 10 : 8
     const h = blink ? 1.5 : isTyping ? 14 : 12
     return (
-      <g filter={`url(#${id("glow")})`}>
+      <g>
         <rect x={38 - w / 2 + ex} y={46 - h / 2 + ey} width={w} height={h} rx={w / 2} fill={EYE} />
         <rect x={62 - w / 2 + ex} y={46 - h / 2 + ey} width={w} height={h} rx={w / 2} fill={EYE} />
         {!blink && (
@@ -144,12 +151,12 @@ export function RobotIcon({
     if (isSleepy) return <path d="M47 58 Q50 59 53 58" stroke={EYE} strokeWidth="1.8" strokeLinecap="round" fill="none" opacity="0.7" />
     if (isTyping || state === "singing" || state === "eating") {
       return (
-        <motion.ellipse cx="50" cy="58.5" rx="3.2" ry="2.4" fill={EYE} filter={`url(#${id("glow")})`}
+        <motion.ellipse cx="50" cy="58.5" rx="3.2" ry="2.4" fill={EYE}
           animate={{ scaleY: [0.67, 1.42, 0.67] }} transition={{ repeat: Infinity, duration: state === "singing" ? 0.5 : 0.35 }} />
       )
     }
     const d = isHeart || isHappy ? "M44 56.5 Q50 62.5 56 56.5" : "M45.5 57 Q50 60.5 54.5 57"
-    return <path d={d} stroke={EYE} strokeWidth="2.2" strokeLinecap="round" fill="none" filter={`url(#${id("glow")})`} />
+    return <path d={d} stroke={EYE} strokeWidth="2.2" strokeLinecap="round" fill="none" />
   }
 
   const armWave = state === "waving" || state === "greeting"
@@ -191,13 +198,6 @@ export function RobotIcon({
             <stop offset="0%" stopColor="#67e8f9" stopOpacity="0.9" />
             <stop offset="100%" stopColor="#a855f7" stopOpacity="0" />
           </radialGradient>
-          <filter id={id("glow")} x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="1.6" result="b" />
-            <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
-          </filter>
-          <filter id={id("soft")} x="-30%" y="-30%" width="160%" height="160%">
-            <feDropShadow dx="0" dy="3" stdDeviation="3" floodColor="#312e81" floodOpacity="0.35" />
-          </filter>
         </defs>
 
         {/* Ground shadow */}
@@ -215,41 +215,43 @@ export function RobotIcon({
         />
 
         {/* Body */}
-        <g filter={`url(#${id("soft")})`}>
-          <path d="M30 82 C30 70 70 70 70 82 L68 98 C66 108 34 108 32 98 Z" fill={`url(#${id("body")})`} />
-          <ellipse cx="42" cy="80" rx="6" ry="3" fill="#ffffff" opacity="0.8" />
-          {/* Chest light */}
-          <motion.circle
-            cx="50" cy="90" r="4.5" fill={isHeart ? EYE_HOT : EYE} filter={`url(#${id("glow")})`}
-            animate={{ opacity: [0.6, 1, 0.6], scale: isTyping ? [1, 1.25, 1] : [1, 1.1, 1] }}
-            transition={{ repeat: Infinity, duration: isTyping ? 0.4 : 1.6 }}
-          />
-        </g>
+        <path d="M30 85 C30 73 70 73 70 85 L68 101 C66 111 34 111 32 101 Z" fill="#312e81" opacity="0.22" />
+        <path d="M30 82 C30 70 70 70 70 82 L68 98 C66 108 34 108 32 98 Z" fill={`url(#${id("body")})`} />
+        <ellipse cx="42" cy="80" rx="6" ry="3" fill="#ffffff" opacity="0.8" />
+        {/* Chest light */}
+        <circle cx="50" cy="90" r="7" fill={isHeart ? EYE_HOT : EYE} opacity="0.25" />
+        <motion.circle
+          cx="50" cy="90" r="4.5" fill={isHeart ? EYE_HOT : EYE}
+          animate={{ opacity: [0.6, 1, 0.6], scale: isTyping ? [1, 1.25, 1] : [1, 1.1, 1] }}
+          transition={{ repeat: Infinity, duration: isTyping ? 0.4 : 1.6 }}
+        />
 
         {/* Arms (floating mittens) */}
         <motion.g animate={leftArm} transition={{ repeat: Infinity, duration: armWave ? 1 : 2.4 }} style={{ originX: 0.9, originY: 0.1 }}>
-          <ellipse cx="22" cy="90" rx="6" ry="8.5" transform="rotate(18 22 90)" fill={`url(#${id("shell")})`} filter={`url(#${id("soft")})`} />
+          <ellipse cx="22" cy="92.5" rx="6" ry="8.5" transform="rotate(18 22 92.5)" fill="#312e81" opacity="0.2" />
+          <ellipse cx="22" cy="90" rx="6" ry="8.5" transform="rotate(18 22 90)" fill={`url(#${id("shell")})`} />
           <ellipse cx="20.5" cy="86" rx="2" ry="3" fill="#ffffff" opacity="0.9" />
         </motion.g>
         <motion.g animate={rightArm} transition={{ repeat: Infinity, duration: 2.4 }} style={{ originX: 0.1, originY: 0.1 }}>
-          <ellipse cx="78" cy="90" rx="6" ry="8.5" transform="rotate(-18 78 90)" fill={`url(#${id("shell")})`} filter={`url(#${id("soft")})`} />
+          <ellipse cx="78" cy="92.5" rx="6" ry="8.5" transform="rotate(-18 78 92.5)" fill="#312e81" opacity="0.2" />
+          <ellipse cx="78" cy="90" rx="6" ry="8.5" transform="rotate(-18 78 90)" fill={`url(#${id("shell")})`} />
           <ellipse cx="76.5" cy="86" rx="2" ry="3" fill="#ffffff" opacity="0.9" />
         </motion.g>
 
         {/* Antenna */}
         <path d="M50 22 Q50 14 54 9" stroke="#a5b4fc" strokeWidth="2.4" strokeLinecap="round" fill="none" />
+        <circle cx="55" cy="7.5" r="7" fill="#f472b6" opacity="0.25" />
         <motion.circle
-          cx="55" cy="7.5" r="4.6" fill={`url(#${id("bulb")})`} filter={`url(#${id("glow")})`}
+          cx="55" cy="7.5" r="4.6" fill={`url(#${id("bulb")})`}
           animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 1.6 }}
         />
 
         {/* Head */}
-        <g filter={`url(#${id("soft")})`}>
-          {/* Ear pods */}
-          <rect x="9" y="38" width="10" height="18" rx="5" fill={`url(#${id("ear")})`} />
-          <rect x="81" y="38" width="10" height="18" rx="5" fill={`url(#${id("ear")})`} />
-          <rect x="15" y="20" width="70" height="56" rx="28" fill={`url(#${id("shell")})`} />
-        </g>
+        <rect x="15" y="23" width="70" height="56" rx="28" fill="#312e81" opacity="0.22" />
+        {/* Ear pods */}
+        <rect x="9" y="38" width="10" height="18" rx="5" fill={`url(#${id("ear")})`} />
+        <rect x="81" y="38" width="10" height="18" rx="5" fill={`url(#${id("ear")})`} />
+        <rect x="15" y="20" width="70" height="56" rx="28" fill={`url(#${id("shell")})`} />
         {/* Specular highlight */}
         <ellipse cx="34" cy="26" rx="12" ry="4.5" fill="#ffffff" opacity="0.95" transform="rotate(-12 34 26)" />
 

@@ -93,7 +93,7 @@ const ProjectsPopup: React.FC<ProjectsPopupProps> = ({ isOpen, onClose }) => {
                 <h4 className="font-bold text-lg mb-4">{language === 'ko' ? '프로젝트 갤러리' : 'Project Gallery'}</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {selectedProject.images.map((img, index) => (
-                    <img key={index} src={img} alt={`${getProjectName(selectedProject)} screenshot ${index + 1}`} className="w-full h-auto rounded-lg shadow-md cursor-pointer hover:opacity-90 transition-opacity" onClick={() => setLightboxImage(img)} />
+                    <img key={index} src={img} alt={`${getProjectName(selectedProject)} screenshot ${index + 1}`} loading="lazy" decoding="async" className="w-full h-auto rounded-lg shadow-md cursor-pointer hover:opacity-90 transition-opacity" onClick={() => setLightboxImage(img)} />
                   ))}
                 </div>
               </div>

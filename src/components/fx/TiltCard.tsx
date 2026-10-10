@@ -58,7 +58,7 @@ export function TiltCard({ children, className = "", max = 8, glare = true }: Ti
           ? undefined
           : { rotateX, rotateY, scale, transformPerspective: 1100, transformStyle: "preserve-3d" }
       }
-      className={`group/tilt relative will-change-transform ${className}`}
+      className={`group/tilt relative ${className}`}
     >
       {children}
       {glare && (

@@ -36,7 +36,7 @@ STRATEGIC BUILDS (PROJECTS):
    - Stack: Next.js 15, TypeScript, FastAPI, Gemini 2.5 Flash, Pydantic, Firebase, Vercel, Railway
    - Summary: Audits South Korean merchants and returns trust scores, legal status and public sentiment as typed JSON enforced via Pydantic + Gemini response_schema.
    - Live: https://project-4xzgu-blush.vercel.app/
-   - KR Details: 한국 판매자를 감사하고 신뢰도 점수, 법적 상태, 여론을 스키마가 보장된 JSON으로 반환하는 AI 시스템.
+   - KR Details: 한국 판매자를 검증하고 신뢰도 점수, 법적 상태, 여론을 스키마가 보장된 JSON으로 반환하는 AI 시스템.
 
 3. Draping (AI Personal Color Analysis & Outfit Try-On)
    - Stack: Next.js, Gemini API, YouCam API, Cloudinary, Firebase Firestore, SerpAPI
@@ -52,21 +52,21 @@ STRATEGIC BUILDS (PROJECTS):
    - Stack: Next.js, Tailwind, Formspree
    - Summary: Premium dark mode car detailing studio.
    - Details: Full-featured lead generation site with dynamic pricing, testimonial sliders, and automated contact forms.
-   - KR Title: 카본샤인 디테일링 (잠재 고객 확보)
+   - KR Title: CarbonShine Detailing (잠재 고객 확보)
    - KR Details: 디테일링 비즈니스를 위한 리드 생성 사이트. 동적 가격 책정 및 자동 연락처 양식 포함.
 
 6. Paws & Play (E-Commerce)
    - Stack: Next.js, Stripe, Tailwind
    - Summary: Smart pet toy product page.
    - Details: E-commerce concept with Stripe test payment integration and responsive product galleries.
-   - KR Title: 포즈 & 플레이 (이커머스)
+   - KR Title: Paws & Play (이커머스)
    - KR Details: Stripe 결제 연동 및 반응형 제품 갤러리를 갖춘 반려동물 용품 페이지.
 
 7. TaskFlow AI (SaaS)
    - Stack: Next.js, Tailwind, AI
    - Summary: AI-powered freelance automation SaaS.
    - Details: SaaS platform with waitlist system and interactive FAQ components designed to automate workflows.
-   - KR Title: 태스크플로우 AI (SaaS)
+   - KR Title: TaskFlow AI (SaaS)
    - KR Details: AI를 활용한 워크플로우 자동화 SaaS 플랫폼. 대기자 명단 및 FAQ 시스템 포함.
 
 Tone: Professional, expert, but approachable. Use emojis. If asked about these projects, mention their specific stacks and business value.`

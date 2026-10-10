@@ -8,6 +8,7 @@ import {
   Environment,
   Float,
   Lightformer,
+  PerformanceMonitor,
   Sparkles,
   Trail,
 } from "@react-three/drei"
@@ -109,6 +110,7 @@ const glowPointsVertex = /* glsl */ `
 const glowPointsFragment = /* glsl */ `
   uniform vec3 uColor;
   uniform float uOpacity;
+  uniform float uLight;
   varying float vAlpha;
 
   void main() {
@@ -116,7 +118,7 @@ const glowPointsFragment = /* glsl */ `
     if (d > 0.5) discard;
     float glow = pow(1.0 - d * 2.0, 2.2);
     float core = smoothstep(0.16, 0.0, d);
-    gl_FragColor = vec4(mix(uColor, vec3(1.0), core * 0.7), (glow + core * 0.6) * vAlpha * uOpacity);
+    gl_FragColor = vec4(mix(uColor, vec3(1.0), core * 0.7 * (1.0 - uLight)), (glow + core * 0.6) * vAlpha * uOpacity);
     #include <colorspace_fragment>
   }
 `
@@ -157,6 +159,7 @@ function useGlowMaterial(color: string, size: number, opacity: number, dark: boo
           uSize: { value: size * dpr },
           uColor: { value: new THREE.Color(color) },
           uOpacity: { value: opacity },
+          uLight: { value: dark ? 0 : 1 },
           uScan: { value: new THREE.Vector2(0, 0) },
         },
         transparent: true,
@@ -365,9 +368,9 @@ function NeuralCore({ dark }: { dark: boolean }) {
 
   const nodeMaterial = useGlowMaterial(dark ? "#bdf4ff" : "#6d28d9", 30, dark ? 1 : 0.9, dark)
   const pulseMaterial = useGlowMaterial(dark ? "#ffffff" : "#0e7490", 52, 1, dark)
-  const shellMaterial = useFresnelMaterial(dark ? VIOLET : "#7c3aed", dark ? 0.9 : 0.45, 2.6, dark)
-  const coreMaterial = useFresnelMaterial(dark ? CYAN : "#0891b2", dark ? 2.4 : 0.9, 1.1, dark)
-  const coreHalo = useGlowMaterial(dark ? CYAN : "#0891b2", 1250, dark ? 0.75 : 0.35, dark)
+  const shellMaterial = useFresnelMaterial(dark ? VIOLET : "#6d28d9", dark ? 0.9 : 0.8, 2.6, dark)
+  const coreMaterial = useFresnelMaterial(dark ? CYAN : "#0e7490", dark ? 2.4 : 1.3, 1.1, dark)
+  const coreHalo = useGlowMaterial(dark ? CYAN : "#0891b2", 1250, dark ? 0.75 : 0.25, dark)
 
   const pulses = useMemo(() => {
     const rand = seededRandom(17)
@@ -448,8 +451,9 @@ function NeuralCore({ dark }: { dark: boolean }) {
         </bufferGeometry>
         <lineBasicMaterial
           vertexColors
+          color={dark ? "#ffffff" : "#8a8a8a"}
           transparent
-          opacity={dark ? 0.45 : 0.55}
+          opacity={dark ? 0.45 : 0.75}
           depthWrite={false}
           blending={dark ? THREE.AdditiveBlending : THREE.NormalBlending}
           toneMapped={false}
@@ -531,18 +535,21 @@ function Rings({ dark }: { dark: boolean }) {
     a.current.rotation.z += delta * 0.32
     b.current.rotation.z -= delta * 0.22
   })
+  const cyan = dark ? CYAN : "#0891b2"
+  const violet = dark ? VIOLET : "#7c3aed"
+  const pink = dark ? PINK : "#db2777"
   return (
     <group>
       <mesh ref={a} rotation={[Math.PI / 2.4, 0.3, 0]}>
         <torusGeometry args={[2.05, 0.012, 16, 160]} />
-        <meshBasicMaterial color={CYAN} toneMapped={false} transparent opacity={0.85} />
-        <Moon orbit={2.05} angle={0} size={0.13} color={CYAN} dark={dark} />
-        <Moon orbit={2.05} angle={Math.PI * 0.9} size={0.085} color={VIOLET} dark={dark} />
+        <meshBasicMaterial color={cyan} toneMapped={false} transparent opacity={0.85} />
+        <Moon orbit={2.05} angle={0} size={0.13} color={cyan} dark={dark} />
+        <Moon orbit={2.05} angle={Math.PI * 0.9} size={0.085} color={violet} dark={dark} />
       </mesh>
       <mesh ref={b} rotation={[Math.PI / 1.8, -0.5, 0]}>
         <torusGeometry args={[2.45, 0.008, 16, 160]} />
-        <meshBasicMaterial color={VIOLET} toneMapped={false} transparent opacity={0.7} />
-        <Moon orbit={2.45} angle={Math.PI * 0.4} size={0.16} color={PINK} dark={dark} ringed />
+        <meshBasicMaterial color={violet} toneMapped={false} transparent opacity={dark ? 0.7 : 0.8} />
+        <Moon orbit={2.45} angle={Math.PI * 0.4} size={0.16} color={pink} dark={dark} ringed />
       </mesh>
     </group>
   )
@@ -660,27 +667,13 @@ function buildGalaxy({ count, seed, arms, spin, randomness, minScale, maxScale, 
   return { position, color, scale, phase }
 }
 
-const STARS = buildGalaxy({
-  count: 5200,
-  seed: 11,
-  arms: 3,
-  spin: 1.6,
-  randomness: 0.32,
-  minScale: 0.5,
-  maxScale: 2.6,
-  colors: ["#e0fbff", CYAN, VIOLET, PINK],
-})
+const STARS_SHAPE = { count: 4200, seed: 11, arms: 3, spin: 1.6, randomness: 0.32, minScale: 0.5, maxScale: 2.6 }
+const DUST_SHAPE = { count: 420, seed: 29, arms: 3, spin: 1.6, randomness: 0.45, minScale: 4, maxScale: 8 }
 
-const DUST = buildGalaxy({
-  count: 420,
-  seed: 29,
-  arms: 3,
-  spin: 1.6,
-  randomness: 0.45,
-  minScale: 4,
-  maxScale: 8,
-  colors: [CYAN, VIOLET, PINK, PINK],
-})
+const STARS = buildGalaxy({ ...STARS_SHAPE, colors: ["#e0fbff", CYAN, VIOLET, PINK] })
+const DUST = buildGalaxy({ ...DUST_SHAPE, colors: [CYAN, VIOLET, PINK, PINK] })
+const STARS_LIGHT = buildGalaxy({ ...STARS_SHAPE, colors: ["#0e7490", "#0891b2", "#7c3aed", "#db2777"] })
+const DUST_LIGHT = buildGalaxy({ ...DUST_SHAPE, colors: ["#0891b2", "#7c3aed", "#db2777", "#db2777"] })
 
 const galaxyVertex = /* glsl */ `
   uniform float uTime;
@@ -710,6 +703,7 @@ const galaxyVertex = /* glsl */ `
 
 const galaxyFragment = /* glsl */ `
   uniform float uOpacity;
+  uniform float uLight;
   varying vec3 vColor;
   varying float vAlpha;
 
@@ -718,7 +712,7 @@ const galaxyFragment = /* glsl */ `
     if (d > 0.5) discard;
     float glow = pow(1.0 - d * 2.0, 2.4);
     float core = smoothstep(0.14, 0.0, d);
-    gl_FragColor = vec4(mix(vColor, vec3(1.0), core * 0.65), (glow + core * 0.6) * vAlpha * uOpacity);
+    gl_FragColor = vec4(mix(vColor, vec3(1.0), core * 0.65 * (1.0 - uLight)), (glow + core * 0.6) * vAlpha * uOpacity);
     #include <colorspace_fragment>
   }
 `
@@ -733,7 +727,8 @@ function GalaxyLayer({ data, size, opacity, dark }: { data: ReturnType<typeof bu
         uniforms: {
           uTime: { value: 0 },
           uSize: { value: size * dpr },
-          uOpacity: { value: dark ? opacity : opacity * 0.85 },
+          uOpacity: { value: dark ? opacity : Math.min(opacity * 1.3, 1) },
+          uLight: { value: dark ? 0 : 1 },
           uInner: { value: GALAXY_INNER },
           uOuter: { value: GALAXY_OUTER },
         },
@@ -768,8 +763,8 @@ function Galaxy({ dark }: { dark: boolean }) {
   return (
     <group rotation={[0.55, 0, 0.2]}>
       <group ref={spin}>
-        <GalaxyLayer data={DUST} size={30} opacity={dark ? 0.09 : 0.06} dark={dark} />
-        <GalaxyLayer data={STARS} size={26} opacity={1} dark={dark} />
+        <GalaxyLayer key={`dust-${dark}`} data={dark ? DUST : DUST_LIGHT} size={30} opacity={0.09} dark={dark} />
+        <GalaxyLayer key={`stars-${dark}`} data={dark ? STARS : STARS_LIGHT} size={26} opacity={1} dark={dark} />
       </group>
     </group>
   )
@@ -884,30 +879,39 @@ export default function HeroScene() {
   const [visible, setVisible] = useState(true)
   const [reduceMotion, setReduceMotion] = useState(false)
   const [eventSource, setEventSource] = useState<HTMLElement | undefined>(undefined)
+  const [ready, setReady] = useState(false)
+  const [dpr, setDpr] = useState(1.5)
   const { resolvedTheme } = useTheme()
   const dark = resolvedTheme !== "light"
 
   useEffect(() => {
-    setEventSource(document.body)
     setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+    const mount = () => setEventSource(document.body)
+    const hasIdle = typeof window.requestIdleCallback === "function"
+    const idle = hasIdle ? window.requestIdleCallback(mount, { timeout: 1200 }) : setTimeout(mount, 300)
     const el = wrapper.current
-    if (!el) return
     const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: 0 })
-    observer.observe(el)
-    return () => observer.disconnect()
+    if (el) observer.observe(el)
+    return () => {
+      if (hasIdle) window.cancelIdleCallback(idle as number)
+      else clearTimeout(idle)
+      observer.disconnect()
+    }
   }, [])
 
   return (
-    <div ref={wrapper} className="h-full w-full">
+    <div ref={wrapper} className={`h-full w-full transition-opacity duration-1000 ${ready ? "opacity-100" : "opacity-0"}`}>
       {eventSource && (
         <Canvas
+          onCreated={() => requestAnimationFrame(() => setReady(true))}
           eventSource={eventSource}
           eventPrefix="client"
-          dpr={[1, 1.75]}
+          dpr={[1, dpr]}
           camera={{ position: [0, 0, 7.4], fov: 42 }}
           gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
           frameloop={!visible ? "never" : reduceMotion ? "demand" : "always"}
         >
+          <PerformanceMonitor onDecline={() => setDpr(1)} onIncline={() => setDpr(1.5)} flipflops={3} onFallback={() => setDpr(1)} />
           <ambientLight intensity={dark ? 0.3 : 0.6} />
           <directionalLight position={[3, 4, 5]} intensity={1.2} />
           <Studio />
@@ -920,7 +924,7 @@ export default function HeroScene() {
             <Sirius dark={dark} />
           </PointerRig>
           <Comet dark={dark} />
-          <Sparkles count={70} scale={[7, 5, 4]} size={2.2} speed={0.35} color={dark ? CYAN : VIOLET} opacity={0.8} />
+          <Sparkles count={70} scale={[7, 5, 4]} size={2.2} speed={0.35} color={dark ? CYAN : "#7c3aed"} opacity={0.8} />
         </Canvas>
       )}
     </div>

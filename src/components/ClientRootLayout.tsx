@@ -13,6 +13,7 @@ import { ThemeProvider } from "next-themes";
 import { AuroraBackground } from "@/components/fx/AuroraBackground";
 import { CursorGlow } from "@/components/fx/CursorGlow";
 import { ScrollProgress } from "@/components/fx/ScrollProgress";
+import { SmoothScroll } from "@/components/fx/SmoothScroll";
 
 interface ClientRootLayoutProps {
   children: ReactNode;
@@ -32,6 +33,7 @@ export default function ClientRootLayout({ children }: ClientRootLayoutProps) {
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
       <MotionConfig reducedMotion="user">
+        <SmoothScroll />
         <AuroraBackground />
         <CursorGlow />
         <ScrollProgress />

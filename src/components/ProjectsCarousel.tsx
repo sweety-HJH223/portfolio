@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import { Lightbox } from './Lightbox';
 import { XIcon, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -232,10 +233,13 @@ function ProjectCard({ project, onOpenGallery, selectedSkill }: { project: any; 
     >
       {/* Top Image - Flexible Aspect Ratio */}
       <div className="relative w-full shrink-0 overflow-hidden cursor-pointer" onClick={onOpenGallery}>
-        <img 
-          src={project.image} 
+        <Image
+          src={project.image}
           alt={project.name}
-          className="w-full h-auto display-block transition-transform duration-500 group-hover:scale-105"
+          width={1920}
+          height={900}
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="block w-full h-auto transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
           <span className="bg-white text-slate-900 px-5 py-2 rounded-full text-sm font-bold shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform">

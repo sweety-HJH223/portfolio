@@ -30,7 +30,7 @@ export default function Navigation() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
     }
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
@@ -55,16 +55,13 @@ export default function Navigation() {
             <div className="flex-1 flex justify-start">
               <Link
                 href="/"
-                className="group flex items-center gap-2 text-xl font-bold tracking-tighter"
+                className="group flex items-center gap-2 text-lg font-bold tracking-tighter"
               >
-                <div className="flex items-center font-display text-foreground transition-colors">
-                  <span className="text-gradient">{"<"}</span>
-                  dev
-                  <span className="text-gradient">{" />"}</span>
+                <div className="flex items-center font-display">
+                  <span className="text-primary/70 transition-colors group-hover:text-primary">{"<"}</span>
+                  <span className="text-gradient">SweetyCodes</span>
+                  <span className="text-primary/70 transition-colors group-hover:text-primary">{" />"}</span>
                 </div>
-                <span className="hidden sm:inline-block text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                  SweetyCodes
-                </span>
               </Link>
             </div>
 
@@ -112,7 +109,7 @@ export default function Navigation() {
                     rel="noopener noreferrer"
                     className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors relative group"
                   >
-                    Blog
+                    {language === "ko" ? "블로그" : "Blog"}
                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
                   </Link>
                 </li>
@@ -179,7 +176,7 @@ export default function Navigation() {
                   onClick={() => setIsResumeOpen(true)}
                   className="btn-3d ml-2 inline-flex items-center gap-2 rounded-xl bg-brand-gradient px-4 py-2 text-sm font-semibold text-white [--btn-depth:3px]"
                 >
-                 Resume
+                  {getText("Resume")}
                 </button>
               </div>
 
@@ -269,7 +266,7 @@ export default function Navigation() {
                     }}
                     className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-brand-gradient px-5 py-2.5 text-sm font-semibold text-white"
                   >
-                    Resume
+                    {getText("Resume")}
                   </button>
                 </li>
               </ul>

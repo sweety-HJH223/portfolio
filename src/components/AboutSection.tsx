@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react"
 import Image from "next/image"
+import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion"
 import Link from "next/link"
 import {
   ArrowUpRight,
@@ -82,7 +83,7 @@ const localAboutTranslations: Record<string, any> = {
     bio1: "AI 엔지니어이자 풀스택 개발자입니다. 실제 환경에서 제대로 작동하는 AI 시스템 — 멀티 에이전트 파이프라인, 스키마로 출력이 보장되는 LLM 앱 — 과 이를 실제 사용자에게 전달하는 풀스택 제품을 만듭니다.",
     bio2: "Handshake AI를 통해 AI 평가 엔지니어로 일하며 AI 코딩 에이전트를 평가하는 에이전틱 벤치마크 태스크를 설계하고 있습니다. 개인 프로젝트로는 5개 에이전트로 구성된 면접 시뮬레이터 InterviewLens와 Gemini에서 타입이 지정된 JSON을 반환하는 컴플라이언스 포털 K-Trust를 Next.js, TypeScript, Python, FastAPI로 처음부터 끝까지 직접 구축했습니다. 재시도와 폴백, 신뢰도 기반 저장, 실제 모델 실패와 버그를 구분하는 평가까지 — 무엇보다 신뢰성을 중요하게 생각합니다.",
     factEdu: "학력",
-    factEduValue: "컴퓨터공학 학사 · 학점 8.41",
+    factEduValue: "컴퓨터과학 학사 · 학점 8.41",
     factLoc: "위치",
     factLocValue: "전 세계 원격 근무 가능",
     factStatus: "상태",
@@ -104,10 +105,10 @@ const localAboutTranslations: Record<string, any> = {
     f6Desc: "FastAPI + Pydantic 서비스, Firebase & SQL 데이터",
     journeyTitle: "나의 여정",
     journey: [
-      { year: "2023", title: "컴퓨터공학 학사 시작", sub: "모든 것이 시작된 곳", icon: "🎓" },
+      { year: "2023", title: "컴퓨터과학 학사 과정 시작", sub: "모든 것이 시작된 곳", icon: "🎓" },
       { year: "2024", title: "프론트엔드 개발 발견", sub: "첫 웹 프로젝트를 빌드하며 UI와 사랑에 빠지다", icon: "⚡" },
       { year: "2025", title: "파이썬 및 AI 심층 학습", sub: "100시간 이상 독학 + KMOOC 데이터 과학 및 AI 수료", icon: "🐍" },
-      { year: "2026년 1월", title: "해커톤 3회 수상", sub: "코드 릴레이 1위 · 솔루션 스프린트 1위 · 버그 버스터 2위", icon: "🏆" },
+      { year: "2026년 1월", title: "해커톤 3회 수상", sub: "Code Relay 1위 · Solution Sprint 1위 · Bug Buster 2위", icon: "🏆" },
       { year: "2026", title: "졸업 및 AI 앱 출시", sub: "학점 8.41 — InterviewLens, K-Trust, Draping, CarbonIQ", icon: "🚀" },
       { year: "2026년 7월", title: "AI 평가 엔지니어", sub: "AI 코딩 에이전트를 평가하는 벤치마크 구축 — Handshake AI", icon: "🤖" },
     ],
@@ -245,7 +246,7 @@ const TerminalBio = () => {
 }
 
 // --- Data ---
-type Skill = { name: string; icon: string; tooltip: string; match?: string }
+type Skill = { name: string; icon: string; tooltip: string; tooltipKo: string; match?: string }
 
 const skillCategories: { key: string; tone: string; wide?: boolean; skills: Skill[] }[] = [
   {
@@ -253,18 +254,18 @@ const skillCategories: { key: string; tone: string; wide?: boolean; skills: Skil
     tone: "from-violet-500 to-fuchsia-500",
     wide: true,
     skills: [
-      { name: "Gemini API", icon: "💎", tooltip: "2.5 Flash / Flash Lite — InterviewLens, K-Trust, Draping, CarbonIQ", match: "Gemini" },
-      { name: "OpenAI API", icon: "🧠", tooltip: "Desktop automation AI bot" },
-      { name: "Google AI Studio", icon: "🧪", tooltip: "Prompt prototyping for Gemini apps" },
-      { name: "Prompt Engineering", icon: "📐", tooltip: "Rubrics and prompts for K-Trust & InterviewLens" },
-      { name: "Structured Output", icon: "🧾", tooltip: "Pydantic + response_schema in K-Trust", match: "Pydantic" },
-      { name: "Function Calling & Tool Use", icon: "🛠️", tooltip: "Tools for AI agents" },
-      { name: "Multimodal (Vision + PDF)", icon: "🖼️", tooltip: "Selfie analysis in Draping, resume PDFs in InterviewLens" },
-      { name: "Long Context Optimization", icon: "📜", tooltip: "Fitting resumes, history and rubrics into one context" },
-      { name: "RAG", icon: "📚", tooltip: "Retrieval-augmented generation over your own data" },
-      { name: "Vector Databases & Embeddings", icon: "🧭", tooltip: "Semantic search for RAG pipelines" },
-      { name: "LangChain", icon: "🦜", tooltip: "Chains, retrievers and tool-using agents" },
-      { name: "MCP", icon: "🔌", tooltip: "Model Context Protocol — connecting LLMs to tools and data" },
+      { name: "Gemini API", icon: "💎", tooltip: "2.5 Flash / Flash Lite — InterviewLens, K-Trust, Draping, CarbonIQ", tooltipKo: "2.5 Flash / Flash Lite — InterviewLens, K-Trust, Draping, CarbonIQ", match: "Gemini" },
+      { name: "OpenAI API", icon: "🧠", tooltip: "Desktop automation AI bot", tooltipKo: "데스크톱 자동화 AI 봇" },
+      { name: "Google AI Studio", icon: "🧪", tooltip: "Prompt prototyping for Gemini apps", tooltipKo: "Gemini 앱용 프롬프트 프로토타이핑" },
+      { name: "Prompt Engineering", icon: "📐", tooltip: "Rubrics and prompts for K-Trust & InterviewLens", tooltipKo: "K-Trust와 InterviewLens의 루브릭 및 프롬프트 설계" },
+      { name: "Structured Output", icon: "🧾", tooltip: "Pydantic + response_schema in K-Trust", tooltipKo: "K-Trust의 Pydantic + response_schema", match: "Pydantic" },
+      { name: "Function Calling & Tool Use", icon: "🛠️", tooltip: "Tools for AI agents", tooltipKo: "AI 에이전트용 도구 연동" },
+      { name: "Multimodal (Vision + PDF)", icon: "🖼️", tooltip: "Selfie analysis in Draping, resume PDFs in InterviewLens", tooltipKo: "Draping의 셀카 분석, InterviewLens의 이력서 PDF 처리" },
+      { name: "Long Context Optimization", icon: "📜", tooltip: "Fitting resumes, history and rubrics into one context", tooltipKo: "이력서, 기록, 루브릭을 하나의 컨텍스트에 담는 최적화" },
+      { name: "RAG", icon: "📚", tooltip: "Retrieval-augmented generation over your own data", tooltipKo: "자체 데이터 기반 검색 증강 생성" },
+      { name: "Vector Databases & Embeddings", icon: "🧭", tooltip: "Semantic search for RAG pipelines", tooltipKo: "RAG 파이프라인용 시맨틱 검색" },
+      { name: "LangChain", icon: "🦜", tooltip: "Chains, retrievers and tool-using agents", tooltipKo: "체인, 리트리버, 도구 사용 에이전트" },
+      { name: "MCP", icon: "🔌", tooltip: "Model Context Protocol — connecting LLMs to tools and data", tooltipKo: "Model Context Protocol — LLM과 도구·데이터 연결" },
     ],
   },
   {
@@ -272,87 +273,87 @@ const skillCategories: { key: string; tone: string; wide?: boolean; skills: Skil
     tone: "from-fuchsia-500 to-pink-500",
     wide: true,
     skills: [
-      { name: "Multi-Agent Systems", icon: "🤖", tooltip: "5-agent pipeline in InterviewLens", match: "AI Agents" },
-      { name: "Agent Memory & State", icon: "🧠", tooltip: "Candidate memory that compounds across sessions" },
-      { name: "Retries & Fallbacks", icon: "🔁", tooltip: "Exponential backoff so AI failures never crash a session" },
-      { name: "AI Evaluation", icon: "📊", tooltip: "Agentic benchmarks at Handshake AI" },
-      { name: "Automated Verifiers", icon: "✅", tooltip: "Reference solutions + verifiers for coding-agent tasks" },
-      { name: "pass@k Testing", icon: "🎯", tooltip: "pass@2 / pass@5 agent trial gating" },
-      { name: "LLM Evals & Tracing", icon: "🔬", tooltip: "Scoring LLM output and tracing every step of a chain" },
-      { name: "Agent Observability", icon: "🔭", tooltip: "Real-time agent pipeline logging" },
-      { name: "Agent Security", icon: "🛡️", tooltip: "Safe tool use and input handling for agents" },
+      { name: "Multi-Agent Systems", icon: "🤖", tooltip: "5-agent pipeline in InterviewLens", tooltipKo: "InterviewLens의 5-에이전트 파이프라인", match: "AI Agents" },
+      { name: "Agent Memory & State", icon: "🧠", tooltip: "Candidate memory that compounds across sessions", tooltipKo: "세션마다 누적되는 지원자 메모리" },
+      { name: "Retries & Fallbacks", icon: "🔁", tooltip: "Exponential backoff so AI failures never crash a session", tooltipKo: "지수 백오프로 AI 오류가 세션을 중단시키지 않도록 처리" },
+      { name: "AI Evaluation", icon: "📊", tooltip: "Agentic benchmarks at Handshake AI", tooltipKo: "Handshake AI의 에이전틱 벤치마크" },
+      { name: "Automated Verifiers", icon: "✅", tooltip: "Reference solutions + verifiers for coding-agent tasks", tooltipKo: "코딩 에이전트 태스크용 참조 솔루션 + 검증기" },
+      { name: "pass@k Testing", icon: "🎯", tooltip: "pass@2 / pass@5 agent trial gating", tooltipKo: "pass@2 / pass@5 에이전트 시험 게이팅" },
+      { name: "LLM Evals & Tracing", icon: "🔬", tooltip: "Scoring LLM output and tracing every step of a chain", tooltipKo: "LLM 출력 평가 및 체인 전 단계 트레이싱" },
+      { name: "Agent Observability", icon: "🔭", tooltip: "Real-time agent pipeline logging", tooltipKo: "실시간 에이전트 파이프라인 로깅" },
+      { name: "Agent Security", icon: "🛡️", tooltip: "Safe tool use and input handling for agents", tooltipKo: "에이전트의 안전한 도구 사용 및 입력 처리" },
     ],
   },
   {
     key: "catLang",
     tone: "from-sky-400 to-indigo-500",
     skills: [
-      { name: "TypeScript", icon: "📘", tooltip: "InterviewLens, CarbonIQ, this portfolio" },
-      { name: "JavaScript", icon: "🟨", tooltip: "ES6+" },
-      { name: "Python", icon: "🐍", tooltip: "AI backends, automation, scraping" },
-      { name: "SQL", icon: "🗄️", tooltip: "SQLite and relational data" },
-      { name: "HTML5 / CSS3", icon: "🌐", tooltip: "Semantic, responsive markup", match: "HTML" },
-      { name: "C++", icon: "➕", tooltip: "University coursework" },
+      { name: "TypeScript", icon: "📘", tooltip: "InterviewLens, CarbonIQ, this portfolio", tooltipKo: "InterviewLens, CarbonIQ, 이 포트폴리오" },
+      { name: "JavaScript", icon: "🟨", tooltip: "ES6+", tooltipKo: "ES6+" },
+      { name: "Python", icon: "🐍", tooltip: "AI backends, automation, scraping", tooltipKo: "AI 백엔드, 자동화, 스크래핑" },
+      { name: "SQL", icon: "🗄️", tooltip: "SQLite and relational data", tooltipKo: "SQLite 및 관계형 데이터" },
+      { name: "HTML5 / CSS3", icon: "🌐", tooltip: "Semantic, responsive markup", tooltipKo: "시맨틱 · 반응형 마크업", match: "HTML" },
+      { name: "C++", icon: "➕", tooltip: "University coursework", tooltipKo: "대학 전공 수업" },
     ],
   },
   {
     key: "catFrontend",
     tone: "from-cyan-400 to-blue-500",
     skills: [
-      { name: "Next.js 15/16", icon: "▲", tooltip: "All recent AI apps", match: "Next.js" },
-      { name: "React", icon: "⚛️", tooltip: "Every frontend project" },
-      { name: "Tailwind CSS", icon: "🎨", tooltip: "Styling across all apps" },
-      { name: "shadcn/ui", icon: "🧩", tooltip: "Accessible UI components" },
-      { name: "Framer Motion", icon: "🎬", tooltip: "Animations in this portfolio" },
-      { name: "Recharts", icon: "📈", tooltip: "10-year projection chart in CarbonIQ" },
+      { name: "Next.js 15/16", icon: "▲", tooltip: "All recent AI apps", tooltipKo: "최근 모든 AI 앱", match: "Next.js" },
+      { name: "React", icon: "⚛️", tooltip: "Every frontend project", tooltipKo: "모든 프론트엔드 프로젝트" },
+      { name: "Tailwind CSS", icon: "🎨", tooltip: "Styling across all apps", tooltipKo: "모든 앱의 스타일링" },
+      { name: "shadcn/ui", icon: "🧩", tooltip: "Accessible UI components", tooltipKo: "접근성 높은 UI 컴포넌트" },
+      { name: "Framer Motion", icon: "🎬", tooltip: "Animations in this portfolio", tooltipKo: "이 포트폴리오의 애니메이션" },
+      { name: "Recharts", icon: "📈", tooltip: "10-year projection chart in CarbonIQ", tooltipKo: "CarbonIQ의 10년 예측 차트" },
     ],
   },
   {
     key: "catBackend",
     tone: "from-emerald-400 to-teal-500",
     skills: [
-      { name: "FastAPI", icon: "⚡", tooltip: "K-Trust backend on Railway" },
-      { name: "REST APIs", icon: "🔌", tooltip: "Designing and consuming APIs" },
-      { name: "Node.js", icon: "🖥️", tooltip: "Backend projects" },
-      { name: "Flask", icon: "🧪", tooltip: "Python web backends" },
-      { name: "Firebase", icon: "🔥", tooltip: "Firestore + Auth in InterviewLens and CarbonIQ" },
-      { name: "SQLite", icon: "🗃️", tooltip: "Lightweight relational storage" },
+      { name: "FastAPI", icon: "⚡", tooltip: "K-Trust backend on Railway", tooltipKo: "Railway에 배포한 K-Trust 백엔드" },
+      { name: "REST APIs", icon: "🔌", tooltip: "Designing and consuming APIs", tooltipKo: "API 설계 및 연동" },
+      { name: "Node.js", icon: "🖥️", tooltip: "Backend projects", tooltipKo: "백엔드 프로젝트" },
+      { name: "Flask", icon: "🧪", tooltip: "Python web backends", tooltipKo: "Python 웹 백엔드" },
+      { name: "Firebase", icon: "🔥", tooltip: "Firestore + Auth in InterviewLens and CarbonIQ", tooltipKo: "InterviewLens와 CarbonIQ의 Firestore + 인증" },
+      { name: "SQLite", icon: "🗃️", tooltip: "Lightweight relational storage", tooltipKo: "경량 관계형 저장소" },
     ],
   },
   {
     key: "catPython",
     tone: "from-amber-400 to-orange-500",
     skills: [
-      { name: "Pydantic", icon: "✅", tooltip: "Typed LLM output in K-Trust" },
-      { name: "pytest", icon: "🧪", tooltip: "Unit and integration tests for Python code" },
-      { name: "pandas", icon: "🐼", tooltip: "Sales Reporter + Scraper" },
-      { name: "NumPy", icon: "🔢", tooltip: "Numerical data processing" },
-      { name: "requests", icon: "📡", tooltip: "HTTP clients and API calls" },
-      { name: "BeautifulSoup", icon: "🔍", tooltip: "Web Scraper project" },
-      { name: "Selenium", icon: "🕹️", tooltip: "Browser automation" },
-      { name: "Playwright", icon: "🎭", tooltip: "Browser automation" },
+      { name: "Pydantic", icon: "✅", tooltip: "Typed LLM output in K-Trust", tooltipKo: "K-Trust의 타입 지정 LLM 출력" },
+      { name: "pytest", icon: "🧪", tooltip: "Unit and integration tests for Python code", tooltipKo: "Python 코드의 단위 및 통합 테스트" },
+      { name: "pandas", icon: "🐼", tooltip: "Sales Reporter + Scraper", tooltipKo: "Sales Reporter + Scraper" },
+      { name: "NumPy", icon: "🔢", tooltip: "Numerical data processing", tooltipKo: "수치 데이터 처리" },
+      { name: "requests", icon: "📡", tooltip: "HTTP clients and API calls", tooltipKo: "HTTP 클라이언트 및 API 호출" },
+      { name: "BeautifulSoup", icon: "🔍", tooltip: "Web Scraper project", tooltipKo: "웹 스크래퍼 프로젝트" },
+      { name: "Selenium", icon: "🕹️", tooltip: "Browser automation", tooltipKo: "브라우저 자동화" },
+      { name: "Playwright", icon: "🎭", tooltip: "Browser automation", tooltipKo: "브라우저 자동화" },
     ],
   },
   {
     key: "catTools",
     tone: "from-pink-400 to-rose-500",
     skills: [
-      { name: "Git/GitHub", icon: "🐙", tooltip: "Every project, every day" },
-      { name: "Docker", icon: "🐳", tooltip: "Dockerized benchmark environments" },
-      { name: "Vercel", icon: "🚀", tooltip: "Frontend deployments" },
-      { name: "Railway", icon: "🚂", tooltip: "FastAPI deployment for K-Trust" },
-      { name: "Netlify", icon: "🌍", tooltip: "Static site deployments" },
-      { name: "Cloudinary", icon: "☁️", tooltip: "Image pipeline in Draping" },
+      { name: "Git/GitHub", icon: "🐙", tooltip: "Every project, every day", tooltipKo: "모든 프로젝트에서 매일 사용" },
+      { name: "Docker", icon: "🐳", tooltip: "Dockerized benchmark environments", tooltipKo: "Docker 기반 벤치마크 환경" },
+      { name: "Vercel", icon: "🚀", tooltip: "Frontend deployments", tooltipKo: "프론트엔드 배포" },
+      { name: "Railway", icon: "🚂", tooltip: "FastAPI deployment for K-Trust", tooltipKo: "K-Trust의 FastAPI 배포" },
+      { name: "Netlify", icon: "🌍", tooltip: "Static site deployments", tooltipKo: "정적 사이트 배포" },
+      { name: "Cloudinary", icon: "☁️", tooltip: "Image pipeline in Draping", tooltipKo: "Draping의 이미지 파이프라인" },
     ],
   },
   {
     key: "catAITools",
     tone: "from-violet-400 to-indigo-500",
     skills: [
-      { name: "Cursor", icon: "⚡", tooltip: "AI-powered code editor" },
-      { name: "Claude AI", icon: "🤖", tooltip: "Daily AI coding assistant" },
-      { name: "GitHub Copilot", icon: "🧑‍✈️", tooltip: "AI pair programming" },
-      { name: "v0.dev", icon: "✨", tooltip: "AI UI prototyping" },
+      { name: "Cursor", icon: "⚡", tooltip: "AI-powered code editor", tooltipKo: "AI 기반 코드 에디터" },
+      { name: "Claude AI", icon: "🤖", tooltip: "Daily AI coding assistant", tooltipKo: "매일 쓰는 AI 코딩 어시스턴트" },
+      { name: "GitHub Copilot", icon: "🧑‍✈️", tooltip: "AI pair programming", tooltipKo: "AI 페어 프로그래밍" },
+      { name: "v0.dev", icon: "✨", tooltip: "AI UI prototyping", tooltipKo: "AI UI 프로토타이핑" },
     ],
   },
 ]
@@ -361,7 +362,7 @@ const highlights = [
   { en: "Live AI apps", ko: "배포된 AI 앱", subEn: "InterviewLens, K-Trust, Draping and CarbonIQ — all live and on GitHub", subKo: "InterviewLens, K-Trust, Draping, CarbonIQ — 모두 배포 및 GitHub 공개", icon: Rocket, tone: "from-violet-500 to-fuchsia-500" },
   { en: "Multi-agent pipelines", ko: "멀티 에이전트 파이프라인", subEn: "Five agents with memory, retries and fallbacks", subKo: "메모리, 재시도, 폴백을 갖춘 다섯 개의 에이전트", icon: Bot, tone: "from-cyan-400 to-blue-500" },
   { en: "Hackathon podiums", ko: "해커톤 입상", subEn: "Two 1st places and a 2nd, in one month", subKo: "한 달 동안 1위 2회, 2위 1회", icon: Trophy, tone: "from-amber-400 to-orange-500" },
-  { en: "Self-taught in AI", ko: "AI 자기주도 학습", subEn: "100+ hours, plus the KMOOC Data Science & AI certificate", subKo: "100시간 이상 + KMOOC 데이터 사이언스 & AI 수료", icon: BookOpen, tone: "from-emerald-400 to-cyan-500" },
+  { en: "Self-taught in AI", ko: "AI 자기주도 학습", subEn: "100+ hours, plus the KMOOC Data Science & AI certificate", subKo: "100시간 이상 + KMOOC 데이터 과학 및 AI 수료", icon: BookOpen, tone: "from-emerald-400 to-cyan-500" },
 ]
 
 const aiBuilds = [
@@ -381,7 +382,7 @@ const aiBuilds = [
     icon: "⚖️",
     tone: "from-cyan-400 to-blue-500",
     en: "Audits Korean merchants and returns trust scores as schema-enforced JSON.",
-    ko: "한국 판매자를 감사하고 스키마가 보장된 JSON으로 신뢰 점수를 반환.",
+    ko: "한국 판매자를 검증하고 스키마가 보장된 JSON으로 신뢰 점수를 반환.",
     stack: ["FastAPI", "Pydantic", "Gemini"],
     url: "https://project-4xzgu-blush.vercel.app/",
     slug: "k-trust",
@@ -422,6 +423,7 @@ const learning = [
 // --- Building blocks ---
 const SkillTag = ({ skill }: { skill: Skill }) => {
   const { selectedSkill, setSelectedSkill, openProjectsPopup } = useUI()
+  const { language } = useLanguage()
   const filter = skill.match ?? skill.name
   const term = filter.toLowerCase()
   const clickable = projects.some((p) => p.techStack.some((tech) => tech.toLowerCase().includes(term)))
@@ -454,7 +456,7 @@ const SkillTag = ({ skill }: { skill: Skill }) => {
         <span className="text-[13px] font-semibold tracking-wide">{skill.name}</span>
       </div>
       <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max max-w-[180px] px-2 py-1 bg-popover text-popover-foreground text-[10px] rounded border border-border/50 opacity-0 group-hover/tag:opacity-100 transition-opacity pointer-events-none z-50 shadow-xl">
-        {skill.tooltip}
+        {language === "ko" ? skill.tooltipKo : skill.tooltip}
       </div>
     </div>
   )
@@ -473,9 +475,16 @@ const SkillGroup = ({ label, tone, skills, highlight = false }: { label: string;
 )
 
 const BentoBox = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
-  <div className={`glass gradient-border relative p-6 md:p-7 rounded-[2rem] hover:-translate-y-1 hover:shadow-[0_30px_60px_-25px_hsl(var(--accent)/0.4)] transition-all duration-500 group ${className}`}>
+  <motion.div
+    initial={{ opacity: 0, y: 48, scale: 0.97 }}
+    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+    whileHover={{ y: -4 }}
+    viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+    transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+    className={`glass gradient-border relative p-6 md:p-7 rounded-[2rem] hover:shadow-[0_30px_60px_-25px_hsl(var(--accent)/0.4)] transition-shadow duration-500 group ${className}`}
+  >
     {children}
-  </div>
+  </motion.div>
 )
 
 const TileHeading = ({ children }: { children: React.ReactNode }) => (
@@ -486,9 +495,12 @@ const TileHeading = ({ children }: { children: React.ReactNode }) => (
 )
 
 export default function AboutSection() {
-  const [isVisible, setIsVisible] = useState(false)
   const [terminalKey, setTerminalKey] = useState(0)
   const sectionRef = useRef<HTMLElement>(null)
+  const journeyRef = useRef<HTMLOListElement>(null)
+  const reduceMotion = useReducedMotion()
+  const { scrollYProgress: journeyProgress } = useScroll({ target: journeyRef, offset: ["start 85%", "end 55%"] })
+  const journeyLine = useSpring(journeyProgress, { stiffness: 120, damping: 30, restDelta: 0.001 })
   const { getText, language } = useLanguage()
   const { openProjectsPopup, setSelectedSkill } = useUI()
 
@@ -499,10 +511,7 @@ export default function AboutSection() {
     const currentRef = sectionRef.current
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-          setTerminalKey(prev => prev + 1)
-        }
+        if (entry.isIntersecting) setTerminalKey(prev => prev + 1)
       },
       { threshold: 0, rootMargin: "0px 0px -15% 0px" }
     )
@@ -536,7 +545,7 @@ export default function AboutSection() {
     <section id="about" ref={sectionRef} className="scroll-mt-24 py-24 px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <SectionHeading index="01" title={getText("About")} />
-        <div className={`grid grid-cols-1 md:grid-cols-6 gap-6 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
 
           {/* Profile */}
           <BentoBox className="md:col-span-2 flex flex-col items-center justify-center text-center">
@@ -620,11 +629,24 @@ export default function AboutSection() {
           {/* Journey */}
           <BentoBox className="md:col-span-3">
             <TileHeading>{t.journeyTitle}</TileHeading>
-            <ol className="relative space-y-3 before:absolute before:left-[19px] before:top-3 before:bottom-3 before:w-[2px] before:rounded-full before:bg-gradient-to-b before:from-primary before:via-accent before:to-[hsl(var(--pink))]">
+            <ol ref={journeyRef} className="relative space-y-3">
+              <span aria-hidden className="absolute bottom-3 left-[19px] top-3 w-[2px] rounded-full bg-border/50" />
+              <motion.span
+                aria-hidden
+                style={reduceMotion ? undefined : { scaleY: journeyLine }}
+                className="absolute bottom-3 left-[19px] top-3 w-[2px] origin-top rounded-full bg-gradient-to-b from-primary via-accent to-[hsl(var(--pink))] shadow-[0_0_10px_hsl(var(--accent)/0.6)]"
+              />
               {t.journey.map((step: { year: string; title: string; sub: string; icon: string }, idx: number) => {
                 const isLast = idx === t.journey.length - 1
                 return (
-                  <li key={idx} className="group/step relative flex items-start gap-4">
+                  <motion.li
+                    key={idx}
+                    initial={{ opacity: 0, x: -24 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "0px 0px -15% 0px" }}
+                    transition={{ duration: 0.5, delay: idx * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                    className="group/step relative flex items-start gap-4"
+                  >
                     <span className={`relative z-10 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-lg transition-all duration-300 group-hover/step:scale-110 ${isLast ? "border-transparent bg-brand-gradient shadow-[0_0_24px_hsl(var(--accent)/0.8)]" : "border-primary/40 bg-background shadow-[0_0_14px_hsl(var(--primary)/0.35)]"}`}>
                       {step.icon}
                       {isLast && <span className="absolute inset-0 rounded-full bg-brand-gradient opacity-60 animate-ping" />}
@@ -636,7 +658,7 @@ export default function AboutSection() {
                       <p className="font-display text-[15px] font-semibold leading-tight text-foreground">{step.title}</p>
                       <p className="mt-1 text-xs leading-snug text-muted-foreground">{step.sub}</p>
                     </div>
-                  </li>
+                  </motion.li>
                 )
               })}
             </ol>

@@ -9,6 +9,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swa
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-display", display: "swap" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://portfolio-one-taupe-42.vercel.app'),
   title: 'SweetyCodes | AI Engineer & Full-Stack Developer',
   description: 'Portfolio of Subhashree Behera (Sweety) — AI engineer and full-stack developer. AI Evaluation Engineer via Handshake AI, building multi-agent systems, LLM apps with structured output and AI agent benchmarks, shipped with Next.js, TypeScript, Python and FastAPI.',
   keywords: ['SweetyCodes', 'Subhashree Behera', 'AI Engineer', 'AI Evaluation Engineer', 'Full-Stack Developer', 'Multi-Agent Systems', 'LLM Applications', 'AI Agents', 'Structured Output', 'Gemini API', 'Next.js', 'TypeScript', 'Python', 'FastAPI', 'Remote Developer'],

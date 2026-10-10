@@ -8,27 +8,35 @@ import { Reveal } from "./fx/Reveal"
 import { SectionHeading } from "./fx/SectionHeading"
 
 const achievements = [
-  { title: "1st Place Solution Sprint", org: "Intercollege Hackathon", date: "Jan 2026", type: "Team" },
-  { title: "1st Place Code Relay", org: "Intercollege Hackathon", date: "Jan 2026", type: "Team" },
-  { title: "2nd Place Bug Buster", org: "Intercollege Hackathon", date: "Jan 2026", type: "Individual" },
-  { title: "Keynote Speaker Blockchain Seminar", org: "Khallikote University", date: "Year 1", type: "" },
+  { place: 1, title: "1st Place Solution Sprint", titleKo: "Solution Sprint 1위", org: "Intercollege Hackathon", orgKo: "대학 연합 해커톤", date: "Jan 2026", dateKo: "2026년 1월", type: "Team", typeKo: "팀" },
+  { place: 1, title: "1st Place Code Relay", titleKo: "Code Relay 1위", org: "Intercollege Hackathon", orgKo: "대학 연합 해커톤", date: "Jan 2026", dateKo: "2026년 1월", type: "Team", typeKo: "팀" },
+  { place: 2, title: "2nd Place Bug Buster", titleKo: "Bug Buster 2위", org: "Intercollege Hackathon", orgKo: "대학 연합 해커톤", date: "Jan 2026", dateKo: "2026년 1월", type: "Individual", typeKo: "개인" },
+  { place: 0, title: "Keynote Speaker Blockchain Seminar", titleKo: "블록체인 세미나 기조연설", org: "Khallikote University", orgKo: "Khallikote 대학교", date: "Year 1", dateKo: "1학년", type: "", typeKo: "" },
 ]
 
 const certifications = [
-  { 
-    title: "KMOOC Data Science and AI", 
+  {
+    title: "KMOOC Data Science and AI",
+    titleKo: "KMOOC 데이터 과학 및 AI",
     year: "Oct 2025",
+    yearKo: "2025년 10월",
     link: "/kmooc-certificate.pdf"
   },
   {
     title: "Full Stack Web Development",
+    titleKo: "풀스택 웹 개발",
     year: "Self-Learned — FreeCodeCamp + CS50W",
-    badge: "Self-Learned"
+    yearKo: "독학 — FreeCodeCamp + CS50W",
+    badge: "Self-Learned",
+    badgeKo: "독학"
   },
   {
     title: "Git and GitHub Version Control",
+    titleKo: "Git 및 GitHub 버전 관리",
     year: "Self-Learned — Practiced Daily",
-    badge: "Self-Learned"
+    yearKo: "독학 — 매일 실무 사용",
+    badge: "Self-Learned",
+    badgeKo: "독학"
   }
 ]
 
@@ -47,16 +55,16 @@ const experiences = [
     ],
     descriptionKo: [
       "AI 코딩 에이전트를 평가하기 위한 에이전틱(agentic) 터미널 기반 벤치마크 태스크를 설계 및 구축 — Docker 환경, 참조 솔루션(reference solution), 자동 검증기(verifier) 포함",
-      "실제 오라클 출력값의 편차를 측정하여 검증 허용 오차(tolerance)를 경험적으로 보정함으로써, 추측이 아닌 데이터 기반으로 설정하여 태스크가 에이전트의 실제 실패와 태스크/인프라 버그를 정확히 구분하도록 함",
+      "실제 오라클 출력값의 편차를 측정해 검증 허용 오차(tolerance)를 데이터 기반으로 보정하여, 태스크가 에이전트의 실제 실패와 태스크/인프라 버그를 정확히 구분하도록 함",
       "다단계 자동 검토 파이프라인(정적 검사, 루브릭 평가, 유사도 검사, pass@2 및 pass@5 에이전트 시험)을 통과시켜 프로덕션 수준의 평가 태스크를 엔드투엔드로 전달"
     ]
   }
 ]
 
 const education = [
-  { degree: "B.Sc Computer Science", school: "Khallikote University", year: "2023-2026", details: "8.41 CGPA" },
-  { degree: "Senior Secondary XII Science CBSE", school: "Kendriya Vidyalaya", year: "2021", details: "88%" },
-  { degree: "Secondary X CBSE", school: "Kendriya Vidyalaya", year: "2019", details: "91.4%" },
+  { degree: "B.Sc Computer Science", degreeKo: "컴퓨터과학 학사 (B.Sc)", school: "Khallikote University", schoolKo: "Khallikote 대학교", year: "2023-2026", details: "8.41 CGPA" },
+  { degree: "Senior Secondary XII Science CBSE", degreeKo: "고등학교 졸업 (12학년 이과, CBSE)", school: "Kendriya Vidyalaya", schoolKo: "Kendriya Vidyalaya", year: "2021", details: "88%" },
+  { degree: "Secondary X CBSE", degreeKo: "중등 과정 수료 (10학년, CBSE)", school: "Kendriya Vidyalaya", schoolKo: "Kendriya Vidyalaya", year: "2019", details: "91.4%" },
 ]
 
 function SubHeading({ icon: Icon, children }: { icon: React.ComponentType<{ size?: number }>; children: React.ReactNode }) {
@@ -72,6 +80,7 @@ function SubHeading({ icon: Icon, children }: { icon: React.ComponentType<{ size
 
 export default function WorkSection() {
   const { getText, language } = useLanguage()
+  const ko = language === "ko"
 
   return (
     <section id="work" className="scroll-mt-24 px-6 py-24">
@@ -123,21 +132,21 @@ export default function WorkSection() {
                 <TiltCard key={idx} max={5} className="glass rounded-2xl">
                   <div className="flex items-center gap-4 p-5">
                     <span className={`icon-3d inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${
-                      item.title.startsWith("1st")
+                      item.place === 1
                         ? "bg-gradient-to-br from-amber-300 to-yellow-600 text-white"
-                        : item.title.startsWith("2nd")
+                        : item.place === 2
                         ? "bg-gradient-to-br from-slate-200 to-slate-500 text-white"
                         : "bg-gradient-to-br from-violet-400 to-fuchsia-600 text-white"
                     }`}>
                       <Trophy size={22} />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <h4 className="font-semibold text-foreground">{item.title}</h4>
-                      <p className="text-sm text-muted-foreground">{item.org} • {item.date}</p>
+                      <h4 className="font-semibold text-foreground">{ko ? item.titleKo : item.title}</h4>
+                      <p className="text-sm text-muted-foreground">{ko ? item.orgKo : item.org} • {ko ? item.dateKo : item.date}</p>
                     </div>
                     {item.type && (
                       <span className="rounded-full border border-border/60 bg-secondary/60 px-3 py-1 text-[11px] font-bold text-foreground/80">
-                        {item.type}
+                        {ko ? item.typeKo : item.type}
                       </span>
                     )}
                   </div>
@@ -154,12 +163,12 @@ export default function WorkSection() {
                   <TiltCard max={5} className="glass rounded-2xl">
                     <div className="flex items-center justify-between gap-4 p-5">
                       <div>
-                        <h4 className="font-semibold text-foreground">{cert.title}</h4>
-                        <p className="text-sm text-muted-foreground">{cert.year}</p>
+                        <h4 className="font-semibold text-foreground">{ko ? cert.titleKo : cert.title}</h4>
+                        <p className="text-sm text-muted-foreground">{ko ? cert.yearKo : cert.year}</p>
                       </div>
                       {cert.badge ? (
                         <span className="shrink-0 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-[11px] font-bold text-primary">
-                          {cert.badge}
+                          {ko ? cert.badgeKo : cert.badge}
                         </span>
                       ) : (
                         <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border/60 text-muted-foreground transition-colors group-hover/tilt:border-primary group-hover/tilt:text-primary">
@@ -190,8 +199,8 @@ export default function WorkSection() {
               <TiltCard key={idx} className="glass gradient-border h-full rounded-3xl">
                 <div className="flex h-full flex-col p-7">
                   <span className="mb-6 font-display text-sm font-semibold text-muted-foreground">{edu.year}</span>
-                  <h4 className="text-lg font-bold leading-snug text-foreground">{edu.degree}</h4>
-                  <p className="mt-1 text-sm text-muted-foreground">{edu.school}</p>
+                  <h4 className="text-lg font-bold leading-snug text-foreground">{ko ? edu.degreeKo : edu.degree}</h4>
+                  <p className="mt-1 text-sm text-muted-foreground">{ko ? edu.schoolKo : edu.school}</p>
                   {edu.details && (
                     <p className="mt-auto pt-6 font-display text-3xl font-bold text-gradient">{edu.details}</p>
                   )}

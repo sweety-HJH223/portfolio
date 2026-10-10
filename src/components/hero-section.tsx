@@ -1,8 +1,8 @@
 "use client"
 
-import React from "react"
+import React, { useRef } from "react"
 import dynamic from "next/dynamic"
-import { motion } from "framer-motion"
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion"
 import { ArrowUpRight, Layers } from "lucide-react"
 import { useLanguage } from "@/context/LanguageContext";
 import { useUI } from "@/context/UIContext";
@@ -20,11 +20,10 @@ const HeroScene = dynamic(() => import("./three/HeroScene"), {
 const ease = [0.22, 1, 0.36, 1] as const
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24, filter: "blur(8px)" },
+  hidden: { opacity: 0, y: 24 },
   show: (i: number) => ({
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
     transition: { duration: 0.8, delay: 0.1 + i * 0.12, ease },
   }),
 }
@@ -32,6 +31,13 @@ const fadeUp = {
 export function HeroSection() {
   const { getText, language } = useLanguage();
   const { openProjectsPopup } = useUI();
+  const sectionRef = useRef<HTMLElement>(null)
+  const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] })
+  const textY = useTransform(scrollYProgress, [0, 1], [0, -140])
+  const textOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0])
+  const sceneY = useTransform(scrollYProgress, [0, 1], [0, 90])
+  const sceneOpacity = useTransform(scrollYProgress, [0.2, 0.9], [1, 0])
 
   const ko = language === "ko"
   const stats = [
@@ -42,7 +48,7 @@ export function HeroSection() {
   ]
 
   return (
-    <section className="relative flex min-h-screen items-center overflow-hidden">
+    <section ref={sectionRef} className="relative flex min-h-screen items-center overflow-hidden">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-0 h-[42vh] overflow-hidden [perspective-origin:50%_0%] [perspective:380px] [mask-image:linear-gradient(to_bottom,transparent,#000_35%,#000_65%,transparent)]"
@@ -52,7 +58,7 @@ export function HeroSection() {
       </div>
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-6 px-6 pb-20 pt-32 lg:grid-cols-[1.05fr_1fr] lg:gap-4">
         {/* Main content */}
-        <div className="max-w-2xl">
+        <motion.div className="max-w-2xl will-change-transform" style={reduceMotion ? undefined : { y: textY, opacity: textOpacity }}>
           {/* Open for Work Badge */}
           <motion.div
             variants={fadeUp}
@@ -87,9 +93,9 @@ export function HeroSection() {
               <>
                 <span className="text-balance">아이디어를</span>
                 <br />
-                <span className="text-balance">
-                  <span className="text-gradient [filter:drop-shadow(0_10px_30px_hsl(var(--accent)/0.4))]">지능형 소프트웨어</span>로 만듭니다
-                </span>
+                <span className="text-gradient break-keep [filter:drop-shadow(0_10px_30px_hsl(var(--accent)/0.4))]">지능형 소프트웨어로</span>
+                <br />
+                <span>만듭니다</span>
               </>
             )}
           </motion.h1>
@@ -155,17 +161,22 @@ export function HeroSection() {
               </span>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
 
         {/* 3D Scene */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.4, delay: 0.2, ease }}
-          className="relative order-first h-[280px] sm:h-[340px] lg:order-none lg:h-[min(560px,78vh)]"
+          style={reduceMotion ? undefined : { y: sceneY, opacity: sceneOpacity }}
+          className="relative order-first h-[280px] will-change-transform sm:h-[340px] lg:order-none lg:h-[min(560px,78vh)]"
         >
-          <div className="absolute left-1/2 top-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,hsl(var(--accent)/0.35),hsl(var(--primary)/0.12)_45%,transparent_70%)] blur-2xl" />
-          <HeroScene />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.4, delay: 0.2, ease }}
+            className="h-full w-full"
+          >
+            <div className="absolute left-1/2 top-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-50 dark:opacity-100 bg-[radial-gradient(circle,hsl(var(--accent)/0.35),hsl(var(--primary)/0.12)_45%,transparent_70%)] blur-2xl" />
+            <HeroScene />
+          </motion.div>
         </motion.div>
       </div>
 

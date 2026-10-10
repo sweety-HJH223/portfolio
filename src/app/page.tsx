@@ -129,7 +129,7 @@ export default function Home() {
               </p>
             </div>
             <p className="text-xs text-muted-foreground">
-              🇰🇷 한국 기회를 찾고 있습니다 | © 2026
+              🇰🇷 한국에서의 기회를 찾고 있습니다 | © 2026
             </p>
           </footer>
         </div>

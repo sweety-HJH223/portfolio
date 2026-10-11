@@ -4,6 +4,7 @@ import React from "react";
 import type { ReactNode } from "react";
 import { Inter, Space_Grotesk } from "next/font/google";
 import ClientRootLayout from "@/components/ClientRootLayout"; // To be created
+import { Analytics } from "@vercel/analytics/next"; // 1. Import Vercel Analytics
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-display", display: "swap" });
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body className="custom-scrollbar">
         <ClientRootLayout>{children}</ClientRootLayout>
+        <Analytics /> {/* 2. Add the component right before the closing body tag */}
       </body>
     </html>
   );

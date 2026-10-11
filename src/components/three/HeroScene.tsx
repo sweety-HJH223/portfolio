@@ -520,7 +520,7 @@ function Moon({ orbit, angle, size, color, dark, ringed = false }: MoonProps) {
           <mesh rotation={[1.1, 0.3, 0]}>
             <ringGeometry args={[size * 1.45, size * 2.1, 64]} />
             <meshBasicMaterial color={color} side={THREE.DoubleSide} transparent opacity={0.55} toneMapped={false} />
-          </mesh>
+    </mesh>
         )}
       </group>
     </>
@@ -619,7 +619,7 @@ function Comet({ dark }: { dark: boolean }) {
   return (
     <mesh ref={mesh} material={material} position={[0, 0, -10]}>
       <planeGeometry args={[1.9, 0.05]} />
-    </mesh>
+        </mesh>
   )
 }
 
@@ -843,7 +843,7 @@ function Sirius({ dark }: { dark: boolean }) {
           <planeGeometry args={[1.8, 1.8]} />
         </mesh>
       </Billboard>
-    </Float>
+      </Float>
   )
 }
 
